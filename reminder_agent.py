@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from supabase import create_client  # <--- New Import
+from supabase import create_client  
 from crewai import Agent, Task, Crew
 
 # Load environment variables (Make sure SUPABASE_URL and SUPABASE_KEY are in your .env)
