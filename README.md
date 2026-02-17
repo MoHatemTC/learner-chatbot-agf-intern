@@ -49,9 +49,15 @@ OPENAI_API_KEY=sk-...
 GEMINI_API_KEY=...
 
 # Qdrant Configuration
+# Option 1: Local Qdrant
 QDRANT_MODE=local
 QDRANT_URL=http://localhost:6333
 COLLECTION_NAME=your_collection_name
+
+# Option 2: Qdrant Cloud
+# QDRANT_MODE=cloud
+# QDRANT_URL=...
+# QDRANT_API_KEY=...
 
 # Embedding Settings
 EMBEDDING_MODEL=text-embedding-3-small
