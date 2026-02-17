@@ -1,0 +1,17 @@
+# Minimal requirements for Hybrid PDF Ingestion
+# Use this if you only need the ingestion pipeline without the full app
+
+# Core utilities
+python-dotenv~=1.0.0
+
+# Vector database
+qdrant-client~=1.7.3
+
+# OpenAI for text embeddings
+openai>=1.13.3
+
+# PDF processing - Pure Python with PyMuPDF
+PyMuPDF>=1.23.0
+
+# Google Gemini for multimodal embeddings + OCR (replaces Tesseract)
+google-generativeai~=0.3.2

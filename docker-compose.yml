@@ -1,0 +1,25 @@
+# FIX#11: Removed obsolete 'version' field (Docker Compose v2+ ignores it)
+
+services:
+  qdrant:
+    # FIX#6: Pin specific version instead of :latest to prevent breaking changes
+    # FIX#13: Upgraded to v1.16.2 to match qdrant-client version and fix API compatibility
+    # :latest can pull incompatible versions automatically, causing unexpected failures
+    image: qdrant/qdrant:v1.16.2
+    ports:
+      - "6333:6333"  # HTTP API
+      - "6334:6334"  # gRPC API (optional)
+    volumes:
+      - ./qdrant_storage:/qdrant/storage
+    environment:
+      - QDRANT__SERVICE__GRPC_PORT=6334
+    restart: unless-stopped
+
+# Usage:
+# Start: docker-compose up -d
+# Stop: docker-compose down
+# View logs: docker-compose logs -f
+#
+# FIX#6: To upgrade Qdrant, update the version tag above and run:
+#   docker-compose pull && docker-compose up -d
+# Check available versions: https://hub.docker.com/r/qdrant/qdrant/tags

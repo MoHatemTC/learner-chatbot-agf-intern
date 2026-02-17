@@ -1,0 +1,29 @@
+# ~= allows patch updates but blocks minor/major version changes
+# Example: ~=1.2.3 means >=1.2.3, <1.3.0 (allows 1.2.4, 1.2.5... but not 1.3.0)
+#
+# To generate a lockfile for exact reproducibility:
+#   pip freeze > requirements-lock.txt
+# To install from lockfile:
+#   pip install -r requirements-lock.txt
+
+# Core dependencies
+crewai~=0.86.0  # Used by agents.py, runner.py, tasks.py
+streamlit~=1.31.0  # Used by app.py (UI)
+python-dotenv~=1.0.0
+
+# Vector database
+qdrant-client~=1.7.3
+
+# OpenAI (version constraint compatible with crewai 0.86.0)
+openai>=1.13.3
+langchain-openai~=0.2.0  # Used by agents.py (LangChain integration)
+
+# PDF processing - Pure Python solution (no external dependencies!)
+# PyMuPDF replaces: pypdf, pdf2image, Pillow
+# Gemini Vision API replaces: Tesseract OCR
+PyMuPDF>=1.23.0  # Used by: ingest.py, ingest_hybrid.py, chunking.py
+
+# Google Gemini for multimodal embeddings + OCR
+# Used by: multimodal_embedder.py, ingest_hybrid.py
+google-generativeai~=0.3.2
+
