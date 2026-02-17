@@ -1,4 +1,4 @@
 python-dotenv
 supabase
 crewai
-openai
+apscheduler
