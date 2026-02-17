@@ -1,0 +1,110 @@
+Code Review: Multimodal RAG University FAQ Chatbot
+Reviewer: Raghad Saad
+
+Date: February 18, 2026
+
+Project: Multimodal RAG System (Gemini 1.5 + Qdrant + CrewAI)
+
+Purpose: Hybrid text/image retrieval for university administration queries.
+
+Executive Summary
+The codebase demonstrates excellent modularity and a clean separation of concerns through factory patterns. However, a significant "Retrieval-Ingestion Mismatch" exists: the system implements a sophisticated multimodal ingestion pipeline but defaults to a unimodal (text-only) search. Additionally, the indexing strategy lacks idempotency, which will lead to significant data duplication in production environments.
+
+🔴 MAJOR ISSUES
+AI/ML Discipline
+
+1. The "Ghost Vector" Problem (Retrieval Gap)
+
+File: runner.py (Line 53)
+
+Issue: The search query is hardcoded to using="text".
+
+Impact: CRITICAL — Despite generating Gemini Vision embeddings for images during ingestion, the system never queries the visual vector space. If a student asks about a flowchart, table, or map, the system will only find it if the surrounding text happens to match.
+
+Recommendation: Implement Hybrid Vector Retrieval using Qdrant’s Prefetch and FusionQuery (RRF) to merge results from both the "text" and "image" vector names.
+
+2. Contextual Modality Blindness
+
+File: tasks.py (Lines 20–30)
+
+Issue: Visual content descriptions (from Gemini) and raw PDF text are merged into a single string for the Agent.
+
+Impact: HIGH — The Agent cannot distinguish between primary text and visual interpretations. This limits the Agent's ability to cite sources accurately (e.g., "As shown in the diagram on page 5").
+
+Recommendation: Prepend metadata tags to chunks during task creation: [SOURCE: TEXT] vs. [SOURCE: IMAGE_ANALYSIS].
+
+Software Engineering Discipline
+
+3. Non-Idempotent Indexing (Data Bloat)
+
+File: chunking.py (Line 74)
+
+Issue: chunk_id is generated as a simple incrementing integer.
+
+Impact: HIGH — Any change to chunk_size or the source document shifts all IDs. Re-running ingestion will result in 100% data duplication in Qdrant rather than updating existing points, leading to skewed search results and increased storage costs.
+
+Recommendation: Use content-addressable IDs by hashing the chunk text: hashlib.md5(text.encode()).hexdigest().
+
+🟡 MINOR ISSUES
+Architecture Discipline
+
+4. Multi-Provider Latency (OpenAI + Google)
+
+Issue: Using OpenAI for text embeddings and Gemini for Vision/LLM tasks.
+
+Impact: MEDIUM — Increased network latency and fragmented billing.
+
+Recommendation: Consolidate to the Google ecosystem using text-embedding-004 to maintain consistency with the Gemini 1.5 Flash model.
+
+5. Hardcoded Similarity Thresholds
+
+File: runner.py (Line 35)
+
+Issue: score_threshold = 0.3 is hardcoded.
+
+Impact: MINOR — Similarity scores vary by model. A 0.3 threshold might be too loose for certain embeddings, leading to "noisy" retrievals.
+
+Recommendation: Move this to an environment variable.
+
+6. Inconsistent Type Hinting
+
+Issue: Partial use of Python type hints across files.
+
+Impact: MINOR — Reduces developer velocity and IDE effectiveness.
+
+📊 Summary Statistics
+Category	Major Issues	Minor Issues
+AI/ML Discipline	2	1
+Software Engineering	1	1
+Code Quality	0	2
+TOTAL	3	4
+🎯 Suggested Fix: Hybrid Multimodal Search
+To resolve the Ghost Vector issue, I suggest updating the search_document method in runner.py to use Reciprocal Rank Fusion (RRF). This allows the system to actually utilize the image embeddings:
+
+Python
+from qdrant_client import models
+
+def search_document(self, question: str):
+    query_vector = self.embedder.embed_text(question)
+    
+    # Perform Hybrid Search (Text + Image Vectors)
+    results = self.qdrant_client.query_points(
+        collection_name=self.collection_name,
+        prefetch=[
+            models.Prefetch(query=query_vector, using="text", limit=self.top_k),
+            models.Prefetch(query=query_vector, using="image", limit=self.top_k)
+        ],
+        query=models.FusionQuery(fusion=models.Fusion.RRF),
+        score_threshold=self.score_threshold,
+        with_payload=True
+    ).points
+    
+    return results
+✅ Positive Observations
+Resilient Fallbacks: The try-except block in runner.py for "named vectors" is an excellent defense against schema mismatches.
+
+Clean Orchestration: The use of factory patterns makes the system highly testable and easy to extend.
+
+Precise Chunking: Respecting sentence boundaries (rfind('. ')) ensures the LLM receives semantically complete context.
+
+End of Review
