@@ -1,5 +1,5 @@
-python-dotenv
-supabase
 crewai
-apscheduler
+supabase
+python-dotenv
 pytz
+apscheduler
