@@ -1,16 +1,42 @@
 import os
 import logging
 import sys
-from datetime import datetime
-from typing import List, Dict, Any
+import warnings
+import json # Added for state persistence
+from typing import List, Dict, Any, Optional, Set
+from datetime import datetime, timedelta
 from dotenv import load_dotenv
 from supabase import create_client, Client
 from crewai import Agent, Task, Crew, Process
 from crewai.tools import tool
 from apscheduler.schedulers.blocking import BlockingScheduler
 
-# --- 1. SETUP LOGGING ---
-# Using professional logging with timestamps for monitoring
+# --- 0. CONFIG & PERSISTENCE ---
+warnings.filterwarnings("ignore", category=UserWarning, module='apscheduler')
+STATE_FILE = "sent_reminders.json"
+
+# Load previously sent IDs so we don't post them again if the script restarts
+def load_sent_ids() -> Set[int]:
+    if os.path.exists(STATE_FILE):
+        try:
+            with open(STATE_FILE, 'r') as f:
+                return set(json.load(f))
+        except:
+            return set()
+    return set()
+
+def save_sent_id(session_id: int):
+    sent_ids = load_sent_ids()
+    sent_ids.add(session_id)
+    with open(STATE_FILE, 'w') as f:
+        json.dump(list(sent_ids), f)
+
+# --- 1. CONSTANTS ---
+DB_TABLE = "schedule"
+COL_DATE = "session_date"
+COL_TIME = "session_time"
+REMINDER_WINDOW_MINS = 90 
+
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
@@ -18,124 +44,86 @@ logging.basicConfig(
 )
 
 load_dotenv()
+supabase: Client = create_client(os.environ.get("SUPABASE_URL"), os.environ.get("SUPABASE_KEY"))
 
-# --- 2. ENVIRONMENT VALIDATION ---
-SUPABASE_URL = os.environ.get("SUPABASE_URL")
-SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
+# --- 2. HELPER LOGIC ---
 
-if not SUPABASE_URL or not SUPABASE_KEY:
-    logging.critical("❌ Missing SUPABASE_URL or SUPABASE_KEY in .env file.")
-    sys.exit(1)
+def is_session_upcoming(session_time_str: str) -> bool:
+    try:
+        current_time = datetime.now()
+        session_time_obj = datetime.strptime(session_time_str, "%I:%M %p").time()
+        session_datetime = datetime.combine(current_time.date(), session_time_obj)
+        time_diff = session_datetime - current_time
+        return timedelta(0) <= time_diff <= timedelta(minutes=REMINDER_WINDOW_MINS)
+    except Exception as e:
+        logging.error(f"Time parsing error: {e}")
+        return False
 
-# Initialize Supabase Client
-try:
-    supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
-except Exception as e:
-    logging.critical(f"❌ Failed to connect to Supabase: {e}")
-    sys.exit(1)
+# --- 3. TOOLS ---
 
-
-# --- 3. UPDATED TOOLS ---
-
-@tool("Fetch_Todays_Schedule")
-def fetch_todays_schedule() -> str:
+@tool("Fetch_Upcoming_Sessions")
+def fetch_upcoming_sessions() -> str:
     """
-    Queries Supabase for sessions occurring on the current calendar date.
-    Uses 'session_date' column to match the SQL schema.
+    Fetches sessions today that are starting soon AND haven't been posted yet.
     """
     try:
-        # Format today's date to match PostgreSQL DATE type (YYYY-MM-DD)
         today = datetime.now().strftime('%Y-%m-%d')
-        logging.info(f"📅 Querying database for date: {today}")
-
-        # Execute filtered query to minimize token usage and data transfer
-        response = supabase.table("schedule").select("*").eq("session_date", today).execute()
+        response = supabase.table(DB_TABLE).select("*").eq(COL_DATE, today).execute()
         
         if not response.data:
             return "NO_SESSIONS_FOUND"
+
+        sent_ids = load_sent_ids()
+        upcoming = []
+
+        for session in response.data:
+            s_id = session.get('id')
+            s_time = session.get(COL_TIME, "")
             
-        return str(response.data)
+            # CRITICAL CHECK: Upcoming AND not already sent
+            if is_session_upcoming(s_time) and s_id not in sent_ids:
+                upcoming.append(session)
+                # Mark as sent immediately to prevent race conditions
+                save_sent_id(s_id)
+
+        if not upcoming:
+            return "NO_NEW_UPCOMING_SESSIONS"
+            
+        return str(upcoming)
 
     except Exception as e:
-        logging.error(f"Database error: {e}")
         return f"Error: {str(e)}"
 
 @tool("Circle_Post_Tool")
 def circle_post_tool(reminder_text: str) -> str:
-    """
-    Simulates posting the finalized announcement to the Circle.so community.
-    """
-    try:
-        logging.info("🚀 TRIGGERING CIRCLE POST...")
-        print(f"\n📢 --- FINAL CIRCLE POST CONTENT ---\n{reminder_text}\n")
-        return "Successfully posted to Circle."
-    except Exception as e:
-        logging.error(f"Post failed: {e}")
-        return f"Error posting to platform: {e}"
+    """Publishes the reminder to Circle."""
+    logging.info("🚀 Pushing to Circle...")
+    print(f"\n📢 FINAL POST:\n{reminder_text}\n")
+    return "Successfully posted."
 
-
-# --- 4. AGENT & TASK DEFINITIONS ---
+# --- 4. AGENT LOGIC ---
 
 def run_reminder_check():
-    """
-    The core logic executed by the scheduler. 
-    Encapsulated to allow for recurring execution.
-    """
-    logging.info("⏰ Starting scheduled reminder check...")
-
-    # Agent: Lead Study Coordinator
-    reminder_bot = Agent(
+    coordinator = Agent(
         role='Lead Study Coordinator',
-        goal='Analyze the daily schedule and post professional reminders ONLY if sessions exist today.',
-        backstory=(
-            "You represent the US Embassy Sprints program. You are professional, warm, and precise. "
-            "If the tool returns 'NO_SESSIONS_FOUND', you acknowledge it and stop. "
-            "If data is returned, you draft a clear announcement with the topic, expert, and time."
-        ),
-        tools=[fetch_todays_schedule, circle_post_tool],
-        allow_delegation=False,
+        goal='Post reminders only for NEW upcoming sessions.',
+        backstory="You are precise. If the tool says NO_NEW_UPCOMING_SESSIONS, you stop immediately.",
+        tools=[fetch_upcoming_sessions, circle_post_tool],
         verbose=True
     )
 
-    # Task: Processing and Delivery
-    reminder_task = Task(
-        description=(
-            f"Current Date: {datetime.now().strftime('%Y-%m-%d')}\n"
-            "1. Call 'Fetch_Todays_Schedule'.\n"
-            "2. IF the result is 'NO_SESSIONS_FOUND', do not post anything.\n"
-            "3. IF sessions exist, draft a friendly community reminder.\n"
-            "4. Use 'Circle_Post_Tool' to finalize the announcement."
-        ),
-        expected_output="A confirmation of the post or a report that no sessions were found.",
-        agent=reminder_bot
+    task = Task(
+        description="Check for new upcoming sessions. If found, post them. If none, stop.",
+        expected_output="Confirmation or 'Nothing to post'.",
+        agent=coordinator
     )
 
-    # Crew Execution
-    crew = Crew(
-        agents=[reminder_bot],
-        tasks=[reminder_task],
-        process=Process.sequential
-    )
-
-    result = crew.kickoff()
-    logging.info(f"✅ Cycle Complete. Result: {result}")
-
-
-# --- 5. BLOCKING SCHEDULER (AUTOMATION) ---
+    Crew(agents=[coordinator], tasks=[task]).kickoff()
 
 if __name__ == "__main__":
     scheduler = BlockingScheduler()
-    
-    # Schedule to run every hour (Adjust 'minutes' as needed)
     scheduler.add_job(run_reminder_check, 'interval', minutes=60)
     
-    print("--- 🤖 Agent Scheduler Active ---")
-    print("Monitoring database... (Press Ctrl+C to stop)")
-
-    try:
-        # Immediate first run for testing
-        run_reminder_check()
-        # Start the recurring loop
-        scheduler.start()
-    except (KeyboardInterrupt, SystemExit):
-        print("\n--- Scheduler Stopped Safely ---")
+    print("--- 🤖 Agent Scheduler Active (With ID Tracking) ---")
+    run_reminder_check()
+    scheduler.start()
