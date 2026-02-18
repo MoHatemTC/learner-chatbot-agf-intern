@@ -11,8 +11,8 @@ crewai~=0.86.0  # Used by agents.py, runner.py, tasks.py
 streamlit~=1.31.0  # Used by app.py (UI)
 python-dotenv~=1.0.0
 
-# Vector database
-qdrant-client~=1.7.3
+# Vector database (REQUIRED: >=1.9.0 for hybrid search with query_points and RRF)
+qdrant-client>=1.9.0
 
 # OpenAI (version constraint compatible with crewai 0.86.0)
 openai>=1.13.3

@@ -4,6 +4,7 @@ Split documents into overlapping chunks for better retrieval
 """
 import os
 import re
+import hashlib  # FIX#3: Import hashlib for content-based IDs
 from typing import List, Dict
 from dotenv import load_dotenv
 
@@ -13,7 +14,7 @@ load_dotenv()
 class TextChunker:
     """Split text into overlapping chunks"""
     
-    def __init__(self, chunk_size=500, chunk_overlap=100):
+    def __init__(self, chunk_size: int = 500, chunk_overlap: int = 100) -> None:  # FIX#6: Add return type hint
         """
         Initialize the chunker.
         
@@ -65,7 +66,6 @@ class TextChunker:
         
         chunks = []
         start = 0
-        chunk_id = 0
         
         while start < len(text):
             # Get chunk end position
@@ -92,6 +92,10 @@ class TextChunker:
             chunk_text = text[start:end].strip()
             
             if chunk_text:
+                # FIX#3: Generate content-addressable chunk_id using MD5 hash
+                # This ensures identical content always gets the same ID (idempotent ingestion)
+                chunk_id = hashlib.md5(chunk_text.encode()).hexdigest()
+                
                 chunk_data = {
                     'chunk_id': chunk_id,
                     'text': chunk_text,
@@ -104,7 +108,6 @@ class TextChunker:
                     chunk_data.update(metadata)
                 
                 chunks.append(chunk_data)
-                chunk_id += 1
             
             # Move start position (with overlap)
             new_start = end - self.chunk_overlap

@@ -1,4 +1,4 @@
-"""
+""" 
 CrewAI Agents for University Chatbot
 FIX#10: Renamed "retriever" to "context_analyzer" for accuracy
 - Context Analyzer Agent: Analyzes pre-retrieved chunks for relevance
@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-def create_llm():
+def create_llm() -> ChatOpenAI:  # FIX#6: Add return type hint
     """Create OpenAI LLM instance for agents"""
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
@@ -28,7 +28,7 @@ def create_llm():
     )
 
 
-def create_context_analyzer_agent(llm):
+def create_context_analyzer_agent(llm: ChatOpenAI) -> Agent:  # FIX#6: Add type hints
     """
     Context Analyzer Agent: Analyzes pre-retrieved chunks for relevance.
     
@@ -55,7 +55,7 @@ def create_context_analyzer_agent(llm):
     )
 
 
-def create_answer_agent(llm):
+def create_answer_agent(llm: ChatOpenAI) -> Agent:  # FIX#6: Add type hints
     """
     Answer Agent: Generates accurate answers based on retrieved context.
     

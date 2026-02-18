@@ -1,10 +1,12 @@
-"""
+"""  
 Runner - Execute the CrewAI workflow
 Orchestrates retrieval and answer generation
 """
 import os
+from typing import Dict, List, Any  # FIX#6: Add type imports
 from crewai import Crew, Process
 from dotenv import load_dotenv
+from qdrant_client import models
 
 from agents import create_llm, create_context_analyzer_agent, create_answer_agent  #Import factories instead of instances
 from tasks import create_retrieval_task, create_answer_task
@@ -17,7 +19,7 @@ load_dotenv()
 class ChatbotRunner:
     """Orchestrate the chatbot workflow"""
     
-    def __init__(self):
+    def __init__(self) -> None:  # FIX#6: Add return type hint
         """Initialize the runner with all components"""
         print("🚀 Initializing Chatbot Runner...")
         
@@ -31,13 +33,15 @@ class ChatbotRunner:
         self.qdrant_client = get_qdrant_client()
         self.collection_name = os.getenv("COLLECTION_NAME", "sprints_faq")
         self.top_k = int(os.getenv("TOP_K", 7))
-        self.score_threshold = 0.3  # Minimum similarity score (lower = more lenient)
+        # FIX#5: Make score_threshold configurable via environment variable
+        self.score_threshold = float(os.getenv("SCORE_THRESHOLD", "0.3"))  # Minimum similarity score (lower = more lenient)
         
         print("✅ Runner initialized")
     
-    def search_document(self, question: str):
+    def search_document(self, question: str) -> List[Any]:  # FIX#6: Add return type hint
         """
-        Search for relevant chunks in the document.
+        Search for relevant chunks in the text vector space.
+        Note: Visual content is already included in text chunks via Gemini Vision descriptions.
         
         Args:
             question: User's question
@@ -45,10 +49,10 @@ class ChatbotRunner:
         Returns:
             List of search results from Qdrant
         """
-        # Generate query embedding
+        # Generate query embedding (OpenAI text embedding)
         query_vector = self.embedder.embed_text(question)
         
-        # Search Qdrant - use "text" vector for hybrid collections
+        # Search text vector (which includes visual descriptions from Gemini Vision)
         try:
             results = self.qdrant_client.query_points(
                 collection_name=self.collection_name,
@@ -56,12 +60,13 @@ class ChatbotRunner:
                 limit=self.top_k,
                 score_threshold=self.score_threshold,
                 with_payload=True,
-                using="text"  # Search the "text" vector (for hybrid collections)
+                using="text"  # Text vector contains both text and visual descriptions
             ).points
+            return results
         except Exception as e:
-            # Fallback: try without specifying vector name (for non-hybrid collections)
-            if "vector name" in str(e).lower() or "not existing vector" in str(e).lower():
-                print("ℹ️  Trying search without named vectors (non-hybrid collection)...")
+            # Fallback: try without named vector (for non-hybrid collections)
+            if "vector name" in str(e).lower():
+                print("ℹ️  Named vectors not available, using default vector...")
                 results = self.qdrant_client.query_points(
                     collection_name=self.collection_name,
                     query=query_vector,
@@ -69,12 +74,11 @@ class ChatbotRunner:
                     score_threshold=self.score_threshold,
                     with_payload=True
                 ).points
+                return results
             else:
                 raise
-        
-        return results
     
-    def answer_question(self, question: str):
+    def answer_question(self, question: str) -> Dict[str, Any]:  # FIX#6: Add return type hint
         """
         Answer a question using the CrewAI workflow.
         
@@ -141,7 +145,7 @@ class ChatbotRunner:
             'raw_results': results
         }
     
-    def interactive_mode(self):
+    def interactive_mode(self) -> None:  # FIX#6: Add return type hint
         """Run in interactive CLI mode"""
         print("\n" + "="*60)
         print("🎓 ACC|Sprints Chatbot - Interactive Mode")

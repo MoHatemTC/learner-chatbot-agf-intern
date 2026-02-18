@@ -1,11 +1,12 @@
-"""
+""" 
 CrewAI Tasks for the University Chatbot
 Defines the workflow for retrieval and answer generation
 """
-from crewai import Task
+from typing import Callable, Any  # FIX#6: Add type imports
+from crewai import Task, Agent  # FIX#6: Import Agent for type hints
 
 
-def create_retrieval_task(agent, question: str, search_function):
+def create_retrieval_task(agent: Agent, question: str, search_function: Callable) -> Task:  # FIX#6: Add type hints
     """
     Task for the Context Analyzer Agent.
     
@@ -23,7 +24,18 @@ def create_retrieval_task(agent, question: str, search_function):
     else:
         context = "Retrieved chunks from the documents:\n\n"
         for i, result in enumerate(results, 1):
-            context += f"--- Chunk {i} (Page {result.payload.get('page')}, Score: {result.score:.3f}) ---\n"
+            # FIX#2: Add content type tags to help agent distinguish between text and visual analysis
+            content_type = result.payload.get('content_type', 'text_only')
+            if content_type == 'text_only':
+                source_tag = "[SOURCE: PRIMARY TEXT]"
+            elif content_type == 'image_analysis_only':
+                source_tag = "[SOURCE: IMAGE_ANALYSIS]"
+            elif content_type == 'text_with_visual_analysis':
+                source_tag = "[SOURCE: TEXT + IMAGE_ANALYSIS]"
+            else:
+                source_tag = "[SOURCE: UNKNOWN]"
+            
+            context += f"--- Chunk {i} (Page {result.payload.get('page')}, Score: {result.score:.3f}) {source_tag} ---\n"
             context += f"{result.payload.get('text')}\n\n"
     
     return Task(
@@ -48,7 +60,7 @@ Your task:
     )
 
 
-def create_answer_task(agent, question: str, retrieval_context: str = None):
+def create_answer_task(agent: Agent, question: str, retrieval_context: str = None) -> Task:  # FIX#6: Add type hints
     """
     Task for the Answer Agent.
     

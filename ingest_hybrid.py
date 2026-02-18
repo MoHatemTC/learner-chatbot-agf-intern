@@ -216,7 +216,9 @@ class HybridPDFIngestor:
                         If provided, uses cached images for Gemini Vision (optimization).
             
         Returns:
-            Dictionary mapping page_number -> text
+            Tuple of (pages_dict, metadata_dict) where:
+            - pages_dict: Dictionary mapping page_number -> text
+            - metadata_dict: Dictionary mapping page_number -> content_type metadata
         """
         if not os.path.exists(pdf_path):
             raise FileNotFoundError(f"PDF not found: {pdf_path}")
@@ -226,6 +228,7 @@ class HybridPDFIngestor:
         pdf_doc = fitz.open(pdf_path)
         
         pages = {}
+        page_metadata = {}  # FIX#2: Track content type per page
         ocr_count = 0
         image_page_count = 0
         
@@ -271,27 +274,37 @@ class HybridPDFIngestor:
                     gemini_text = self.ocr_page_with_gemini(pdf_doc, page_num, has_images=has_images)
                 
                 if gemini_text:
+                    # FIX#2: Track content type based on what was combined
                     # Combine PyMuPDF text with Gemini output for richer content
                     if text and len(text) >= self.ocr_threshold:
                         # Page has good text + images: combine both
                         text = f"{text}\n\n[Visual Content Description]\n{gemini_text}"
+                        content_type = "text_with_visual_analysis"  # FIX#2: Mixed content
                     else:
                         # Low quality text: use Gemini output
                         text = gemini_text
+                        content_type = "image_analysis_only"  # FIX#2: Pure visual analysis
                     ocr_count += 1
-                elif not text:
-                    # Gemini failed and no text: skip this page
-                    print(f"⚠️  Page {page_num + 1}: Both PyMuPDF and Gemini Vision failed")
-                    continue
+                else:
+                    # Gemini failed - use what we have
+                    content_type = "text_only"  # FIX#2: Only primary text
+                    if not text:
+                        # Gemini failed and no text: skip this page
+                        print(f"⚠️  Page {page_num + 1}: Both PyMuPDF and Gemini Vision failed")
+                        continue
+            else:
+                # Not using Gemini - pure text extraction
+                content_type = "text_only"  # FIX#2: Only primary text
             
             if text:
                 pages[page_num + 1] = text  # Store with 1-indexed page numbers
+                page_metadata[page_num + 1] = {"content_type": content_type}  # FIX#2: Store metadata
                 print(f"  Page {page_num + 1}: {len(text)} characters{' (enhanced with Gemini)' if use_gemini and gemini_text else ''}")
         
         pdf_doc.close()
         print(f"✅ Loaded {len(pages)} pages from PDF")
         print(f"   📊 Stats: {ocr_count} pages processed with Gemini Vision, {image_page_count} pages contain images")
-        return pages
+        return pages, page_metadata  # FIX#2: Return metadata along with pages
     
     def convert_pdf_to_images(self, pdf_path: str) -> dict:
         """
@@ -327,10 +340,10 @@ class HybridPDFIngestor:
         Complete hybrid ingestion pipeline (OPTIMIZED):
         1. Convert PDF pages to images first (if hybrid mode) - renders once
         2. Load PDF text with OCR fallback (uses cached images for Gemini Vision)
-        3. Chunk text
+        3. Chunk text with content_type metadata  # FIX#2
         4. Generate text embeddings
         5. Generate image embeddings (reuses same cached images)
-        6. Store in Qdrant with named vectors
+        6. Store in Qdrant with named vectors and content_type metadata  # FIX#2
         
         Args:
             pdf_path: Path to the PDF file
@@ -345,14 +358,23 @@ class HybridPDFIngestor:
             print("🖼️  Step 1: Converting PDF pages to images (for OCR + embeddings reuse)...")
             page_images = self.convert_pdf_to_images(pdf_path)
         
-        # Load PDF text (will use cached images for Gemini Vision if available)
+        # FIX#2: Load PDF text with metadata (will use cached images for Gemini Vision if available)
         print("\n📖 Step 2: Extracting text content...")
-        pages = self.load_pdf(pdf_path, page_images=page_images)
+        pages, page_metadata = self.load_pdf(pdf_path, page_images=page_images)
         
         # Chunk pages
         print("\n📄 Step 3: Chunking text...")
         base_metadata = {'source': filename}
         chunks = self.chunker.chunk_by_pages(pages, base_metadata)
+        
+        # FIX#2: Add content_type metadata to each chunk based on its page
+        for chunk in chunks:
+            page_num = chunk.get('page')
+            if page_num in page_metadata:
+                chunk['content_type'] = page_metadata[page_num]['content_type']
+            else:
+                chunk['content_type'] = 'text_only'  # Default fallback
+        
         print(f"✅ Created {len(chunks)} total chunks")
         
         # Generate text embeddings
@@ -410,6 +432,7 @@ class HybridPDFIngestor:
                     'chunk_id': chunk.get('chunk_id'),
                     'char_start': chunk.get('char_start'),
                     'char_end': chunk.get('char_end'),
+                    'content_type': chunk.get('content_type', 'text_only'),  # FIX#2: Store content type
                 }
             )
             points.append(point)
@@ -445,13 +468,17 @@ class HybridPDFIngestor:
         
         print(f"✅ Successfully ingested '{filename}' into collection '{self.collection_name}'")
         
-        # Print collection info
-        collection_info = self.qdrant_client.get_collection(self.collection_name)
-        print(f"📊 Collection now has {collection_info.points_count} total points")
+        # Print collection info (with error handling for hybrid collections)
+        try:
+            collection_info = self.qdrant_client.get_collection(self.collection_name)
+            print(f"📊 Collection now has {collection_info.points_count} total points")
+        except Exception as e:
+            print(f"ℹ️  Could not fetch collection info (non-critical): {type(e).__name__}")
     
     def search(self, query: str, top_k: int = 5, search_mode: str = 'text'):
         """
         Search for similar chunks given a query.
+        Uses text-only search since visual content is already in text chunks.
         
         Args:
             query: Search query text
@@ -464,19 +491,26 @@ class HybridPDFIngestor:
         # Embed query as text
         query_vector = self.embedder.embed_text(query)
         
-        # Determine which vector to search
-        using_vector = 'text' if self.use_hybrid else None
-        
-        # Search
-        results = self.qdrant_client.query_points(
-            collection_name=self.collection_name,
-            query=query_vector,
-            limit=top_k,
-            with_payload=True,
-            using=using_vector
-        ).points
-        
-        return results
+        # Text-only search (visual content is in text chunks via Gemini descriptions)
+        try:
+            using_vector = 'text' if self.use_hybrid else None
+            results = self.qdrant_client.query_points(
+                collection_name=self.collection_name,
+                query=query_vector,
+                limit=top_k,
+                with_payload=True,
+                using=using_vector
+            ).points
+            return results
+        except Exception:
+            # Fallback: no named vector (for non-hybrid collections)
+            results = self.qdrant_client.query_points(
+                collection_name=self.collection_name,
+                query=query_vector,
+                limit=top_k,
+                with_payload=True
+            ).points
+            return results
 
 
 def main():
@@ -500,20 +534,24 @@ def main():
         ingestor = HybridPDFIngestor(use_hybrid=use_hybrid, always_use_gemini=always_use_gemini)
         ingestor.ingest_pdf(pdf_path)
         
-        # Test search
-        print("\n" + "="*60)
-        print("🔍 Testing search functionality...")
-        test_query = "What are the admission requirements?"
-        results = ingestor.search(test_query, top_k=3)
-        
-        print(f"\nQuery: '{test_query}'")
-        print(f"Found {len(results)} results:\n")
-        
-        for i, result in enumerate(results, 1):
-            print(f"Result {i} (score: {result.score:.3f}):")
-            print(f"  Page: {result.payload.get('page')}")
-            print(f"  Text: {result.payload.get('text')[:200]}...")
-            print()
+        # Test search (with error handling - non-critical)
+        try:
+            print("\n" + "="*60)
+            print("🔍 Testing search functionality...")
+            test_query = "What are the admission requirements?"
+            results = ingestor.search(test_query, top_k=3)
+            
+            print(f"\nQuery: '{test_query}'")
+            print(f"Found {len(results)} results:\n")
+            
+            for i, result in enumerate(results, 1):
+                print(f"Result {i} (score: {result.score:.3f}):")
+                print(f"  Page: {result.payload.get('page')}")
+                print(f"  Text: {result.payload.get('text')[:200]}...")
+                print()
+        except Exception as test_error:
+            print(f"ℹ️  Test search skipped (non-critical): {type(test_error).__name__}")
+            print("   Ingestion completed successfully. Use runner.py for queries.")
         
     except Exception as e:
         print(f"❌ Error during ingestion: {e}")
