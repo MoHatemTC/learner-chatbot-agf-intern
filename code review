@@ -1,0 +1,53 @@
+Code Review: Schedule Extractor & CrewAI Agent
+Reviewer: Raghad Saad
+Date: February 22, 2026
+Project: US Embassy Weekly Schedule Extractor & AI Summarizer
+Purpose: Automate PDF schedule extraction, Supabase storage, and AI-driven learner reminders.
+Executive Summary
+The core logic of this pipeline—connecting pdfplumber to Supabase and then into a CrewAI agent—is a great architectural start.
+ The Agents personality is well-defined. 
+ However, the current implementation has a few "Major" issues regarding database performance (N+1 problem) and redundant tool execution that will slow down the system as the PDF size grows.
+ 🔴 MAJOR ISSUES
+ Security & Environment Discipline
+ 1. Missing Environment Variable Validation * File: database_utils.py
+ Issue: The script uses os.environ.get("SUPABASE_URL") but doesnt check if the result is None before initializing the client.
+ Risk: If a teammate forgets to set up their .env correctly, the script will crash with a cryptic "AttributeError" much later in the execution.
+ Recommendation: Add a simple guard clause:Python
+ if not url or not key:
+    raise ValueError("Missing SUPABASE_URL or SUPABASE_KEY in .env file!")
+Software Engineering Discipline
+2. Inefficient Database Sync (Bulk Insert vs. Loops) * File: database_utils.py (lines 14-20)
+Issue: The code loops through items and calls .insert() for every single row.
+Impact: HIGH - If a PDF has 50 rows, that’s 50 separate API calls.
+This is slow and hits rate limits quickly.
+Recommendation: Use Supabases bulk insert capability:Python
+# Pass the entire list at once instead of looping
+supabase.table("schedule_data").insert(formatted_items_list).execute()
+3. Redundant Execution (Double Extraction) * File: Main Script
+Issue: The code extracts the PDF and saves it to the DB manually, then starts the CrewAI Agent and tells it to extract the PDF again using the tool.
+Impact: HIGH - Wastes LLM tokens and execution time.
+Recommendation: Either let the Agent handle the whole flow (Extract -> Save -> Summarize) or extract it once and pass the result to the Agent as context.
+4. Fragile Tool Invocation * File: Main Script
+Issue: Using extract_schedule_data._run(...) manually.
+Impact: MEDIUM - The ._run() method is an internal CrewAI implementation detail.
+Recommendation: Call the function directly extract_schedule_data(...) or let the Agent invoke it.
+🟡 MINOR ISSUESCode Quality Discipline
+5. Duplicate Imports & Code Organization *
+Issue: import os and load_dotenv appear multiple times across the script.
+Logic is floating in the global scope.
+Recommendation: Consolidate imports at the top and wrap the main logic in a def main(): block to prevent accidental execution during imports.
+6. PDF Table Header Edge Case * File: extractPDF.py
+Issue: table[1:] assumes every page has a header row. In multi-page PDFs, page 2 often starts with data immediately.
+Recommendation: Add a check to see if the first row actually contains header text before slicing.
+📊 Summary Statistics
+Category       MajorIssues     Minor Issues 
+Security          1              0
+Software Engineering 3           1
+Code Quality    0               2
+TOTAL            4            3
+🎯 Priority Recommendations
+Refactor Database Sync: Switch to bulk inserts to save the database from 100s of unnecessary API calls.
+Optimize Tool Flow: Remove the redundant manual extraction so the Agent and the script arent doing the same work twice.
+Validation: Add checks for all .env variables (Supabase & OpenAI) at the very start of the script.
+
+End of Review
