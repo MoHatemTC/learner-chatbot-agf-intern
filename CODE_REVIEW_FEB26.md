@@ -1,9 +1,7 @@
 # Code Review: Weekly Schedule Reminder System
 
-**Reviewer:** GitHub Copilot (AI Assistant)  
-**Date:** February 26, 2026  
-**Project:** US Embassy Weekly Schedule Extractor & AI Summarizer  
-**Codebase Version:** Current state as of Feb 26, 2026  
+**Reviewer:** Salman Ghanem 
+**Date:** February 26, 2026 
 
 ---
 
