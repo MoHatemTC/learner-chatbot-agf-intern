@@ -438,3 +438,9 @@ docker-compose logs qdrant
 See `requirements.txt` for complete dependency list with versions.
 
 ---
+
+# To evaluate the relevance of your code using the RAG testing system. 
+1- Add eval_with_ragas.py to VS Code
+2- Make sure your .ven has COLLECTION_NAME=Sprints_FQA_Collection
+3- In the terminal, run: pip install ragas datasets langchain-openai 
+4- Once completed, run: python eval_with_ragas.py
