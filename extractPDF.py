@@ -1,37 +1,54 @@
 import pdfplumber
+import os
 from crewai.tools import tool
 
 def extract_logic(pdf_path: str):
-    """The actual python logic to parse the PDF"""
-    schedule_items = []
+    """Loops through ALL pages to find ALL schedule tables."""
+    if not pdf_path or not os.path.exists(pdf_path):
+        return f"Error: File {pdf_path} not found."
+    
+    all_items = []
     try:
         with pdfplumber.open(pdf_path) as pdf:
-            for page in pdf.pages:
+            print(f"Scanning {len(pdf.pages)} pages...")
+            
+            for page_num, page in enumerate(pdf.pages):
                 table = page.extract_table()
-                if table:
-                    start_index = 0
-                    first_row_text = str(table[0][0]).lower() if table[0][0] else ""
-                    if "week" in first_row_text or "program" in first_row_text:
-                        start_index = 1
-                    
-                    for row in table[start_index:]:
-                        if row and len(row) >= 5:
-                            item = {
-                                "Week" : row[0] if row[0] else "N/A",
-                                "Program" : row[1] if row[1] else "N/A",
-                                "Module" : row[2] if row[2] else "N/A",
-                                "Topics" : row[3] if row[3] else "N/A",
-                                "Tasks" : row[4] if row[4] else "N/A"
-                            }
-                            schedule_items.append(item)
-        return schedule_items
+                if not table:
+                    continue
+                
+                # IMPROVEMENT: Smarter header detection (Salman's reliability fix)
+                first_row_str = str(table[0]).lower()
+                start_index = 1 if any(h in first_row_str for h in ["week", "program", "module"]) else 0
+                
+                rows_found = 0
+                for row in table[start_index:]:
+                    if row and any(row): 
+                        clean_row = [str(cell).replace('\n', ' ').strip() if cell else "N/A" for cell in row]
+                        
+                        # Pad row if columns are missing to prevent IndexError
+                        while len(clean_row) < 5:
+                            clean_row.append("N/A")
+
+                        all_items.append({
+                            "Week": clean_row[0],
+                            "Program": clean_row[1],
+                            "Module": clean_row[2],
+                            "Topics": clean_row[3],
+                            "Tasks": clean_row[4]
+                        })
+                        rows_found += 1
+                
+                print(f"Page {page_num + 1}: Found {rows_found} rows")
+
+        return all_items
     except Exception as e:
-        return f"Error processing PDF: {str(e)}"
+        return f"Error during extraction: {str(e)}"
 
 @tool("extract_schedule_data")
 def extract_schedule_data(pdf_path: str):
     """
-    Useful to extract schedule information from a PDF file. 
-    It parses tables and returns a list of weeks, programs, modules, topics, and tasks.
+    Mandatory docstring for CrewAI: Extracts table data from the PDF 
+    and returns a structured list of weeks and tasks.
     """
     return extract_logic(pdf_path)

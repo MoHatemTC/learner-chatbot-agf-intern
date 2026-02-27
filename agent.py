@@ -1,67 +1,59 @@
 import os
 from dotenv import load_dotenv
-from extractPDF import extract_logic, extract_schedule_data
+from extractPDF import extract_logic
+from database_utils import save_to_supabase, fetch_week_from_db
 from crewai import Agent, Task, Crew
-from database_utils import save_to_supabase
 
 def main():
     load_dotenv()
-    if not os.getenv("OPENAI_API_KEY"):
-        raise ValueError("OPENAI_API_KEY not found in .env file!")
+    target_file = os.getenv('PDF_PATH')
 
-    print(f"Current Directory: {os.getcwd()}")
-    print(f"Files in folder: {os.listdir('.')}")
+    print("--- 1. Data Pipeline: Extracting & Syncing ---")
+    data = extract_logic(target_file)
+    db_status = save_to_supabase(data)
+    print(db_status)
 
-    target_file = 'US Embassy - Weekly Schedule.pdf'
-    if not os.path.exists(target_file):
-        print(f" ERROR: {target_file} not found.")
+    # 2. Filtering Logic (Raghad's Requirement: Focus & Clarity)
+    print("\n" + "="*40)
+    selected_week = input("Enter the week to summarize (e.g., Week 1): ")
+    context_data = fetch_week_from_db(selected_week)
+    
+    if not context_data:
+        print(f"Warning: No data found in Supabase for {selected_week}.")
         return
-    
-    print("--- Starting Extraction & Sync ---")
-    
-    raw_data = extract_logic(target_file) 
-    
-    db_result = save_to_supabase(raw_data)
-    print(db_result)
 
-    share_schedule_agent = Agent(
-        role='Academic Success & Schedule Coordinator',
-        goal='Deliver upcoming session times and deadlines from the Program Plan accurately.',
-        backstory='''You are a supportive assistant for Sprints AI learners. 
-        You excel at turning complex PDF schedules into friendly, actionable reminders. 
-        Your mission is to ensure no learner ever misses a live session or a deadline.''',
+    student_helper = Agent(
+        role='Senior Academic Coordinator',
+        goal=f'Summarize {selected_week} into a clear, student-friendly announcement.',
+        backstory=(
+            'You are an expert at extracting the most important details from '
+            'complex schedules. You ensure students know exactly what to watch and what to submit.'
+        ),
         verbose=True,
-        allow_delegation=False
+        memory=True 
     )
 
-    share_schedule_task = Task(
-        description=f"""
-            Review the following schedule data extracted from the PDF:
-            {raw_data}
-
-            1. Identify the upcoming Week's sessions, topics, and deadlines.
-            2. Distinguish clearly between 'Recorded Videos' and 'Live Sessions'.
-            3. Create a clean, easy-to-read summary.
-        """,
-        expected_output="""
-            A friendly summary of the week's schedule including:
-            - Topic name
-            - Live session date/time
-            - Task deadline
-            - Expert name (if available)
-        """,
-        agent=share_schedule_agent, 
+    summary_task = Task(
+        description=(
+            f"Review the following data for {selected_week}: {context_data}. "
+            "Note: Some topics might be merged into the 'program' or 'module' text. "
+            "1. Create a bulleted list of topics for each program (extract them carefully). "
+            "2. List the specific Live Session dates and times clearly. "
+            "3. Identify any tasks or 'Calculate/Check' exercises mentioned. "
+            "Format this as a friendly 'Next Steps' announcement for a student Slack/Discord channel."
+        ),
+        expected_output="A professional Markdown announcement with bold headings, emojis, and clear bullet points.",
+        agent=student_helper
     )
 
-    crew = Crew(
-        agents=[share_schedule_agent],
-        tasks=[share_schedule_task],
-        verbose=True
-    )
-
-    print("\n--- Starting AI Summary ---")
+    crew = Crew(agents=[student_helper],
+                 tasks=[summary_task])
     result = crew.kickoff()
-    print("\nCHATBOT RESPONSE:\n", result)
+    
+    print("\n" + "*"*50)
+    print(f"FINAL OUTPUT FOR {selected_week}")
+    print("*"*50 + "\n")
+    print(result)
 
 if __name__ == "__main__":
     main()
