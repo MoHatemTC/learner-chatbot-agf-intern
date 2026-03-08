@@ -1,5 +1,9 @@
-crewai
-supabase
 python-dotenv
+supabase
+crewai
 pytz
-apscheduler
+datasets
+ragas
+langchain-openai
+openai
+pandas
