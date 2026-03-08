@@ -23,11 +23,6 @@ logging.basicConfig(
     handlers=[logging.StreamHandler(sys.stdout)]
 )
 
-# Use the provided keys
-SUPABASE_URL = "https://dycbxblpynlleliludfx.supabase.co"
-SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5Y2J4YmxweW5sbGVsaWx1ZGZ4Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MTE0MTM0OSwiZXhwIjoyMDg2NzE3MzQ5fQ.-bHnISZTqd7e_xox5ycUIhhBywZ5jODnZkm1Sll8upE"
-# API key is already in environment
-pass
 
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
