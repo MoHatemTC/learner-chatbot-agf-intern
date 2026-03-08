@@ -1,0 +1,22 @@
+================================================================================
+📊 EVALUATION RESULTS - 27-02-2026
+================================================================================
+
+📈 Overall Metrics:
+--------------------------------------------------------------------------------
+🎯 Faithfulness.................................... 1.0000
+✨ Answer Relevancy................................ 0.9817
+🔍 Context Precision............................... 1.0000
+📚 Context Recall.................................. 1.0000
+
+================================================================================
+
+📖 Score Interpretation:
+--------------------------------------------------------------------------------
+Faithfulness:      How well answers are grounded in source data (0-1, higher is better)
+Answer Relevancy:  How relevant answers are to questions (0-1, higher is better)
+Context Precision: Quality of retrieved context (0-1, higher is better)
+Context Recall:    Completeness of retrieved context (0-1, higher is better)
+
+✅ Good scores: > 0.7  |  ⚠️  Needs improvement: < 0.5
+================================================================================
