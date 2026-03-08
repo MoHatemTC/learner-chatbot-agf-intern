@@ -6,52 +6,70 @@ from crewai import Agent, Task, Crew
 
 def main():
     load_dotenv()
-    target_file = os.getenv('PDF_PATH')
 
-    print("--- 1. Data Pipeline: Extracting & Syncing ---")
-    data = extract_logic(target_file)
-    db_status = save_to_supabase(data)
-    print(db_status)
+    print("\n" + "="*45)
+    print("🚀 ACADEMIC COORDINATOR SYSTEM")
+    print("="*45)
 
-    # 2. Filtering Logic (Raghad's Requirement: Focus & Clarity)
-    print("\n" + "="*40)
-    selected_week = input("Enter the week to summarize (e.g., Week 1): ")
-    context_data = fetch_week_from_db(selected_week)
+    # --- PART 1: OPTIONAL EXTRACTION ---
+    refresh_db = input("Do you want to extract and update Supabase from the PDF? (y/n): ").lower()
+    if refresh_db == 'y':
+        target_file = os.getenv('PDF_PATH')
+        print(f"--- Extraction: Reading {target_file} ---")
+        data = extract_logic(target_file)
+        db_status = save_to_supabase(data)
+        print(db_status)
+    else:
+        print("--- Skipping Extraction: Using existing Supabase data ---")
+
+    # --- PART 2: COURSE & WEEK SELECTION ---
+    print("\nSelect the Course:")
+    print("1. Mobile Development")
+    print("2. AI/ML")
+    course_choice = input("Enter number (1 or 2): ")
+    
+    course_name = "Mobile Development" if course_choice == "1" else "AI/ML"
+
+    print("-" * 30)
+    # Based on your table, enter just the number (e.g., 3)
+    selected_week = input(f"Enter week number for {course_name} (e.g., 3): ")
+    
+    print(f"🔍 Querying: course_id={course_choice} AND week_number='{selected_week}'")
+    context_data = fetch_week_from_db(course_choice, selected_week)
     
     if not context_data:
-        print(f"Warning: No data found in Supabase for {selected_week}.")
+        print(f"❌ Error: No data found for {course_name} Week {selected_week}.")
         return
 
+    # --- PART 3: AGENT EXECUTION ---
     student_helper = Agent(
         role='Senior Academic Coordinator',
-        goal=f'Summarize {selected_week} into a clear, student-friendly announcement.',
+        goal=f'Summarize {selected_week} of {course_name} into a clear announcement.',
         backstory=(
-            'You are an expert at extracting the most important details from '
-            'complex schedules. You ensure students know exactly what to watch and what to submit.'
+            f'You are an expert at managing the {course_name} curriculum. '
+            'You turn complex schedule rows into friendly student updates.'
         ),
-        verbose=True,
-        memory=True 
+        verbose=True
     )
 
     summary_task = Task(
         description=(
-            f"Review the following data for {selected_week}: {context_data}. "
-            "Note: Some topics might be merged into the 'program' or 'module' text. "
-            "1. Create a bulleted list of topics for each program (extract them carefully). "
-            "2. List the specific Live Session dates and times clearly. "
-            "3. Identify any tasks or 'Calculate/Check' exercises mentioned. "
-            "Format this as a friendly 'Next Steps' announcement for a student Slack/Discord channel."
+            f"Review the following data for {course_name}, Week {selected_week}: {context_data}. "
+            "Use the fields: 'topic', 'session_date', 'session_time', 'expert_name', and 'zoom_link'. "
+            "1. List the specific topics for this course clearly. "
+            "2. Identify Live Session dates and times. "
+            "3. Include the expert name and zoom link if they are available. "
+            "Format this as a friendly Slack/Discord announcement with emojis."
         ),
-        expected_output="A professional Markdown announcement with bold headings, emojis, and clear bullet points.",
+        expected_output="A professional Markdown announcement with bold headings.",
         agent=student_helper
     )
 
-    crew = Crew(agents=[student_helper],
-                 tasks=[summary_task])
+    crew = Crew(agents=[student_helper], tasks=[summary_task])
     result = crew.kickoff()
     
     print("\n" + "*"*50)
-    print(f"FINAL OUTPUT FOR {selected_week}")
+    print(f"📢 FINAL OUTPUT FOR {course_name} - Week {selected_week}")
     print("*"*50 + "\n")
     print(result)
 
