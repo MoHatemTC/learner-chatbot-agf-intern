@@ -1,3 +1,14 @@
+# Secrets
 .env
+
+# Python artifacts
 __pycache__/
 *.pyc
+
+# Local Data/State
+sent_reminders.json
+evaluation_report.csv
+
+# Virtual Environments
+venv/
+env/
