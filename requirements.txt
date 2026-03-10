@@ -1,9 +1,14 @@
+# Environment & Utilities
 python-dotenv
-supabase
-crewai
 pytz
-datasets
-ragas
-langchain-openai
-openai
+requests
 pandas
+
+# Database
+supabase
+
+# AI & Orchestration
+crewai
+openai
+langchain-openai
+
