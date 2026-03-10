@@ -3,23 +3,13 @@ import logging
 import json
 import sys
 import pytz
-from typing import Set, List, Dict
+import requests
+from typing import Set, List, Dict, Optional
 from datetime import datetime
-
-# New import for environment variables
 from dotenv import load_dotenv
-
 from supabase import create_client, Client
 from crewai import Agent, Task, Crew, LLM
 from crewai.tools import tool
-
-from datasets import Dataset
-from ragas import evaluate
-from ragas.llms import llm_factory
-from ragas.metrics import Faithfulness, AnswerRelevancy, ContextPrecision, ContextRecall
-
-from langchain_openai import OpenAIEmbeddings as LangchainOpenAIEmbeddings
-from openai import OpenAI
 
 # ---------------------------------------------------
 # 0. LOAD ENVIRONMENT VARIABLES
@@ -71,7 +61,38 @@ def save_sent_id(session_id: int):
 
 
 # ---------------------------------------------------
-# 3. TOOL
+# 3. CIRCLE HELPER
+# ---------------------------------------------------
+
+def get_circle_member_token(email: str) -> Optional[str]:
+    """Get a dynamic JWT token for a member using the Headless Auth Token."""
+    auth_url = "https://app.circle.so/api/v1/headless/auth_token"
+    headless_auth_token = os.getenv("CIRCLE_HEADLESS_AUTH_TOKEN")
+    
+    if not headless_auth_token:
+        logging.error("CIRCLE_HEADLESS_AUTH_TOKEN not found in environment.")
+        return None
+
+    try:
+        response = requests.post(
+            auth_url,
+            headers={
+                "Authorization": f"Bearer {headless_auth_token}",
+                "Content-Type": "application/json"
+            },
+            json={"email": email}
+        )
+        if response.status_code == 200:
+            return response.json().get("access_token")
+        else:
+            logging.error(f"Circle Auth Error: {response.status_code} - {response.text}")
+            return None
+    except Exception as e:
+        logging.error(f"Circle Auth Exception: {e}")
+        return None
+
+# ---------------------------------------------------
+# 4. TOOL
 # ---------------------------------------------------
 
 @tool("Circle_Post_Tool")
@@ -80,123 +101,117 @@ def circle_post_tool(reminder_text: str, session_id: int) -> str:
 
     logging.info(f"🚀 Pushing Reminder to Circle for ID: {session_id}")
 
-    print(f"\n📢 FINAL POST:\n{reminder_text}\n")
+    # Circle Configuration from .env
+    room_uuid = os.getenv("CIRCLE_CHAT_ROOM_UUID")
+    bot_email = os.getenv("CIRCLE_BOT_EMAIL")
+    enabled = os.getenv("CIRCLE_ENABLED", "true").lower() == "true"
 
-    save_sent_id(session_id)
+    if not enabled:
+        logging.info("Circle posting is disabled.")
+        return "Circle posting is disabled."
 
-    return "Successfully posted."
+    if not room_uuid or not bot_email:
+        logging.error("Missing Circle configuration (room_uuid or bot_email).")
+        return "Missing Circle configuration."
 
+    # Get dynamic token
+    token = get_circle_member_token(bot_email)
+    if not token:
+        return "Failed to authenticate with Circle."
 
-# ---------------------------------------------------
-# 4. RAGAS EVALUATION
-# ---------------------------------------------------
-
-def run_ragas_evaluation(evaluation_data: List[Dict]):
-
-    if not evaluation_data:
-        print("No data found for evaluation.")
-        return
-
-    openai_client = OpenAI(api_key=OPENAI_API_KEY)
-
-    ragas_llm = llm_factory(
-        "gpt-4o-mini",
-        client=openai_client
-    )
-
-    ragas_embeddings = LangchainOpenAIEmbeddings(
-        model="text-embedding-3-small",
-        openai_api_key=OPENAI_API_KEY
-    )
-
-    dataset_dict = {
-        "question": [item["question"] for item in evaluation_data],
-        "contexts": [[item["contexts"][0]] for item in evaluation_data],
-        "answer": [item["answer"] for item in evaluation_data],
-        "ground_truth": [item["ground_truth"] for item in evaluation_data],
+    url = f"https://app.circle.so/api/headless/v1/messages/{room_uuid}/chat_room_messages"
+    
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Content-Type": "application/json"
+    }
+    
+    # Using the rich_text_body structure required by the Headless V1 API
+    payload = {
+        "rich_text_body": {
+            "body": {
+                "type": "doc",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": reminder_text
+                            }
+                        ]
+                    }
+                ]
+            },
+            "circle_ios_fallback_text": reminder_text,
+            "attachments": [],
+            "inline_attachments": [],
+            "sgids_to_object_map": {},
+            "format": "chat",
+        }
     }
 
-    hf_dataset = Dataset.from_dict(dataset_dict)
-
-    print("\nStarting Ragas Evaluation...")
-
-    result = evaluate(
-        hf_dataset,
-        metrics=[
-            Faithfulness(),
-            AnswerRelevancy(),
-            ContextPrecision(),
-            ContextRecall()
-        ],
-        llm=ragas_llm,
-        embeddings=ragas_embeddings
-    )
-
-    print("\n--- Ragas Evaluation Results ---")
-    print(result)
-
-    df = result.to_pandas()
-    df.to_csv("evaluation_report.csv", index=False)
-
-    print("\nDetailed report saved to evaluation_report.csv")
+    try:
+        response = requests.post(url, headers=headers, json=payload)
+        # Status 201 or 202 are considered successful for message creation
+        if response.status_code in [201, 202]:
+            logging.info(f"✅ Successfully posted to Circle for session {session_id}")
+            save_sent_id(session_id)
+            return "Successfully posted to Circle."
+        else:
+            logging.error(f"❌ Failed to post to Circle: {response.status_code} - {response.text}")
+            return f"Failed to post to Circle: {response.status_code}"
+    except Exception as e:
+        logging.error(f"❌ Error posting to Circle: {e}")
+        return f"Error posting to Circle: {str(e)}"
 
 
 # ---------------------------------------------------
 # 5. CORE LOGIC
 # ---------------------------------------------------
 
-def fetch_data_from_supabase() -> List[Dict]:
-
+def run_reminder_pipeline():
+    """Main function to fetch schedule and post reminders."""
     supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
     now_cairo = datetime.now(CAIRO_TZ)
     today_cairo = now_cairo.strftime("%Y-%m-%d")
 
-    logging.info(f"Checking Supabase for: {today_cairo}")
+    logging.info(f"Checking Supabase for sessions on: {today_cairo}")
 
     try:
         res = supabase.table("schedule").select("*").eq("session_date", today_cairo).execute()
     except Exception as e:
         logging.error(f"DB Error: {e}")
-        return []
+        return
 
     sent_ids = load_sent_ids()
-
     upcoming = [s for s in res.data if s["id"] not in sent_ids]
 
     if not upcoming:
-        logging.info("⏭️ No new sessions.")
-        return []
-
-    evaluation_data = []
+        logging.info("⏭️ No new sessions to process.")
+        return
 
     crew_llm = LLM(model="gpt-4o-mini")
 
     coordinator = Agent(
         role="Strict Data Formatter",
         goal="Convert database rows to factual reminders. No filler.",
-        backstory="Automated reminder pipeline.",
+        backstory="Automated reminder pipeline for the Sprints internship program.",
         tools=[circle_post_tool],
         verbose=True,
         llm=crew_llm
     )
 
     for session in upcoming:
-
         session_id = session["id"]
-
         time_str = session["session_time"].strip()
         date_str = str(session["session_date"])
 
-        naive_dt = datetime.strptime(
-            f"{date_str} {time_str}",
-            "%Y-%m-%d %I:%M %p"
-        )
-
+        # Convert to datetime for timezone adjustment
+        naive_dt = datetime.strptime(f"{date_str} {time_str}", "%Y-%m-%d %I:%M %p")
         session_cairo = CAIRO_TZ.localize(naive_dt)
-
         session_uae = session_cairo.astimezone(UAE_TZ)
-
         uae_time_str = session_uae.strftime("%I:%M %p")
 
         factual_data = (
@@ -208,8 +223,8 @@ def fetch_data_from_supabase() -> List[Dict]:
         )
 
         task = Task(
-            description=f"Draft reminder using ONLY these facts:\n{factual_data}",
-            expected_output="A list of the session facts provided.",
+            description=f"Draft and post a reminder using ONLY these facts for session {session_id}:\n{factual_data}",
+            expected_output="Confirmation of the reminder being successfully sent to Circle.",
             agent=coordinator
         )
 
@@ -218,17 +233,8 @@ def fetch_data_from_supabase() -> List[Dict]:
             tasks=[task]
         )
 
-        result = str(crew.kickoff())
-
-        evaluation_data.append({
-            "question": f"What are the specific details for the session on {session.get('topic')}?",
-            "contexts": [factual_data],
-            "answer": result,
-            "ground_truth": factual_data
-        })
-
-    return evaluation_data
-
+        # Kickoff the crew to process the session and use the tool
+        crew.kickoff()
 
 # ---------------------------------------------------
 # 6. MAIN
@@ -236,11 +242,5 @@ def fetch_data_from_supabase() -> List[Dict]:
 
 if __name__ == "__main__":
 
-    # Note: Removing state file on start for a fresh run
-    if os.path.exists(STATE_FILE):
-        os.remove(STATE_FILE)
 
-    eval_data = fetch_data_from_supabase()
-
-    if eval_data:
-        run_ragas_evaluation(eval_data)
+    run_reminder_pipeline()
