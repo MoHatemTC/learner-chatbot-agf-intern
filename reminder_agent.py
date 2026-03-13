@@ -20,7 +20,8 @@ from circle_integration import CircleClient
 # ---------------------------------------------------
 # 0. CONFIG & ENVIRONMENT
 # ---------------------------------------------------
-
+# Allow Docker (or local dev) to specify where .env.circle lives.
+# Defaults to a local .env.circle in the project root.
 env_path = os.getenv("ENV_FILE_PATH", ".env.circle")
 load_dotenv(env_path)
 
