@@ -1,0 +1,11 @@
+services:
+  learner-bot:
+    build: .
+    container_name: learner-chatbot-agf-intern
+    environment:
+      DATA_DIR: /app/data
+      PYTHONUNBUFFERED: "1"
+    volumes:
+      - ./data:/app/data
+      - ./.env.circle:/app/.env.circle:ro # Mount it here instead
+    restart: unless-stopped
