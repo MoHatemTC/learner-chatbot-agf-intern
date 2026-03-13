@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+supabase
+openai
+python-dotenv
+httpx
+aiohttp
+psycopg
+pandas
+requests
+PyJWT
