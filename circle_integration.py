@@ -3,12 +3,12 @@ import json
 import logging
 import os
 import re
+import asyncio
 from typing import Optional, Dict, Any, List
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-
-import aiohttp
 from dotenv import load_dotenv
+import aiohttp
 
 load_dotenv()
 
@@ -21,7 +21,6 @@ Path(DATA_DIR).mkdir(parents=True, exist_ok=True)
 CHAT_MEMBERS_FILE = os.path.join(DATA_DIR, "chat_members.json")
 CHAT_MEMBERS_SGID_FILE = os.path.join(DATA_DIR, "chat_members_SGID.json")
 
-
 class CircleClient:
     def __init__(self):
         self.auth_url = "https://app.circle.so/api/v1/headless/auth_token"
@@ -30,37 +29,32 @@ class CircleClient:
         self.headless_auth_token = os.getenv("CIRCLE_HEADLESS_AUTH_TOKEN")
         self.admin_v2_token = os.getenv("CIRCLE_ADMIN_V2_TOKEN")
         self.community_id = os.getenv("CIRCLE_COMMUNITY_ID")
-        # Cache: {email: {token, expires_at, refresh_token}}
-        self.token_cache: Dict[str, Dict[str, Any]] = {}
-
+        self.token_cache = {}  # Cache: {email: {token, expires_at, refresh_token}}
+    
     def _is_token_expired(self, email: str) -> bool:
-        """Check if cached token is expired or will expire soon."""
+        """Check if cached token is expired or will expire soon"""
         if email not in self.token_cache:
             return True
-
+        
         expires_at = self.token_cache[email].get("expires_at")
         if not expires_at:
             return True
-
+        
         # Refresh if expires in less than 5 minutes
-        return datetime.fromisoformat(expires_at.replace("Z", "+00:00")) < datetime.now(
-            timezone.utc
-        ) + timedelta(minutes=5)
-
+        return datetime.fromisoformat(expires_at.replace('Z', '+00:00')) < datetime.now(timezone.utc) + timedelta(minutes=5)
+    
     async def get_member_token(self, email: str) -> str:
-        """Get or refresh JWT token for a member."""
+        """Get or refresh JWT token for a member"""
         if not self._is_token_expired(email):
             return self.token_cache[email]["access_token"]
-
+        
         # If we have a refresh token, try to use it
         if email in self.token_cache and self.token_cache[email].get("refresh_token"):
             try:
                 return await self.refresh_token(email)
             except Exception as e:
-                logger.warning(
-                    f"Token refresh failed for {email}, getting new token: {e}"
-                )
-
+                logger.warning(f"Token refresh failed for {email}, getting new token: {e}")
+        
         # Get new token
         async with httpx.AsyncClient(timeout=30.0) as client:
             try:
@@ -68,61 +62,54 @@ class CircleClient:
                     self.auth_url,
                     headers={
                         "Authorization": f"Bearer {self.headless_auth_token}",
-                        "Content-Type": "application/json",
+                        "Content-Type": "application/json"
                     },
-                    json={"email": email},
+                    json={"email": email}
                 )
                 response.raise_for_status()
                 data = response.json()
-
+                
                 # Cache the token
                 self.token_cache[email] = {
                     "access_token": data["access_token"],
                     "refresh_token": data.get("refresh_token"),
                     "expires_at": data.get("access_token_expires_at"),
-                    "community_member_id": data.get("community_member_id"),
+                    "community_member_id": data.get("community_member_id")
                 }
-                logger.debug(
-                    f"✅ Cached token for {email}, member_id: {data.get('community_member_id')}"
-                )
+                logger.debug(f"✅ Cached token for {email}, member_id: {data.get('community_member_id')}")
 
                 return data["access_token"]
             except httpx.HTTPError as e:
                 logger.error(f"Failed to get token for {email}: {e}")
                 raise
-
+    
     async def refresh_token(self, email: str) -> str:
-        """Refresh an expired token."""
-        if (
-            email not in self.token_cache
-            or not self.token_cache[email].get("refresh_token")
-        ):
+        """Refresh an expired token"""
+        if email not in self.token_cache or not self.token_cache[email].get("refresh_token"):
             raise ValueError("No refresh token available")
-
+        
         refresh_token = self.token_cache[email]["refresh_token"]
-
+        
         async with httpx.AsyncClient(timeout=30.0) as client:
             try:
                 response = await client.post(
                     f"{self.auth_url}/refresh",
                     headers={
                         "Authorization": f"Bearer {self.headless_auth_token}",
-                        "Content-Type": "application/json",
+                        "Content-Type": "application/json"
                     },
-                    json={"refresh_token": refresh_token},
+                    json={"refresh_token": refresh_token}
                 )
                 response.raise_for_status()
                 data = response.json()
-
+                
                 # Update cache
-                self.token_cache[email].update(
-                    {
-                        "access_token": data["access_token"],
-                        "refresh_token": data.get("refresh_token"),
-                        "expires_at": data.get("access_token_expires_at"),
-                    }
-                )
-
+                self.token_cache[email].update({
+                    "access_token": data["access_token"],
+                    "refresh_token": data.get("refresh_token"),
+                    "expires_at": data.get("access_token_expires_at")
+                })
+                
                 return data["access_token"]
             except httpx.HTTPError as e:
                 logger.error(f"Failed to refresh token for {email}: {e}")
@@ -153,9 +140,7 @@ class CircleClient:
             logger.error(f"❌ Unexpected error fetching unread chat threads: {e}")
             return []
 
-    async def get_chat_thread_details(
-        self, member_email: str, thread_id: int
-    ) -> Optional[Dict]:
+    async def get_chat_thread_details(self, member_email: str, thread_id: int) -> Optional[Dict]:
         """Fetch the parent message and all replies in a specific chat thread."""
         token = await self.get_member_token(member_email)
         url = f"{self.member_api_base}/chat_threads/{thread_id}"
@@ -170,9 +155,7 @@ class CircleClient:
                 )
                 r.raise_for_status()
                 thread_data = r.json()
-                logger.info(
-                    f"💬 Retrieved thread {thread_id} with {len(thread_data.get('replies', []))} replies."
-                )
+                logger.info(f"💬 Retrieved thread {thread_id} with {len(thread_data.get('replies', []))} replies.")
                 return thread_data
         except httpx.HTTPError as e:
             logger.error(f"❌ Failed to fetch thread {thread_id}: {e}")
@@ -181,15 +164,12 @@ class CircleClient:
             logger.error(f"❌ Unexpected error fetching thread {thread_id}: {e}")
             return None
 
-    async def get_chat_room_participants(
-        self, member_email: str, chat_room_uuid: str, page: int = 1, per_page: int = 50
-    ) -> Dict:
+    async def get_chat_room_participants(self, member_email: str, chat_room_uuid: str,
+                                         page: int = 1, per_page: int = 50) -> Dict:
         """Fetch all participants in a Circle chat room and save them locally."""
         token = await self.get_member_token(member_email)
-        url = (
-            f"{self.member_api_base}/messages/{chat_room_uuid}/chat_room_participants"
-        )
-        all_records: List[Dict[str, Any]] = []
+        url = f"{self.member_api_base}/messages/{chat_room_uuid}/chat_room_participants"
+        all_records = []
         has_next = True
         while has_next:
             async with httpx.AsyncClient(timeout=30.0) as client:
@@ -212,17 +192,13 @@ class CircleClient:
         logger.info(f"✅ Saved {len(all_records)} chat room participants.")
         return {"records": all_records}
 
-    async def get_chat_room_messages(
-        self,
-        member_email: str,
-        chat_room_uuid: str,
-        last_message_id: Optional[int] = None,
-        next_per_page: int = 20,
-    ) -> Dict:
+    async def get_chat_room_messages(self, member_email: str, chat_room_uuid: str,
+                                     last_message_id: Optional[int] = None,
+                                     next_per_page: int = 20) -> Dict:
         """Fetch chat messages newer than a given ID."""
         token = await self.get_member_token(member_email)
         url = f"{self.member_api_base}/messages/{chat_room_uuid}/chat_room_messages"
-        params: Dict[str, Any] = {"next_per_page": next_per_page}
+        params = {"next_per_page": next_per_page}
         if last_message_id:
             params["id"] = last_message_id
         async with httpx.AsyncClient(timeout=30.0) as client:
@@ -237,26 +213,47 @@ class CircleClient:
             r.raise_for_status()
             return r.json()
 
+    async def get_message_comments(
+        self,
+        member_email: str,
+        message_id: int,
+        last_comment_id: Optional[int] = None,
+        next_per_page: int = 20,
+    ) -> Dict:
+        """Fetch comments for a given message newer than a given comment ID."""
+        token = await self.get_member_token(member_email)
+        url = f"{self.member_api_base}/messages/{message_id}/comments"
+        params: Dict[str, Any] = {"next_per_page": next_per_page}
+        if last_comment_id:
+            params["id"] = last_comment_id
+        async with httpx.AsyncClient(timeout=30.0) as client:
+            r = await client.get(
+                url,
+                headers={
+                    "Authorization": f"Bearer {token}",
+                    "Content-Type": "application/json",
+                },
+                params=params,
+            )
+            r.raise_for_status()
+            return r.json()
+    
     async def get_member_attachable_sgid(self, email: str):
         """Retrieves and caches the SGID for a Circle member."""
         cache_file = CHAT_MEMBERS_SGID_FILE
-        cache: Dict[str, Any] = {}
+        cache = {}
 
         if os.path.exists(cache_file):
             try:
                 with open(cache_file, "r", encoding="utf-8") as f:
                     cache = json.load(f)
             except json.JSONDecodeError:
-                logging.warning(
-                    "⚠️ Corrupted chat_members_SGID.json — resetting cache."
-                )
+                logging.warning("⚠️ Corrupted chat_members_SGID.json — resetting cache.")
                 cache = {}
 
         if email in cache and "sgid" in cache[email]:
-            logging.info(
-                f"🔁 Using cached SGID for {email}: {cache[email].get('sgid')}"
-            )
-            return cache[email].get("sgid")
+            logging.info(f"🔁 Using cached SGID for {email}: {cache[email]['sgid']}")
+            return cache[email]["sgid"]
 
         url = f"{self.admin_v2_api_base}/advanced_search?query={email}&search_type=members"
         headers = {"Authorization": f"Token {self.admin_v2_token}"}
@@ -265,9 +262,7 @@ class CircleClient:
             async with session.get(url, headers=headers) as response:
                 if response.status != 200:
                     text = await response.text()
-                    logging.error(
-                        f"❌ Failed to fetch SGID for {email}: {response.status} - {text}"
-                    )
+                    logging.error(f"❌ Failed to fetch SGID for {email}: {response.status} - {text}")
                     return None
                 data = await response.json()
                 if data.get("records"):
@@ -297,7 +292,7 @@ class CircleClient:
         url = f"{self.member_api_base}/messages/{chat_room_uuid}/chat_room_messages"
 
         def markdown_to_tiptap(text: str):
-            content_blocks: List[Dict[str, Any]] = []
+            content_blocks = []
             lines = text.split("\n")
             for line in lines:
                 line = line.strip()
@@ -309,15 +304,12 @@ class CircleClient:
                 link_pattern = r"\[([^\]]+)\]\(([^)]+)\)"
                 matches = list(re.finditer(link_pattern, text_part))
                 if matches:
-                    segments: List[Dict[str, Any]] = []
+                    segments = []
                     last_idx = 0
                     for m in matches:
                         if m.start() > last_idx:
                             segments.append(
-                                {
-                                    "type": "text",
-                                    "text": text_part[last_idx : m.start()],
-                                }
+                                {"type": "text", "text": text_part[last_idx : m.start()]}
                             )
                         label = m.group(1).replace("**", "")
                         url = m.group(2)
@@ -338,7 +330,7 @@ class CircleClient:
                         segments.append({"type": "text", "text": text_part[last_idx:]})
                     content_blocks.append({"type": "paragraph", "content": segments})
                     continue
-                bold_segments: List[Dict[str, Any]] = []
+                bold_segments = []
                 while "**" in text_part:
                     parts = text_part.split("**", 2)
                     if len(parts) == 3:
@@ -360,8 +352,8 @@ class CircleClient:
                 content_blocks.append({"type": "paragraph", "content": bold_segments})
             return content_blocks
 
-        mention_block: List[Dict[str, Any]] = []
-        sgids_to_object_map: Dict[str, Any] = {}
+        mention_block = []
+        sgids_to_object_map = {}
         if mention_sgid:
             mention_block = [
                 {
@@ -382,13 +374,7 @@ class CircleClient:
                     "content": [
                         {
                             "type": "paragraph",
-                            "content": mention_block
-                            + [
-                                {
-                                    "type": "text",
-                                    "text": " ",
-                                }
-                            ],
+                            "content": mention_block + [{"type": "text", "text": " "}],
                         }
                     ]
                     + formatted_blocks,
