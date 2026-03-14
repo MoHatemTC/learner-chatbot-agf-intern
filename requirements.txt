@@ -27,3 +27,9 @@ PyMuPDF>=1.23.0  # Used by: ingest.py, ingest_hybrid.py, chunking.py
 # Used by: multimodal_embedder.py, ingest_hybrid.py
 google-generativeai~=0.3.2
 
+# ── Stage 2: Circle Integration ──────────────────────────────────────────────
+# The following packages were added in Stage 2 to support circle_integration.py.
+# Stage 1 (core pipeline) did not require any HTTP client libraries.
+httpx>=0.27.0       # Sync/async HTTP client (CircleClient API calls)
+aiohttp>=3.9.0      # Async HTTP client (admin v2 API / SGID lookup)
+

@@ -1,3 +1,16 @@
+# ══════════════════════════════════════════════════════════════
+# Stage 3 — Dockerization
+# ══════════════════════════════════════════════════════════════
+# This file is the Stage 3 addition to the project.
+# Stage 1 (core pipeline): this file previously contained only the
+#   Qdrant service used for local development.
+# Stage 2 (Circle integration): circle_integration.py was added;
+#   a .env with CIRCLE_* variables is required.
+# Stage 3 (Dockerization): the fqa_bot service was added here,
+#   a Dockerfile was created, and the Qdrant service gained a
+#   health-check so the bot waits for the DB to be ready.
+# ══════════════════════════════════════════════════════════════
+
 # FIX#11: Removed obsolete 'version' field (Docker Compose v2+ ignores it)
 
 services:
@@ -14,11 +27,52 @@ services:
     environment:
       - QDRANT__SERVICE__GRPC_PORT=6334
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:6333/readyz"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
-# Usage:
-# Start: docker-compose up -d
-# Stop: docker-compose down
-# View logs: docker-compose logs -f
+  fqa_bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # Loads all variables from .env automatically; only the keys listed under
+    # 'environment' are forwarded into the container.
+    env_file:
+      - .env
+    environment:
+      # Qdrant — point the bot at the sibling container, not localhost
+      - QDRANT_MODE=local
+      - QDRANT_URL=http://qdrant:6333
+      # DATA_DIR is set in the Dockerfile; override here if needed
+      - DATA_DIR=/app/data
+    volumes:
+      # Persist bot state and Circle debug logs across restarts
+      - ./data:/app/data
+    depends_on:
+      qdrant:
+        condition: service_healthy
+    restart: unless-stopped
+
+# ── Usage ──────────────────────────────────────────────────────────────────────
+# Start full stack (Qdrant + Circle bot):
+#   docker-compose up -d
+#
+# Start Qdrant only (for local CLI development):
+#   docker-compose up -d qdrant
+#
+# Run ingestion (one-off):
+#   docker-compose run --rm fqa_bot python ingest_hybrid.py "ACC FAQs.pdf" --always-gemini
+#
+# Run interactive CLI:
+#   docker-compose run --rm fqa_bot python runner.py
+#
+# View bot logs:
+#   docker-compose logs -f fqa_bot
+#
+# Stop everything:
+#   docker-compose down
 #
 # FIX#6: To upgrade Qdrant, update the version tag above and run:
 #   docker-compose pull && docker-compose up -d

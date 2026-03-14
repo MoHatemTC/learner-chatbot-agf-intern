@@ -1,6 +1,6 @@
 # FAQ Bot - Hybrid PDF Ingestion & Retrieval System
 
-A production-ready PDF ingestion and retrieval system that combines text and visual understanding for comprehensive document processing. Built with PyMuPDF, OpenAI, Google Gemini Vision, and Qdrant vector database.
+A production-ready FAQ chatbot for Sprints/American Center Cairo students. Combines PDF ingestion with a multi-agent retrieval pipeline and live Circle.so chat integration. Built with PyMuPDF, OpenAI, Google Gemini Vision, Qdrant, CrewAI, and aiohttp/httpx.
 
 ## ✨ Features
 
@@ -9,6 +9,7 @@ A production-ready PDF ingestion and retrieval system that combines text and vis
 - **Optimized Performance**: Single-pass page rendering reused for both OCR and embeddings
 - **Flexible Search**: Named vectors in Qdrant for precise text or image-based retrieval
 - **CrewAI Integration**: Multi-agent workflow for context analysis and answer generation
+- **Circle.so Live Bot**: Real-time polling of Circle chat rooms — reads student messages, answers them, and posts replies with @mention and thread-reply support
 
 ## 🏗️ Architecture
 
@@ -26,6 +27,16 @@ PDF Document
 ```
 
 **Fallback Logic**: If Gemini Vision fails, system gracefully falls back to PyMuPDF text extraction.
+
+**Circle.so Bot Flow**:
+```
+Circle Chat Room
+    └── CircleBotRunner (polls every 15 s)
+            ├── Fetch new messages (TipTap JSON → plain text)
+            ├── Skip thread-replies and the bot's own messages
+            ├── Call ChatbotRunner.answer_question() (Qdrant + CrewAI)
+            └── Post answer back with @mention + in-thread reply
+```
 
 ## 📦 Installation
 
@@ -64,6 +75,29 @@ EMBEDDING_MODEL=text-embedding-3-small
 CHUNK_SIZE=1000
 CHUNK_OVERLAP=200
 TOP_K=7
+SCORE_THRESHOLD=0.3   # Lower = more lenient, Higher = stricter
+
+# ── Circle.so Bot (required only when running circle_integration.py) ──────────
+# Set CIRCLE_ENABLED=true to activate the polling bot.
+CIRCLE_ENABLED=false
+
+# Headless API auth token (Community Settings → API → Headless Auth Token)
+CIRCLE_HEADLESS_AUTH_TOKEN=your_headless_auth_token
+
+# Admin v2 API token (Community Settings → API → Admin API Token v2)
+CIRCLE_ADMIN_V2_TOKEN=your_admin_v2_token
+
+# Email address of the bot's Circle account (used to authenticate as the bot)
+CIRCLE_BOT_EMAIL=bot@example.com
+
+# UUID of the chat room the bot should monitor
+# Find it in the Circle chat room URL: /c/{uuid}/messages
+CIRCLE_CHAT_ROOM_UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+
+# Optional overrides (defaults shown)
+# CIRCLE_AUTH_URL=https://app.circle.so/api/v1/headless/auth_token
+# CIRCLE_MEMBER_API_BASE=https://app.circle.so/api/headless/v1
+# DATA_DIR=./data    # Storage path for bot_state.json and member caches
 ```
 
 **Get API Keys:**
@@ -72,7 +106,7 @@ TOP_K=7
 
 ### 3. Start Qdrant Vector Database if running Quadrant Locally
 ```bash
-docker-compose up -d
+docker-compose up -d qdrant
 ```
 
 Verify Qdrant is running at: http://localhost:6333/dashboard
@@ -110,6 +144,19 @@ python runner.py
 
 Interactive CLI for testing queries against the ingested PDF.
 
+### Run Circle.so Bot
+```bash
+# Make sure CIRCLE_ENABLED=true and all CIRCLE_* vars are set in .env
+python circle_integration.py
+```
+
+The bot will:
+1. Authenticate with Circle using your bot email
+2. Bookmark all existing messages on first run (so old messages are not replayed)
+3. Poll the chat room every 15 seconds for new messages
+4. Answer each new message using the Qdrant + CrewAI pipeline
+5. Post the answer back with an @mention of the sender, as a thread reply
+
 ## 📁 Project Structure
 
 ```
@@ -121,11 +168,14 @@ fqa_bot/
 ├── qdrant_utils.py            # Qdrant database operations
 ├── agents.py                  # CrewAI agent definitions
 ├── tasks.py                   # CrewAI task definitions
-├── runner.py                  # CLI chatbot runner
+├── runner.py                  # CLI chatbot runner + ChatbotRunner class
+├── circle_integration.py      # Circle.so live chat bot (CircleClient + CircleBotRunner)
+├── eval_with_ragas.py         # RAGAS-based retrieval evaluation
 ├── requirements.txt           # Full dependencies
 ├── requirements_hybrid.txt    # Minimal ingestion-only deps
-├── docker-compose.yml         # Qdrant setup
-└── .env                       # API keys (not in git)
+├── Dockerfile                 # Container image for the bot service
+├── docker-compose.yml         # Full stack (Qdrant + fqa_bot)
+└── .env                       # API keys and config (not in git)
 ```
 
 ## 🔧 Configuration Options
@@ -179,7 +229,98 @@ ingestor = HybridPDFIngestor(
 
 Both stored as named vectors in same Qdrant collection for hybrid search capability.
 
-## � Code Review Fixes (18 Feb 2026)
+---
+
+## 🌐 Circle.so Integration
+
+`circle_integration.py` connects the FAQ bot to a live [Circle.so](https://circle.so) community chat room.
+
+### Components
+
+| Class | Purpose |
+|-------|---------|
+| `CircleClient` | Low-level HTTP client — authenticates as any member via headless API, fetches/posts chat messages, handles JWT caching and automatic refresh, resolves member SGIDs for @mentions |
+| `CircleBotRunner` | High-level polling loop — calls `CircleClient` + `ChatbotRunner` to answer student questions in real time |
+
+### How `CircleBotRunner` works
+
+1. **Authentication** — obtains a JWT for the bot account; token is cached in memory and refreshed when it expires within 5 minutes.
+2. **Message ingestion** — calls `GET /messages/{uuid}/chat_room_messages` every 15 seconds and decodes the TipTap rich-text JSON into plain text.
+3. **Deduplication** — skips thread-replies (messages with `parent_message_id`), the bot's own messages (matched by `community_member_id`), and any message ID already in the persisted `processed_ids` set.
+4. **First-run bookmark** — on the very first startup (no saved state) all existing messages are bookmarked without being answered, preventing the bot from replaying old conversations.
+5. **Answer generation** — calls `ChatbotRunner.answer_question()` in a thread pool (`asyncio.to_thread`) so the async event loop is not blocked.
+6. **Reply** — posts back using the TipTap-formatted `rich_text_body`, @mentioning the original sender and attaching the reply as a thread reply to the question message.
+7. **State persistence** — saves `last_message_id` and a rolling window of the 500 most-recent `processed_ids` to `data/bot_state.json`.
+
+### Message format helpers
+
+| Function | Purpose |
+|----------|---------|
+| `tiptap_to_text(node)` | Recursively extracts plain text from TipTap document JSON (handles text, mention, hardBreak, paragraph nodes) |
+| `_markdown_to_tiptap(text)` | Converts Markdown (bold `**text**`, links `[label](url)`, line-breaks) back into TipTap paragraph block objects for outgoing messages |
+
+### Required environment variables (Circle)
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `CIRCLE_ENABLED` | ✅ | `false` | Set to `true` to activate the bot |
+| `CIRCLE_HEADLESS_AUTH_TOKEN` | ✅ | — | Community headless auth token |
+| `CIRCLE_ADMIN_V2_TOKEN` | ✅ | — | Admin v2 API token (for SGID/member lookup) |
+| `CIRCLE_BOT_EMAIL` | ✅ | `agfintern8@sprints.ai` | Email of the bot's Circle account |
+| `CIRCLE_CHAT_ROOM_UUID` | ✅ | — | UUID of the monitored chat room |
+| `CIRCLE_AUTH_URL` | ⬜ | `https://app.circle.so/api/v1/headless/auth_token` | Override auth endpoint |
+| `CIRCLE_MEMBER_API_BASE` | ⬜ | `https://app.circle.so/api/headless/v1` | Override member API base URL |
+| `DATA_DIR` | ⬜ | `./data` | Directory for state files and caches |
+
+---
+
+## 🐳 Docker
+
+The full stack (Qdrant + FAQ bot) is defined in `docker-compose.yml`.
+
+### Quick start
+
+```bash
+# 1. Create .env with all required variables (see Configuration section above)
+
+# 2. Build and start everything
+docker-compose up -d
+
+# 3. Run ingestion once (needed before the bot can answer questions)
+docker-compose run --rm fqa_bot python ingest_hybrid.py "ACC FAQs.pdf" --always-gemini
+
+# 4. Watch logs
+docker-compose logs -f fqa_bot
+```
+
+### Common commands
+
+```bash
+# Start Qdrant only (for local CLI development)
+docker-compose up -d qdrant
+
+# Interactive CLI inside the container
+docker-compose run --rm fqa_bot python runner.py
+
+# Re-build after code changes
+docker-compose build fqa_bot
+
+# Stop everything and remove containers
+docker-compose down
+```
+
+### Service overview
+
+| Service | Image | Port | Description |
+|---------|-------|------|-------------|
+| `qdrant` | `qdrant/qdrant:v1.16.2` | 6333 (HTTP), 6334 (gRPC) | Vector database |
+| `fqa_bot` | Built from `Dockerfile` | — | Circle.so polling bot (default CMD) |
+
+The `fqa_bot` service waits for Qdrant to pass a `/readyz` health-check before starting, so you never need to worry about startup ordering.
+
+> **Tip**: Ingest your PDF before starting the bot so the Qdrant collection is populated when the first student message arrives.
+
+---
 
 Following a comprehensive code review by Raghad Saad, several critical and minor issues were identified and resolved to improve the system's reliability, idempotency, and maintainability.
 
@@ -383,7 +524,7 @@ To benefit from all fixes:
 
 ---
 
-## �🛠️ Troubleshooting
+## 🛠️ Troubleshooting
 ### 'QdrantClient' object has no attribute 'query_points'
 You're using an older version of qdrant-client that doesn't support hybrid search:
 ```bash
@@ -412,6 +553,17 @@ docker-compose logs qdrant
 - Check if PDF was successfully ingested
 - Lower `score_threshold` in `runner.py` for more lenient matching
 
+### Circle Bot Not Responding
+- Confirm `CIRCLE_ENABLED=true` in `.env`
+- Ensure all four `CIRCLE_*` variables are set (auth token, admin token, bot email, room UUID)
+- Check `circle_api_debug_<date>.txt` for detailed HTTP request/response logs
+- Verify the bot account is a member of the chat room (otherwise JWT fetch will fail)
+- On first run, old messages are bookmarked and not answered — this is expected behaviour
+
+### Circle Bot Posts No @mention
+- The `CIRCLE_ADMIN_V2_TOKEN` is required for SGID lookup; without it @mentions are silently skipped
+- Ensure the admin token has `advanced_search` permission in Circle community settings
+
 ## 🔐 Security Notes
 
 - Never commit `.env` file (already in `.gitignore`)
@@ -434,6 +586,8 @@ docker-compose logs qdrant
 - **Qdrant**: Vector database
 - **CrewAI**: Multi-agent orchestration
 - **Pillow**: Image manipulation
+- **httpx**: Async/sync HTTP client (Circle.so headless + member API)
+- **aiohttp**: Async HTTP client (Circle.so admin v2 API / SGID lookup)
 
 See `requirements.txt` for complete dependency list with versions.
 

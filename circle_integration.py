@@ -1,4 +1,16 @@
 """
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Stage 2 — Circle Integration
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+This module is the Stage 2 addition to the project.
+Stage 1 (core pipeline) built the PDF ingestion and CrewAI
+retrieval system (ingest_hybrid.py, runner.py, agents.py, tasks.py,
+embedder.py, chunking.py, qdrant_utils.py).
+
+Stage 2 connects that pipeline to a live Circle.so community
+chat room so students can ask questions directly in Circle and
+receive automated answers from the bot.
+
 Circle.so Chat Integration for the Sprints FAQ Bot
 ====================================================
 - CircleClient  : low-level headless + admin API client with token caching.
