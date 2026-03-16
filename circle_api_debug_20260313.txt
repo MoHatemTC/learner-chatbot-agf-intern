@@ -1,0 +1,597 @@
+2026-03-13 23:34:11,234 - DEBUG - Using proactor: IocpProactor
+2026-03-13 23:34:12,450 - DEBUG - connect_tcp.started host='app.circle.so' port=443 local_address=None timeout=30.0 socket_options=None
+2026-03-13 23:34:12,491 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0CABA10>
+2026-03-13 23:34:12,491 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000002DEC0C13770> server_hostname='app.circle.so' timeout=30.0
+2026-03-13 23:34:12,537 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0CED310>
+2026-03-13 23:34:12,538 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-13 23:34:12,539 - DEBUG - send_request_headers.complete
+2026-03-13 23:34:12,539 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-13 23:34:12,540 - DEBUG - send_request_body.complete
+2026-03-13 23:34:12,540 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-13 23:34:12,870 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 13 Mar 2026 19:33:22 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Content-Encoding', b'gzip'), (b'etag', b'W/"c5f36905502808dc98911980adc9638a"'), (b'Cache-Control', b'max-age=0, private, must-revalidate'), (b'content-security-policy', b''), (b'Set-Cookie', b'ahoy_visitor=c8fb6995-0079-44da-b585-38e8b8c3fb16; path=/; expires=Mon, 13 Mar 2028 19:33:22 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'ahoy_visit=19ca0b56-032f-4ac3-9024-e78bb8243920; path=/; expires=Fri, 13 Mar 2026 20:03:22 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'cookies_enabled=true; path=/; SameSite=Lax; secure'), (b'Set-Cookie', b'_circle_session=SdlWqnFAJlx5va5ee3amnyl%2Fhs7PLr6R1mQQ98bDdOF7SbuRMCO%2BVu%2F7xSLo3IlTxqsc9vO4SqbWPEvCTVuhLDHkWgQDBorst%2BbDf4bA1sByObxhy6ANAoadUahQQKGnuesQ0NcFKkeeWkwac3XSbbm6mmdDCDWXUOz%2FqqXAtrUMw9V%2BALKHVgti9IEgGJpS%2FRv1ZV0WdW6mjI6KZfGQ4IPftv0vNsUWna4L--lN7PIhoiRHwUlpG6--AZU1K5Cf8xRFjO0yNzJ%2FYQ%3D%3D; path=/; secure; HttpOnly; SameSite=None'), (b'Set-Cookie', b'__cf_bm=tuemv4cg8Cb2wlmkOiAvdzSv146O7ygt5lwa96ojEVE-1773430402-1.0.1.1-V1MTNo.L79czlcAkT6RMNZh5D7MzW_jSq_h.5mkhdOL4DjDGi0fDnBNYuVIe6jsTDAtnBKUdfJ9LbeKasR8KcOax6ZA8KsWh6PHIJeiLve8; path=/; expires=Fri, 13-Mar-26 20:03:22 GMT; domain=.circle.so; HttpOnly; Secure; SameSite=None'), (b'x-request-id', b'902f609e-a3aa-4929-9e2b-00e732d2de0b'), (b'x-runtime', b'0.025437'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'vary', b'Origin'), (b'x-rack-cors', b'miss; no-origin'), (b'cf-cache-status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9dbd784e4ae52e9b-DXB')])
+2026-03-13 23:34:12,873 - INFO - HTTP Request: POST https://app.circle.so/api/v1/headless/auth_token "HTTP/1.1 200 OK"
+2026-03-13 23:34:12,874 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-13 23:34:12,876 - DEBUG - receive_response_body.complete
+2026-03-13 23:34:12,877 - DEBUG - response_closed.started
+2026-03-13 23:34:12,877 - DEBUG - response_closed.complete
+2026-03-13 23:34:12,879 - DEBUG - \u2705 Cached token for agfintern2@sprints.ai, member_id: 74668846
+2026-03-13 23:34:12,879 - DEBUG - close.started
+2026-03-13 23:34:12,880 - DEBUG - close.complete
+2026-03-13 23:34:14,029 - DEBUG - connect_tcp.started host='app.circle.so' port=443 local_address=None timeout=30.0 socket_options=None
+2026-03-13 23:34:14,042 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0CEEFD0>
+2026-03-13 23:34:14,042 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000002DEC0C13E30> server_hostname='app.circle.so' timeout=30.0
+2026-03-13 23:34:14,064 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0C6F100>
+2026-03-13 23:34:14,065 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2026-03-13 23:34:14,065 - DEBUG - send_request_headers.complete
+2026-03-13 23:34:14,066 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2026-03-13 23:34:14,066 - DEBUG - send_request_body.complete
+2026-03-13 23:34:14,066 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2026-03-13 23:34:14,674 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 13 Mar 2026 19:33:24 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Content-Encoding', b'gzip'), (b'etag', b'W/"6928eb475f5a3e09c47c05deaa716ce7"'), (b'Cache-Control', b'max-age=0, private, must-revalidate'), (b'content-security-policy', b''), (b'Set-Cookie', b'ahoy_visitor=775b5521-d1f1-4499-b4a6-c1ca6ec94324; path=/; expires=Mon, 13 Mar 2028 19:33:23 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'ahoy_visit=67dab1ee-24cc-47fe-941f-b1af1bc4e2ce; path=/; expires=Fri, 13 Mar 2026 20:03:23 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'cookies_enabled=true; path=/; SameSite=Lax; secure'), (b'Set-Cookie', b'__cf_bm=joQE6YUW9LiUFbnLnCfkmeowC8dV0C.yBl3GaEzW_x4-1773430404-1.0.1.1-VysbVBbk22EKAkhxDmgrgyythMRzZ3wd1j_o86fyhsqcexncD3QgU9Gy.nqW9bVjxwaS2wfc_wJA5w5frBAOroKsvwgSFFR3HwzSj9m.sIA; path=/; expires=Fri, 13-Mar-26 20:03:24 GMT; domain=.circle.so; HttpOnly; Secure; SameSite=None'), (b'x-request-id', b'2e2c8210-9be4-4a96-b319-2c2a791bccc7'), (b'x-runtime', b'0.142046'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'vary', b'Origin'), (b'x-rack-cors', b'miss; no-origin'), (b'cf-cache-status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9dbd7857cdd0e70c-DXB')])
+2026-03-13 23:34:14,676 - INFO - HTTP Request: GET https://app.circle.so/api/headless/v1/messages/3b7bd6eb-a1b0-4783-bdf2-e33b74c1f19a/chat_room_messages?next_per_page=20 "HTTP/1.1 200 OK"
+2026-03-13 23:34:14,677 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2026-03-13 23:34:15,083 - DEBUG - receive_response_body.complete
+2026-03-13 23:34:15,084 - DEBUG - response_closed.started
+2026-03-13 23:34:15,084 - DEBUG - response_closed.complete
+2026-03-13 23:34:15,091 - DEBUG - close.started
+2026-03-13 23:34:15,092 - DEBUG - close.complete
+2026-03-13 23:34:26,797 - DEBUG - connect_tcp.started host='app.circle.so' port=443 local_address=None timeout=30.0 socket_options=None
+2026-03-13 23:34:26,832 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC1D54770>
+2026-03-13 23:34:26,832 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000002DEC0CF8CB0> server_hostname='app.circle.so' timeout=30.0
+2026-03-13 23:34:26,860 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0D243B0>
+2026-03-13 23:34:26,862 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2026-03-13 23:34:26,863 - DEBUG - send_request_headers.complete
+2026-03-13 23:34:26,864 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2026-03-13 23:34:26,864 - DEBUG - send_request_body.complete
+2026-03-13 23:34:26,864 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2026-03-13 23:34:27,349 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 13 Mar 2026 19:33:37 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Content-Encoding', b'gzip'), (b'etag', b'W/"6928eb475f5a3e09c47c05deaa716ce7"'), (b'Cache-Control', b'max-age=0, private, must-revalidate'), (b'content-security-policy', b''), (b'Set-Cookie', b'ahoy_visitor=0495d50d-9837-44d6-a225-27c559cbef3a; path=/; expires=Mon, 13 Mar 2028 19:33:36 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'ahoy_visit=cc06d064-64a8-476a-b01b-354608d8b32a; path=/; expires=Fri, 13 Mar 2026 20:03:36 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'cookies_enabled=true; path=/; SameSite=Lax; secure'), (b'Set-Cookie', b'__cf_bm=t80DC15iCvFa61oNNjUuXykq03NNcEU.Tq9daQmHC2g-1773430417-1.0.1.1-fKDiBwAwg6LDyhCVz8pVmHooZdPr5gyi.MM_4gYjAGwJD24WciASPkk306NCaHWWVsDRxny33uy8J9M_73S1oQ0obpabApieHhJ2VxkoB.o; path=/; expires=Fri, 13-Mar-26 20:03:37 GMT; domain=.circle.so; HttpOnly; Secure; SameSite=None'), (b'x-request-id', b'4c781423-f93b-42c6-b5ee-b3117728daf6'), (b'x-runtime', b'0.221227'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'vary', b'Origin'), (b'x-rack-cors', b'miss; no-origin'), (b'cf-cache-status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9dbd78a7c853c71e-DXB')])
+2026-03-13 23:34:27,351 - INFO - HTTP Request: GET https://app.circle.so/api/headless/v1/messages/3b7bd6eb-a1b0-4783-bdf2-e33b74c1f19a/chat_room_messages?next_per_page=20 "HTTP/1.1 200 OK"
+2026-03-13 23:34:27,365 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2026-03-13 23:34:27,433 - DEBUG - receive_response_body.complete
+2026-03-13 23:34:27,434 - DEBUG - response_closed.started
+2026-03-13 23:34:27,435 - DEBUG - response_closed.complete
+2026-03-13 23:34:27,446 - DEBUG - close.started
+2026-03-13 23:34:27,447 - DEBUG - close.complete
+2026-03-13 23:34:38,821 - DEBUG - connect_tcp.started host='app.circle.so' port=443 local_address=None timeout=30.0 socket_options=None
+2026-03-13 23:34:38,834 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0C878A0>
+2026-03-13 23:34:38,835 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000002DEC0C13E30> server_hostname='app.circle.so' timeout=30.0
+2026-03-13 23:34:38,866 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0C87790>
+2026-03-13 23:34:38,867 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2026-03-13 23:34:38,868 - DEBUG - send_request_headers.complete
+2026-03-13 23:34:38,869 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2026-03-13 23:34:38,869 - DEBUG - send_request_body.complete
+2026-03-13 23:34:38,869 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2026-03-13 23:34:39,310 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 13 Mar 2026 19:33:49 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Content-Encoding', b'gzip'), (b'etag', b'W/"6928eb475f5a3e09c47c05deaa716ce7"'), (b'Cache-Control', b'max-age=0, private, must-revalidate'), (b'content-security-policy', b''), (b'Set-Cookie', b'ahoy_visitor=76746332-baa8-4d01-83bd-3f32aee6b5f3; path=/; expires=Mon, 13 Mar 2028 19:33:48 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'ahoy_visit=b7856d3f-c5fb-4388-b795-4ff0cf6a572a; path=/; expires=Fri, 13 Mar 2026 20:03:48 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'cookies_enabled=true; path=/; SameSite=Lax; secure'), (b'Set-Cookie', b'__cf_bm=0OCVCdCj9_4EFKLVRsBWYmSn4O.jj196PrwA5PnzNPY-1773430429-1.0.1.1-Dc9byedBITPtf3N8Ld8cbgBP_xrMMNe9ZJ8mAwvhubDEx8FSe6SnzQD0Wg2SpFOmkAjJ.unf0J.QH9_XU3R1.NdWycTM2QjDWnjIkOIueGw; path=/; expires=Fri, 13-Mar-26 20:03:49 GMT; domain=.circle.so; HttpOnly; Secure; SameSite=None'), (b'x-request-id', b'75e0eae8-eb9e-4b11-8bb9-bbaf85b89c67'), (b'x-runtime', b'0.117028'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'vary', b'Origin'), (b'x-rack-cors', b'miss; no-origin'), (b'cf-cache-status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9dbd78f2cf509955-DXB')])
+2026-03-13 23:34:39,311 - INFO - HTTP Request: GET https://app.circle.so/api/headless/v1/messages/3b7bd6eb-a1b0-4783-bdf2-e33b74c1f19a/chat_room_messages?next_per_page=20 "HTTP/1.1 200 OK"
+2026-03-13 23:34:39,312 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2026-03-13 23:34:39,338 - DEBUG - receive_response_body.complete
+2026-03-13 23:34:39,338 - DEBUG - response_closed.started
+2026-03-13 23:34:39,338 - DEBUG - response_closed.complete
+2026-03-13 23:34:39,343 - DEBUG - close.started
+2026-03-13 23:34:39,344 - DEBUG - close.complete
+2026-03-13 23:34:51,299 - DEBUG - connect_tcp.started host='app.circle.so' port=443 local_address=None timeout=30.0 socket_options=None
+2026-03-13 23:34:51,597 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0D0A550>
+2026-03-13 23:34:51,598 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000002DEC0C139B0> server_hostname='app.circle.so' timeout=30.0
+2026-03-13 23:34:51,626 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0D0AE50>
+2026-03-13 23:34:51,627 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2026-03-13 23:34:51,629 - DEBUG - send_request_headers.complete
+2026-03-13 23:34:51,629 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2026-03-13 23:34:51,630 - DEBUG - send_request_body.complete
+2026-03-13 23:34:51,630 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2026-03-13 23:34:51,918 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 13 Mar 2026 19:34:01 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Content-Encoding', b'gzip'), (b'etag', b'W/"6928eb475f5a3e09c47c05deaa716ce7"'), (b'Cache-Control', b'max-age=0, private, must-revalidate'), (b'content-security-policy', b''), (b'Set-Cookie', b'ahoy_visitor=876fcd5e-bcd2-41eb-aecc-7421675bbceb; path=/; expires=Mon, 13 Mar 2028 19:34:01 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'ahoy_visit=a683be1a-a1db-48ec-8689-4461ebd3d990; path=/; expires=Fri, 13 Mar 2026 20:04:01 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'cookies_enabled=true; path=/; SameSite=Lax; secure'), (b'Set-Cookie', b'__cf_bm=KzUjTqxv7aM.aZEZRtJk0v0QiuY5GhElFgmBdZYFkP0-1773430441-1.0.1.1-WUF1H0DH.aoXV9AAz2bIN3FFCRDzxbq3eVpTV1oHr5Icze42Oi0XcfCNl4ZMF9bBujJUcDELeo0RmrjXTngN9DeFl0us8jO3.OicnSd.aBA; path=/; expires=Fri, 13-Mar-26 20:04:01 GMT; domain=.circle.so; HttpOnly; Secure; SameSite=None'), (b'x-request-id', b'a8802033-c9e8-45b5-b042-3d60a01ba8f8'), (b'x-runtime', b'0.065280'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'vary', b'Origin'), (b'x-rack-cors', b'miss; no-origin'), (b'cf-cache-status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9dbd79428ab05633-DXB')])
+2026-03-13 23:34:51,920 - INFO - HTTP Request: GET https://app.circle.so/api/headless/v1/messages/3b7bd6eb-a1b0-4783-bdf2-e33b74c1f19a/chat_room_messages?next_per_page=20 "HTTP/1.1 200 OK"
+2026-03-13 23:34:51,921 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2026-03-13 23:34:51,942 - DEBUG - receive_response_body.complete
+2026-03-13 23:34:51,942 - DEBUG - response_closed.started
+2026-03-13 23:34:51,943 - DEBUG - response_closed.complete
+2026-03-13 23:34:51,949 - DEBUG - close.started
+2026-03-13 23:34:51,950 - DEBUG - close.complete
+2026-03-13 23:35:03,424 - DEBUG - connect_tcp.started host='app.circle.so' port=443 local_address=None timeout=30.0 socket_options=None
+2026-03-13 23:35:03,698 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0D4CB90>
+2026-03-13 23:35:03,699 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000002DEC0CF9490> server_hostname='app.circle.so' timeout=30.0
+2026-03-13 23:35:03,728 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0D4CE60>
+2026-03-13 23:35:03,729 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2026-03-13 23:35:03,731 - DEBUG - send_request_headers.complete
+2026-03-13 23:35:03,732 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2026-03-13 23:35:03,733 - DEBUG - send_request_body.complete
+2026-03-13 23:35:03,733 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2026-03-13 23:35:04,119 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 13 Mar 2026 19:34:13 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Content-Encoding', b'gzip'), (b'etag', b'W/"6928eb475f5a3e09c47c05deaa716ce7"'), (b'Cache-Control', b'max-age=0, private, must-revalidate'), (b'content-security-policy', b''), (b'Set-Cookie', b'ahoy_visitor=c6b6769c-f73e-4537-ab93-b038ef9a17ab; path=/; expires=Mon, 13 Mar 2028 19:34:13 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'ahoy_visit=bfb7e682-3c57-4444-b95f-a4b00b6fd226; path=/; expires=Fri, 13 Mar 2026 20:04:13 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'cookies_enabled=true; path=/; SameSite=Lax; secure'), (b'Set-Cookie', b'__cf_bm=puFn.NwUrGRcWLLJF6ASH1qWm40heUy8Kn2i_w8hRac-1773430453-1.0.1.1-_IZQQL5PgEtsF29gKJM.3FQpZzkQEdv0XbG4bB0hEANut7KDdQTloOsp1Qhj57J2vyP9mzdR5_z79E74GJ5AbAD8rMx77b9TnGIpzkPCbT4; path=/; expires=Fri, 13-Mar-26 20:04:13 GMT; domain=.circle.so; HttpOnly; Secure; SameSite=None'), (b'x-request-id', b'6ba86bf1-f442-47e8-9a04-21fd93d03557'), (b'x-runtime', b'0.083245'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'vary', b'Origin'), (b'x-rack-cors', b'miss; no-origin'), (b'cf-cache-status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9dbd798e2f4c7689-DXB')])
+2026-03-13 23:35:04,122 - INFO - HTTP Request: GET https://app.circle.so/api/headless/v1/messages/3b7bd6eb-a1b0-4783-bdf2-e33b74c1f19a/chat_room_messages?next_per_page=20 "HTTP/1.1 200 OK"
+2026-03-13 23:35:04,123 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2026-03-13 23:35:04,229 - DEBUG - receive_response_body.complete
+2026-03-13 23:35:04,229 - DEBUG - response_closed.started
+2026-03-13 23:35:04,230 - DEBUG - response_closed.complete
+2026-03-13 23:35:04,258 - DEBUG - close.started
+2026-03-13 23:35:04,259 - DEBUG - close.complete
+2026-03-13 23:35:15,503 - DEBUG - connect_tcp.started host='app.circle.so' port=443 local_address=None timeout=30.0 socket_options=None
+2026-03-13 23:35:15,517 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0D32DD0>
+2026-03-13 23:35:15,517 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000002DEC0C13E30> server_hostname='app.circle.so' timeout=30.0
+2026-03-13 23:35:15,538 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0D304B0>
+2026-03-13 23:35:15,539 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2026-03-13 23:35:15,539 - DEBUG - send_request_headers.complete
+2026-03-13 23:35:15,539 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2026-03-13 23:35:15,540 - DEBUG - send_request_body.complete
+2026-03-13 23:35:15,540 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2026-03-13 23:35:15,896 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 13 Mar 2026 19:34:25 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Content-Encoding', b'gzip'), (b'etag', b'W/"6928eb475f5a3e09c47c05deaa716ce7"'), (b'Cache-Control', b'max-age=0, private, must-revalidate'), (b'content-security-policy', b''), (b'Set-Cookie', b'ahoy_visitor=f6acc3c0-a7db-49ea-aabd-c65a77827e1e; path=/; expires=Mon, 13 Mar 2028 19:34:25 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'ahoy_visit=fc2c1d9c-7852-4824-9802-e5f7f2831509; path=/; expires=Fri, 13 Mar 2026 20:04:25 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'cookies_enabled=true; path=/; SameSite=Lax; secure'), (b'Set-Cookie', b'__cf_bm=QzhAbwyvqS1SlwRXVVUDATVjo45fIj0ds89gVLOSP_4-1773430465-1.0.1.1-9xIbOSDk4n.iEYwrlCkdKfirWp3LTqzMW5ixEToDnKcxnuZ9AvLRgiz2vvgEj1YOqA6Yfh1v_B9YZYsP068X2IaBKwOlKgrhJ1rEUS3zkng; path=/; expires=Fri, 13-Mar-26 20:04:25 GMT; domain=.circle.so; HttpOnly; Secure; SameSite=None'), (b'x-request-id', b'9e160486-26c0-4c54-ae42-6aaa3a37bd05'), (b'x-runtime', b'0.105899'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'vary', b'Origin'), (b'x-rack-cors', b'miss; no-origin'), (b'cf-cache-status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9dbd79d7fbddf8a8-DXB')])
+2026-03-13 23:35:15,898 - INFO - HTTP Request: GET https://app.circle.so/api/headless/v1/messages/3b7bd6eb-a1b0-4783-bdf2-e33b74c1f19a/chat_room_messages?next_per_page=20 "HTTP/1.1 200 OK"
+2026-03-13 23:35:15,899 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2026-03-13 23:35:15,994 - DEBUG - receive_response_body.complete
+2026-03-13 23:35:15,994 - DEBUG - response_closed.started
+2026-03-13 23:35:15,995 - DEBUG - response_closed.complete
+2026-03-13 23:35:16,001 - DEBUG - close.started
+2026-03-13 23:35:16,001 - DEBUG - close.complete
+2026-03-13 23:35:27,716 - DEBUG - connect_tcp.started host='app.circle.so' port=443 local_address=None timeout=30.0 socket_options=None
+2026-03-13 23:35:27,761 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC1D682C0>
+2026-03-13 23:35:27,762 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000002DEC0CF9880> server_hostname='app.circle.so' timeout=30.0
+2026-03-13 23:35:27,790 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0BAF4D0>
+2026-03-13 23:35:27,792 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2026-03-13 23:35:27,794 - DEBUG - send_request_headers.complete
+2026-03-13 23:35:27,794 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2026-03-13 23:35:27,795 - DEBUG - send_request_body.complete
+2026-03-13 23:35:27,796 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2026-03-13 23:35:28,206 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 13 Mar 2026 19:34:37 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Content-Encoding', b'gzip'), (b'etag', b'W/"6928eb475f5a3e09c47c05deaa716ce7"'), (b'Cache-Control', b'max-age=0, private, must-revalidate'), (b'content-security-policy', b''), (b'Set-Cookie', b'ahoy_visitor=7c075ec5-d44d-42a0-a893-67407d23e892; path=/; expires=Mon, 13 Mar 2028 19:34:37 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'ahoy_visit=0b4e004d-ad33-4b8c-aea0-b09fc1fbcdcf; path=/; expires=Fri, 13 Mar 2026 20:04:37 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'cookies_enabled=true; path=/; SameSite=Lax; secure'), (b'Set-Cookie', b'__cf_bm=ttkZb1oVNzhtC2Pe9NTUwZH.w_auJCvJN0qy8lgNWdM-1773430477-1.0.1.1-LWVYsDOX8CZPssKYvfFF0FpID5nRWYudzeEgDv_tjuWUJLss9X2ecWTVQAa4SkVY7RN.7dz2IF4SYeNoIrWWnJ0ai_LsZDXHlcYURzucBHE; path=/; expires=Fri, 13-Mar-26 20:04:37 GMT; domain=.circle.so; HttpOnly; Secure; SameSite=None'), (b'x-request-id', b'069e907e-7929-4b11-8b23-10843fc446de'), (b'x-runtime', b'0.091094'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'vary', b'Origin'), (b'x-rack-cors', b'miss; no-origin'), (b'cf-cache-status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9dbd7a248e65610e-DXB')])
+2026-03-13 23:35:28,208 - INFO - HTTP Request: GET https://app.circle.so/api/headless/v1/messages/3b7bd6eb-a1b0-4783-bdf2-e33b74c1f19a/chat_room_messages?next_per_page=20 "HTTP/1.1 200 OK"
+2026-03-13 23:35:28,210 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2026-03-13 23:35:28,579 - DEBUG - receive_response_body.complete
+2026-03-13 23:35:28,581 - DEBUG - response_closed.started
+2026-03-13 23:35:28,582 - DEBUG - response_closed.complete
+2026-03-13 23:35:28,591 - DEBUG - close.started
+2026-03-13 23:35:28,593 - DEBUG - close.complete
+2026-03-13 23:35:40,206 - DEBUG - connect_tcp.started host='app.circle.so' port=443 local_address=None timeout=30.0 socket_options=None
+2026-03-13 23:35:40,217 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0BAF7D0>
+2026-03-13 23:35:40,217 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000002DEC0CF97F0> server_hostname='app.circle.so' timeout=30.0
+2026-03-13 23:35:40,242 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0BEF8B0>
+2026-03-13 23:35:40,243 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2026-03-13 23:35:40,243 - DEBUG - send_request_headers.complete
+2026-03-13 23:35:40,244 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2026-03-13 23:35:40,244 - DEBUG - send_request_body.complete
+2026-03-13 23:35:40,244 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2026-03-13 23:35:40,571 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 13 Mar 2026 19:34:50 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Content-Encoding', b'gzip'), (b'etag', b'W/"6928eb475f5a3e09c47c05deaa716ce7"'), (b'Cache-Control', b'max-age=0, private, must-revalidate'), (b'content-security-policy', b''), (b'Set-Cookie', b'ahoy_visitor=46e21109-e36d-4714-ae56-68e83abe3b01; path=/; expires=Mon, 13 Mar 2028 19:34:50 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'ahoy_visit=6344ab71-5d2d-4a8a-ac5b-f3d207b4ea6d; path=/; expires=Fri, 13 Mar 2026 20:04:50 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'cookies_enabled=true; path=/; SameSite=Lax; secure'), (b'Set-Cookie', b'__cf_bm=CRmf8w6McbxuhLKdNqnbeBj0pUzi94m.KWUiXzpOSY4-1773430490-1.0.1.1-YrpU1DqTBmm9hgiQ7uhLOOimSIcGR89EQpCTY3nxkOI9AB5.KXrloD_xGroITP9xRtGxlSFyVWtwDA8R5nG9C5Lf8u_Bs3_lj5X3cTfeG.A; path=/; expires=Fri, 13-Mar-26 20:04:50 GMT; domain=.circle.so; HttpOnly; Secure; SameSite=None'), (b'x-request-id', b'b172e9b3-4934-4e49-8df3-61b242e6e75f'), (b'x-runtime', b'0.081740'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'vary', b'Origin'), (b'x-rack-cors', b'miss; no-origin'), (b'cf-cache-status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9dbd7a7259423415-DXB')])
+2026-03-13 23:35:40,572 - INFO - HTTP Request: GET https://app.circle.so/api/headless/v1/messages/3b7bd6eb-a1b0-4783-bdf2-e33b74c1f19a/chat_room_messages?next_per_page=20 "HTTP/1.1 200 OK"
+2026-03-13 23:35:40,573 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2026-03-13 23:35:40,697 - DEBUG - receive_response_body.complete
+2026-03-13 23:35:40,698 - DEBUG - response_closed.started
+2026-03-13 23:35:40,698 - DEBUG - response_closed.complete
+2026-03-13 23:35:40,705 - DEBUG - close.started
+2026-03-13 23:35:40,706 - DEBUG - close.complete
+2026-03-13 23:35:52,134 - DEBUG - connect_tcp.started host='app.circle.so' port=443 local_address=None timeout=30.0 socket_options=None
+2026-03-13 23:35:52,148 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0BEEE60>
+2026-03-13 23:35:52,148 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000002DEC0CF9910> server_hostname='app.circle.so' timeout=30.0
+2026-03-13 23:35:52,169 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0D360D0>
+2026-03-13 23:35:52,170 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2026-03-13 23:35:52,171 - DEBUG - send_request_headers.complete
+2026-03-13 23:35:52,171 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2026-03-13 23:35:52,172 - DEBUG - send_request_body.complete
+2026-03-13 23:35:52,172 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2026-03-13 23:35:52,578 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 13 Mar 2026 19:35:02 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Content-Encoding', b'gzip'), (b'etag', b'W/"6928eb475f5a3e09c47c05deaa716ce7"'), (b'Cache-Control', b'max-age=0, private, must-revalidate'), (b'content-security-policy', b''), (b'Set-Cookie', b'ahoy_visitor=7c141282-7b1c-459a-9bc9-cb7ebe6c3671; path=/; expires=Mon, 13 Mar 2028 19:35:02 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'ahoy_visit=bb0ae970-b290-46b6-91e1-cfd64ba2193b; path=/; expires=Fri, 13 Mar 2026 20:05:02 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'cookies_enabled=true; path=/; SameSite=Lax; secure'), (b'Set-Cookie', b'__cf_bm=35tMqAL7hBlwD5wjE6QbFSPoKFmMRat7xP6tOWHYVAo-1773430502-1.0.1.1-6Eug.IjoyrfYrNdZlio7FTXYpQfS3Q_SkJCoRYbF8Kai00xxcM23ASD04VU2zx.gbgsH1ATDjGZ_ZvSPhwV5902nbtb4CO2bPGXsNmA7J5M; path=/; expires=Fri, 13-Mar-26 20:05:02 GMT; domain=.circle.so; HttpOnly; Secure; SameSite=None'), (b'x-request-id', b'7b391328-199d-437d-a2a9-5d911e95a459'), (b'x-runtime', b'0.087682'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'vary', b'Origin'), (b'x-rack-cors', b'miss; no-origin'), (b'cf-cache-status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9dbd7abceb48941f-DXB')])
+2026-03-13 23:35:52,579 - INFO - HTTP Request: GET https://app.circle.so/api/headless/v1/messages/3b7bd6eb-a1b0-4783-bdf2-e33b74c1f19a/chat_room_messages?next_per_page=20 "HTTP/1.1 200 OK"
+2026-03-13 23:35:52,579 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2026-03-13 23:35:52,670 - DEBUG - receive_response_body.complete
+2026-03-13 23:35:52,671 - DEBUG - response_closed.started
+2026-03-13 23:35:52,671 - DEBUG - response_closed.complete
+2026-03-13 23:35:52,677 - DEBUG - close.started
+2026-03-13 23:35:52,677 - DEBUG - close.complete
+2026-03-13 23:36:03,276 - DEBUG - connect_tcp.started host='app.circle.so' port=443 local_address=None timeout=30.0 socket_options=None
+2026-03-13 23:36:03,297 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0D35EF0>
+2026-03-13 23:36:03,298 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000002DEC0CF9A30> server_hostname='app.circle.so' timeout=30.0
+2026-03-13 23:36:03,327 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0CF9D00>
+2026-03-13 23:36:03,328 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2026-03-13 23:36:03,329 - DEBUG - send_request_headers.complete
+2026-03-13 23:36:03,329 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2026-03-13 23:36:03,329 - DEBUG - send_request_body.complete
+2026-03-13 23:36:03,329 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2026-03-13 23:36:03,742 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 13 Mar 2026 19:35:13 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Content-Encoding', b'gzip'), (b'etag', b'W/"6928eb475f5a3e09c47c05deaa716ce7"'), (b'Cache-Control', b'max-age=0, private, must-revalidate'), (b'content-security-policy', b''), (b'Set-Cookie', b'ahoy_visitor=6eb73237-b4d2-4d13-9004-318f8df7dc81; path=/; expires=Mon, 13 Mar 2028 19:35:13 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'ahoy_visit=fa08c3fc-4f38-472d-86f9-be8ad27add25; path=/; expires=Fri, 13 Mar 2026 20:05:13 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'cookies_enabled=true; path=/; SameSite=Lax; secure'), (b'Set-Cookie', b'__cf_bm=Chtea3aUbI0lQie0ZnHxRvdQypbwquAUdt1zVK0XUks-1773430513-1.0.1.1-UoOuZ30vPGfCxzbaHTvo55t.DELrILY.B540YG2o.S6uI2ArUYwNtKKEUmSbtZFTD22OW5SYQ_fpmxrJtBugQXH_rawdBbmNSvfNS0E2WFE; path=/; expires=Fri, 13-Mar-26 20:05:13 GMT; domain=.circle.so; HttpOnly; Secure; SameSite=None'), (b'x-request-id', b'ab6be13a-c0ae-4d31-a36c-22c0a25169c0'), (b'x-runtime', b'0.080552'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'vary', b'Origin'), (b'x-rack-cors', b'miss; no-origin'), (b'cf-cache-status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9dbd7b02a802610e-DXB')])
+2026-03-13 23:36:03,743 - INFO - HTTP Request: GET https://app.circle.so/api/headless/v1/messages/3b7bd6eb-a1b0-4783-bdf2-e33b74c1f19a/chat_room_messages?next_per_page=20 "HTTP/1.1 200 OK"
+2026-03-13 23:36:03,744 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2026-03-13 23:36:03,747 - DEBUG - receive_response_body.complete
+2026-03-13 23:36:03,748 - DEBUG - response_closed.started
+2026-03-13 23:36:03,748 - DEBUG - response_closed.complete
+2026-03-13 23:36:03,764 - DEBUG - close.started
+2026-03-13 23:36:03,765 - DEBUG - close.complete
+2026-03-13 23:36:14,922 - DEBUG - connect_tcp.started host='app.circle.so' port=443 local_address=None timeout=30.0 socket_options=None
+2026-03-13 23:36:14,932 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0D39AD0>
+2026-03-13 23:36:14,932 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000002DEC0C139B0> server_hostname='app.circle.so' timeout=30.0
+2026-03-13 23:36:14,953 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0D387D0>
+2026-03-13 23:36:14,954 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2026-03-13 23:36:14,955 - DEBUG - send_request_headers.complete
+2026-03-13 23:36:14,955 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2026-03-13 23:36:14,955 - DEBUG - send_request_body.complete
+2026-03-13 23:36:14,955 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2026-03-13 23:36:15,419 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 13 Mar 2026 19:35:25 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Content-Encoding', b'gzip'), (b'etag', b'W/"6928eb475f5a3e09c47c05deaa716ce7"'), (b'Cache-Control', b'max-age=0, private, must-revalidate'), (b'content-security-policy', b''), (b'Set-Cookie', b'ahoy_visitor=62acdb7d-6591-4e72-b4da-64ef5a23d529; path=/; expires=Mon, 13 Mar 2028 19:35:24 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'ahoy_visit=5d6842d1-d637-42f5-afa2-f7ef29841c84; path=/; expires=Fri, 13 Mar 2026 20:05:24 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'cookies_enabled=true; path=/; SameSite=Lax; secure'), (b'Set-Cookie', b'__cf_bm=M9al87HOzvh.zQBnVcgwHiaBOWbdgf1XTlvPelflqqo-1773430525-1.0.1.1-89av4TMZK962sp1J4VolUZN6g_6eLZfqO8w8aHdxM_iHxsVq5tAZ6vZ6TaqSk_CB3jBoPmEvYxLmcSyEsuwC.uNpQLmmZdo42uD1DyWXxwE; path=/; expires=Fri, 13-Mar-26 20:05:25 GMT; domain=.circle.so; HttpOnly; Secure; SameSite=None'), (b'x-request-id', b'a9cd9ab7-aa48-4bd2-8e64-ce10f09112e3'), (b'x-runtime', b'0.083228'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'vary', b'Origin'), (b'x-rack-cors', b'miss; no-origin'), (b'cf-cache-status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9dbd7b4b488e4b2d-DXB')])
+2026-03-13 23:36:15,421 - INFO - HTTP Request: GET https://app.circle.so/api/headless/v1/messages/3b7bd6eb-a1b0-4783-bdf2-e33b74c1f19a/chat_room_messages?next_per_page=20 "HTTP/1.1 200 OK"
+2026-03-13 23:36:15,421 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2026-03-13 23:36:15,425 - DEBUG - receive_response_body.complete
+2026-03-13 23:36:15,425 - DEBUG - response_closed.started
+2026-03-13 23:36:15,425 - DEBUG - response_closed.complete
+2026-03-13 23:36:15,430 - DEBUG - close.started
+2026-03-13 23:36:15,430 - DEBUG - close.complete
+2026-03-13 23:36:27,270 - DEBUG - connect_tcp.started host='app.circle.so' port=443 local_address=None timeout=30.0 socket_options=None
+2026-03-13 23:36:27,285 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0A58280>
+2026-03-13 23:36:27,286 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000002DEC0CF9C70> server_hostname='app.circle.so' timeout=30.0
+2026-03-13 23:36:27,321 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0D19780>
+2026-03-13 23:36:27,322 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2026-03-13 23:36:27,323 - DEBUG - send_request_headers.complete
+2026-03-13 23:36:27,324 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2026-03-13 23:36:27,324 - DEBUG - send_request_body.complete
+2026-03-13 23:36:27,325 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2026-03-13 23:36:27,809 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 13 Mar 2026 19:35:37 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Content-Encoding', b'gzip'), (b'etag', b'W/"6928eb475f5a3e09c47c05deaa716ce7"'), (b'Cache-Control', b'max-age=0, private, must-revalidate'), (b'content-security-policy', b''), (b'Set-Cookie', b'ahoy_visitor=6cb10914-8e0e-4e71-8fc0-84c23226db9b; path=/; expires=Mon, 13 Mar 2028 19:35:37 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'ahoy_visit=08567eee-161b-4402-ac21-f19b85f94767; path=/; expires=Fri, 13 Mar 2026 20:05:37 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'cookies_enabled=true; path=/; SameSite=Lax; secure'), (b'Set-Cookie', b'__cf_bm=2xuKXc8odoCzjDxSVa6jZWQAyRelK_LhiMvNcw0gC8o-1773430537-1.0.1.1-.qMHWjhvgA4ln32LVYtf3CC6_Z.YAO6M9.TCJZH2luP1xYNa.CDrs6NjkNrYgocQOmbz3koywmWXQdPL3UKgJb5g9IE0Xrnn0wDB50KNOBA; path=/; expires=Fri, 13-Mar-26 20:05:37 GMT; domain=.circle.so; HttpOnly; Secure; SameSite=None'), (b'x-request-id', b'af32fd41-b394-4e13-9b04-432b7b676f80'), (b'x-runtime', b'0.089898'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'vary', b'Origin'), (b'x-rack-cors', b'miss; no-origin'), (b'cf-cache-status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9dbd7b989cb1f3f9-DXB')])
+2026-03-13 23:36:27,828 - INFO - HTTP Request: GET https://app.circle.so/api/headless/v1/messages/3b7bd6eb-a1b0-4783-bdf2-e33b74c1f19a/chat_room_messages?next_per_page=20 "HTTP/1.1 200 OK"
+2026-03-13 23:36:27,829 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2026-03-13 23:36:27,870 - DEBUG - receive_response_body.complete
+2026-03-13 23:36:27,871 - DEBUG - response_closed.started
+2026-03-13 23:36:27,871 - DEBUG - response_closed.complete
+2026-03-13 23:36:27,887 - DEBUG - close.started
+2026-03-13 23:36:27,888 - DEBUG - close.complete
+2026-03-13 23:36:39,643 - DEBUG - connect_tcp.started host='app.circle.so' port=443 local_address=None timeout=30.0 socket_options=None
+2026-03-13 23:36:39,667 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0CFEF30>
+2026-03-13 23:36:39,667 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000002DEC0CF8B00> server_hostname='app.circle.so' timeout=30.0
+2026-03-13 23:36:39,707 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0CFEF90>
+2026-03-13 23:36:39,728 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2026-03-13 23:36:39,729 - DEBUG - send_request_headers.complete
+2026-03-13 23:36:39,729 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2026-03-13 23:36:39,729 - DEBUG - send_request_body.complete
+2026-03-13 23:36:39,738 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2026-03-13 23:36:40,037 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 13 Mar 2026 19:35:49 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Content-Encoding', b'gzip'), (b'etag', b'W/"6928eb475f5a3e09c47c05deaa716ce7"'), (b'Cache-Control', b'max-age=0, private, must-revalidate'), (b'content-security-policy', b''), (b'Set-Cookie', b'ahoy_visitor=7f322702-3370-49b6-b6a8-97e942940e84; path=/; expires=Mon, 13 Mar 2028 19:35:49 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'ahoy_visit=04421b2e-eb73-4563-bb21-2baddbfea545; path=/; expires=Fri, 13 Mar 2026 20:05:49 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'cookies_enabled=true; path=/; SameSite=Lax; secure'), (b'Set-Cookie', b'__cf_bm=7qOm.Q1Ye4eitiYgKt3PnEJ4JIn6jJ3HL5HyPZ25gD4-1773430549-1.0.1.1-DkI9YZnnpbbcRvvBb3P3APK9rsNvaWS.jJOkMyf0C.i6nxxJ0i0jcRBQMVMlIORDG7fafhK0K509iVRoarP9YQ9wbKnNLxW60Aq0hjorI2I; path=/; expires=Fri, 13-Mar-26 20:05:49 GMT; domain=.circle.so; HttpOnly; Secure; SameSite=None'), (b'x-request-id', b'c7ba0ca6-6ce8-4dee-89fc-31ed49dce7ff'), (b'x-runtime', b'0.085573'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'vary', b'Origin'), (b'x-rack-cors', b'miss; no-origin'), (b'cf-cache-status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9dbd7be619aadb6f-DXB')])
+2026-03-13 23:36:40,040 - INFO - HTTP Request: GET https://app.circle.so/api/headless/v1/messages/3b7bd6eb-a1b0-4783-bdf2-e33b74c1f19a/chat_room_messages?next_per_page=20 "HTTP/1.1 200 OK"
+2026-03-13 23:36:40,041 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2026-03-13 23:36:40,100 - DEBUG - receive_response_body.complete
+2026-03-13 23:36:40,101 - DEBUG - response_closed.started
+2026-03-13 23:36:40,103 - DEBUG - response_closed.complete
+2026-03-13 23:36:40,117 - DEBUG - close.started
+2026-03-13 23:36:40,119 - DEBUG - close.complete
+2026-03-13 23:36:51,386 - DEBUG - connect_tcp.started host='app.circle.so' port=443 local_address=None timeout=30.0 socket_options=None
+2026-03-13 23:36:51,401 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC1D6E0D0>
+2026-03-13 23:36:51,402 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000002DEC0CF9520> server_hostname='app.circle.so' timeout=30.0
+2026-03-13 23:36:51,424 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC1D6DEA0>
+2026-03-13 23:36:51,424 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2026-03-13 23:36:51,425 - DEBUG - send_request_headers.complete
+2026-03-13 23:36:51,425 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2026-03-13 23:36:51,425 - DEBUG - send_request_body.complete
+2026-03-13 23:36:51,426 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2026-03-13 23:36:51,875 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 13 Mar 2026 19:36:01 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Content-Encoding', b'gzip'), (b'etag', b'W/"6928eb475f5a3e09c47c05deaa716ce7"'), (b'Cache-Control', b'max-age=0, private, must-revalidate'), (b'content-security-policy', b''), (b'Set-Cookie', b'ahoy_visitor=0439e1d3-2078-4222-82ca-0eed73ac197b; path=/; expires=Mon, 13 Mar 2028 19:36:01 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'ahoy_visit=db5ab4d4-229b-4dfd-80fc-76a04db17eae; path=/; expires=Fri, 13 Mar 2026 20:06:01 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'cookies_enabled=true; path=/; SameSite=Lax; secure'), (b'Set-Cookie', b'__cf_bm=dUgmtc_wxoTgoF2cNssky60dvd504eqj7pansv_S9nQ-1773430561-1.0.1.1-meRO_ShQ0a.XY14juwWdhxitOSvcitc4we758hnPtvPbzkNlRKysUw7YDfBuzGM9fMVOAHdGDx8k6llXW2kbZmnwVYSeE2eRGG9YEH06ycY; path=/; expires=Fri, 13-Mar-26 20:06:01 GMT; domain=.circle.so; HttpOnly; Secure; SameSite=None'), (b'x-request-id', b'7a6ee9ef-353f-411f-b0dd-faa25dd58b8b'), (b'x-runtime', b'0.090046'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'vary', b'Origin'), (b'x-rack-cors', b'miss; no-origin'), (b'cf-cache-status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9dbd7c2f3e6223e5-DXB')])
+2026-03-13 23:36:51,877 - INFO - HTTP Request: GET https://app.circle.so/api/headless/v1/messages/3b7bd6eb-a1b0-4783-bdf2-e33b74c1f19a/chat_room_messages?next_per_page=20 "HTTP/1.1 200 OK"
+2026-03-13 23:36:51,878 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2026-03-13 23:36:51,885 - DEBUG - receive_response_body.complete
+2026-03-13 23:36:51,886 - DEBUG - response_closed.started
+2026-03-13 23:36:51,887 - DEBUG - response_closed.complete
+2026-03-13 23:36:51,897 - DEBUG - close.started
+2026-03-13 23:36:51,899 - DEBUG - close.complete
+2026-03-13 23:37:03,129 - DEBUG - connect_tcp.started host='app.circle.so' port=443 local_address=None timeout=30.0 socket_options=None
+2026-03-13 23:37:03,145 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0D48050>
+2026-03-13 23:37:03,146 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000002DEC0CF8E60> server_hostname='app.circle.so' timeout=30.0
+2026-03-13 23:37:03,167 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC01937A0>
+2026-03-13 23:37:03,168 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2026-03-13 23:37:03,169 - DEBUG - send_request_headers.complete
+2026-03-13 23:37:03,169 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2026-03-13 23:37:03,169 - DEBUG - send_request_body.complete
+2026-03-13 23:37:03,169 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2026-03-13 23:37:03,530 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 13 Mar 2026 19:36:13 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Content-Encoding', b'gzip'), (b'etag', b'W/"6928eb475f5a3e09c47c05deaa716ce7"'), (b'Cache-Control', b'max-age=0, private, must-revalidate'), (b'content-security-policy', b''), (b'Set-Cookie', b'ahoy_visitor=0cb11e11-b98e-4952-8cd6-520c42f7467b; path=/; expires=Mon, 13 Mar 2028 19:36:13 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'ahoy_visit=9ad0affe-d08d-4ff0-a84a-060e8d4a6fb6; path=/; expires=Fri, 13 Mar 2026 20:06:13 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'cookies_enabled=true; path=/; SameSite=Lax; secure'), (b'Set-Cookie', b'__cf_bm=6u0y6Z5Mh6FG4YjmIEkBRY4shPz9bE5ljj1.F8Q8qoo-1773430573-1.0.1.1-a94JBwLyKi2NkWoef0hV3GAhTk4FxJr7UKsToo8PgfjrDerPgh4TRTrsnG49oRMNwLXqcAXp8EVjzKSYNwtVi7qEbuCjU8x4OZtnq6Uc.rw; path=/; expires=Fri, 13-Mar-26 20:06:13 GMT; domain=.circle.so; HttpOnly; Secure; SameSite=None'), (b'x-request-id', b'7f488f28-7c9e-4a74-9a89-ba98d0f0613f'), (b'x-runtime', b'0.094801'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'vary', b'Origin'), (b'x-rack-cors', b'miss; no-origin'), (b'cf-cache-status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9dbd7c789de00d5c-DXB')])
+2026-03-13 23:37:03,532 - INFO - HTTP Request: GET https://app.circle.so/api/headless/v1/messages/3b7bd6eb-a1b0-4783-bdf2-e33b74c1f19a/chat_room_messages?next_per_page=20 "HTTP/1.1 200 OK"
+2026-03-13 23:37:03,532 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2026-03-13 23:37:03,662 - DEBUG - receive_response_body.complete
+2026-03-13 23:37:03,662 - DEBUG - response_closed.started
+2026-03-13 23:37:03,663 - DEBUG - response_closed.complete
+2026-03-13 23:37:03,669 - DEBUG - close.started
+2026-03-13 23:37:03,688 - DEBUG - close.complete
+2026-03-13 23:37:14,991 - DEBUG - connect_tcp.started host='app.circle.so' port=443 local_address=None timeout=30.0 socket_options=None
+2026-03-13 23:37:15,005 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC1DB4FA0>
+2026-03-13 23:37:15,005 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000002DEC0C139B0> server_hostname='app.circle.so' timeout=30.0
+2026-03-13 23:37:15,028 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC1DB5720>
+2026-03-13 23:37:15,029 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2026-03-13 23:37:15,030 - DEBUG - send_request_headers.complete
+2026-03-13 23:37:15,030 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2026-03-13 23:37:15,030 - DEBUG - send_request_body.complete
+2026-03-13 23:37:15,030 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2026-03-13 23:37:15,634 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 13 Mar 2026 19:36:25 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Content-Encoding', b'gzip'), (b'etag', b'W/"6928eb475f5a3e09c47c05deaa716ce7"'), (b'Cache-Control', b'max-age=0, private, must-revalidate'), (b'content-security-policy', b''), (b'Set-Cookie', b'ahoy_visitor=e6eb942d-2e14-40f6-8201-c707e3e894e5; path=/; expires=Mon, 13 Mar 2028 19:36:24 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'ahoy_visit=b0369f05-6efa-4da8-bd7a-75de2d6fa892; path=/; expires=Fri, 13 Mar 2026 20:06:24 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'cookies_enabled=true; path=/; SameSite=Lax; secure'), (b'Set-Cookie', b'__cf_bm=A4g66Jp5wsyCm8HK5PIL3zso47Hq9RHApiAotObOZMc-1773430585-1.0.1.1-I4T5JXCuipQ9fcgspxfCWzgV1FKV.06uJLdntfEQLBtSnXXqNwNX1kigDd4fkaGikHsdNDWYnRYKVeHqH4k02J1vfnXS8mJEEhRIiPSRgf0; path=/; expires=Fri, 13-Mar-26 20:06:25 GMT; domain=.circle.so; HttpOnly; Secure; SameSite=None'), (b'x-request-id', b'be1c9d91-208b-473e-914c-2dc494033c63'), (b'x-runtime', b'0.191958'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'vary', b'Origin'), (b'x-rack-cors', b'miss; no-origin'), (b'cf-cache-status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9dbd7cc2bbf83415-DXB')])
+2026-03-13 23:37:15,637 - INFO - HTTP Request: GET https://app.circle.so/api/headless/v1/messages/3b7bd6eb-a1b0-4783-bdf2-e33b74c1f19a/chat_room_messages?next_per_page=20 "HTTP/1.1 200 OK"
+2026-03-13 23:37:15,638 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2026-03-13 23:37:15,646 - DEBUG - receive_response_body.complete
+2026-03-13 23:37:15,646 - DEBUG - response_closed.started
+2026-03-13 23:37:15,647 - DEBUG - response_closed.complete
+2026-03-13 23:37:15,655 - DEBUG - close.started
+2026-03-13 23:37:15,656 - DEBUG - close.complete
+2026-03-13 23:37:27,278 - DEBUG - connect_tcp.started host='app.circle.so' port=443 local_address=None timeout=30.0 socket_options=None
+2026-03-13 23:37:27,302 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0D49180>
+2026-03-13 23:37:27,302 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000002DEC0CFA0F0> server_hostname='app.circle.so' timeout=30.0
+2026-03-13 23:37:27,346 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0D49810>
+2026-03-13 23:37:27,348 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2026-03-13 23:37:27,350 - DEBUG - send_request_headers.complete
+2026-03-13 23:37:27,351 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2026-03-13 23:37:27,352 - DEBUG - send_request_body.complete
+2026-03-13 23:37:27,352 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2026-03-13 23:37:28,261 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 13 Mar 2026 19:36:37 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Content-Encoding', b'gzip'), (b'etag', b'W/"6928eb475f5a3e09c47c05deaa716ce7"'), (b'Cache-Control', b'max-age=0, private, must-revalidate'), (b'content-security-policy', b''), (b'Set-Cookie', b'ahoy_visitor=c6e991ea-a1df-462d-95b8-53d597e75365; path=/; expires=Mon, 13 Mar 2028 19:36:37 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'ahoy_visit=d45ad706-67a0-4626-b91b-0e714742fb04; path=/; expires=Fri, 13 Mar 2026 20:06:37 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'cookies_enabled=true; path=/; SameSite=Lax; secure'), (b'Set-Cookie', b'__cf_bm=JEv3.7XdLnl9LL3XgJoHYEmYEvx4kySNz5jyJ7LLRZ8-1773430597-1.0.1.1-xkqcviqhK76.Ht7PZ_PuJ1_qhlU5uHoSmsd2og7Y2KAU0kz2uxzTRJuULt6prxOhcBcfbwxgYHc75uv0UXE6KUE6tF7CdaXcNahZDpouOEw; path=/; expires=Fri, 13-Mar-26 20:06:37 GMT; domain=.circle.so; HttpOnly; Secure; SameSite=None'), (b'x-request-id', b'6cdce052-16cf-476f-b7db-4c8514b2b158'), (b'x-runtime', b'0.102883'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'vary', b'Origin'), (b'x-rack-cors', b'miss; no-origin'), (b'cf-cache-status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9dbd7d0fb9f1f08b-DXB')])
+2026-03-13 23:37:28,264 - INFO - HTTP Request: GET https://app.circle.so/api/headless/v1/messages/3b7bd6eb-a1b0-4783-bdf2-e33b74c1f19a/chat_room_messages?next_per_page=20 "HTTP/1.1 200 OK"
+2026-03-13 23:37:28,265 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2026-03-13 23:37:28,845 - DEBUG - receive_response_body.complete
+2026-03-13 23:37:28,846 - DEBUG - response_closed.started
+2026-03-13 23:37:28,847 - DEBUG - response_closed.complete
+2026-03-13 23:37:28,854 - DEBUG - close.started
+2026-03-13 23:37:28,855 - DEBUG - close.complete
+2026-03-13 23:37:40,347 - DEBUG - connect_tcp.started host='app.circle.so' port=443 local_address=None timeout=30.0 socket_options=None
+2026-03-13 23:37:40,365 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC1DB4D20>
+2026-03-13 23:37:40,365 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000002DEC0CFA180> server_hostname='app.circle.so' timeout=30.0
+2026-03-13 23:37:40,389 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0CD2210>
+2026-03-13 23:37:40,389 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2026-03-13 23:37:40,391 - DEBUG - send_request_headers.complete
+2026-03-13 23:37:40,391 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2026-03-13 23:37:40,391 - DEBUG - send_request_body.complete
+2026-03-13 23:37:40,392 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2026-03-13 23:37:40,801 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 13 Mar 2026 19:36:50 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Content-Encoding', b'gzip'), (b'etag', b'W/"6928eb475f5a3e09c47c05deaa716ce7"'), (b'Cache-Control', b'max-age=0, private, must-revalidate'), (b'content-security-policy', b''), (b'Set-Cookie', b'ahoy_visitor=746511f9-4268-4f26-ba70-2dd2d85b09bd; path=/; expires=Mon, 13 Mar 2028 19:36:50 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'ahoy_visit=9931c8d5-8841-4533-873b-8b8742600671; path=/; expires=Fri, 13 Mar 2026 20:06:50 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'cookies_enabled=true; path=/; SameSite=Lax; secure'), (b'Set-Cookie', b'__cf_bm=78uBtN0QuIYUDr.81pRZ3GkB_vljt3UmpkZXVZfgB1M-1773430610-1.0.1.1-Wm4c9SrCbKqUNIoQOqIqY5ylc.X8slol1ArJWfgN1ZX3fnQ.RRKkN4v7HXYxYLXbszeVKdhChiiFEzpZI433185_zi9iWgIg.tOxLeFBGJw; path=/; expires=Fri, 13-Mar-26 20:06:50 GMT; domain=.circle.so; HttpOnly; Secure; SameSite=None'), (b'x-request-id', b'f910377e-c94e-42ef-932b-ba93fb177439'), (b'x-runtime', b'0.084758'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'vary', b'Origin'), (b'x-rack-cors', b'miss; no-origin'), (b'cf-cache-status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9dbd7d613ccbc369-DXB')])
+2026-03-13 23:37:40,803 - INFO - HTTP Request: GET https://app.circle.so/api/headless/v1/messages/3b7bd6eb-a1b0-4783-bdf2-e33b74c1f19a/chat_room_messages?next_per_page=20 "HTTP/1.1 200 OK"
+2026-03-13 23:37:40,804 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2026-03-13 23:37:40,826 - DEBUG - receive_response_body.complete
+2026-03-13 23:37:40,827 - DEBUG - response_closed.started
+2026-03-13 23:37:40,828 - DEBUG - response_closed.complete
+2026-03-13 23:37:40,835 - DEBUG - close.started
+2026-03-13 23:37:40,836 - DEBUG - close.complete
+2026-03-13 23:37:52,472 - DEBUG - connect_tcp.started host='app.circle.so' port=443 local_address=None timeout=30.0 socket_options=None
+2026-03-13 23:37:52,488 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0D494A0>
+2026-03-13 23:37:52,489 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000002DEC0CF9520> server_hostname='app.circle.so' timeout=30.0
+2026-03-13 23:37:52,519 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0D492C0>
+2026-03-13 23:37:52,520 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2026-03-13 23:37:52,522 - DEBUG - send_request_headers.complete
+2026-03-13 23:37:52,523 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2026-03-13 23:37:52,524 - DEBUG - send_request_body.complete
+2026-03-13 23:37:52,524 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2026-03-13 23:37:52,903 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 13 Mar 2026 19:37:02 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Content-Encoding', b'gzip'), (b'etag', b'W/"6928eb475f5a3e09c47c05deaa716ce7"'), (b'Cache-Control', b'max-age=0, private, must-revalidate'), (b'content-security-policy', b''), (b'Set-Cookie', b'ahoy_visitor=03106cda-3970-4485-82aa-57d4b90b1c0b; path=/; expires=Mon, 13 Mar 2028 19:37:02 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'ahoy_visit=9ec47921-df14-443d-be16-0b768db1251f; path=/; expires=Fri, 13 Mar 2026 20:07:02 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'cookies_enabled=true; path=/; SameSite=Lax; secure'), (b'Set-Cookie', b'__cf_bm=RMSDGMykit6GYoqnc.RQSBnf2CKrYtDHA4Rtw2eFF04-1773430622-1.0.1.1-hH2fXArywOOKlaBXNsHTr78EbQWw.hW37fb9ntgSi.tgiIKUQgdlzot57jBcFsB1lPUCYOlaprNIEnY__J0CNf_yOFtv9owP.4UI5hmpzE4; path=/; expires=Fri, 13-Mar-26 20:07:02 GMT; domain=.circle.so; HttpOnly; Secure; SameSite=None'), (b'x-request-id', b'1fc202f7-71d9-4e1a-a0a5-f0852e853335'), (b'x-runtime', b'0.105872'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'vary', b'Origin'), (b'x-rack-cors', b'miss; no-origin'), (b'cf-cache-status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9dbd7dad0d02f3f9-DXB')])
+2026-03-13 23:37:52,904 - INFO - HTTP Request: GET https://app.circle.so/api/headless/v1/messages/3b7bd6eb-a1b0-4783-bdf2-e33b74c1f19a/chat_room_messages?next_per_page=20 "HTTP/1.1 200 OK"
+2026-03-13 23:37:52,904 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2026-03-13 23:37:52,962 - DEBUG - receive_response_body.complete
+2026-03-13 23:37:52,962 - DEBUG - response_closed.started
+2026-03-13 23:37:52,962 - DEBUG - response_closed.complete
+2026-03-13 23:37:52,966 - DEBUG - close.started
+2026-03-13 23:37:52,967 - DEBUG - close.complete
+2026-03-13 23:38:04,044 - DEBUG - connect_tcp.started host='app.circle.so' port=443 local_address=None timeout=30.0 socket_options=None
+2026-03-13 23:38:04,081 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC1DB5130>
+2026-03-13 23:38:04,081 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000002DEC0CF9B50> server_hostname='app.circle.so' timeout=30.0
+2026-03-13 23:38:04,110 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC1DB4E10>
+2026-03-13 23:38:04,111 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2026-03-13 23:38:04,112 - DEBUG - send_request_headers.complete
+2026-03-13 23:38:04,112 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2026-03-13 23:38:04,113 - DEBUG - send_request_body.complete
+2026-03-13 23:38:04,113 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2026-03-13 23:38:04,436 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 13 Mar 2026 19:37:14 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Content-Encoding', b'gzip'), (b'etag', b'W/"6928eb475f5a3e09c47c05deaa716ce7"'), (b'Cache-Control', b'max-age=0, private, must-revalidate'), (b'content-security-policy', b''), (b'Set-Cookie', b'ahoy_visitor=ae3157f8-3a12-4a14-ac2a-f6415d5d2f1c; path=/; expires=Mon, 13 Mar 2028 19:37:13 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'ahoy_visit=90300224-e17a-4c97-ac73-1971e6afd41d; path=/; expires=Fri, 13 Mar 2026 20:07:13 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'cookies_enabled=true; path=/; SameSite=Lax; secure'), (b'Set-Cookie', b'__cf_bm=ib1KaT4dIZ_gU4LwYJd7HTJ6_GmANrvTLpENCcbVkL4-1773430634-1.0.1.1-6ooKb_Om2hs6_mNSXjjKP80L2hlPyg6IqInaA2HQglqv5EoZwbVVJLpkyqb0qa65MXKgmCoaZri4c.n4W_rgQc93wGFnXXTzDGRtWSBTats; path=/; expires=Fri, 13-Mar-26 20:07:14 GMT; domain=.circle.so; HttpOnly; Secure; SameSite=None'), (b'x-request-id', b'cfa39542-75ad-4fcb-82a8-10db3a1be622'), (b'x-runtime', b'0.093023'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'vary', b'Origin'), (b'x-rack-cors', b'miss; no-origin'), (b'cf-cache-status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9dbd7df57be82917-DXB')])
+2026-03-13 23:38:04,440 - INFO - HTTP Request: GET https://app.circle.so/api/headless/v1/messages/3b7bd6eb-a1b0-4783-bdf2-e33b74c1f19a/chat_room_messages?next_per_page=20 "HTTP/1.1 200 OK"
+2026-03-13 23:38:04,441 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2026-03-13 23:38:04,449 - DEBUG - receive_response_body.complete
+2026-03-13 23:38:04,450 - DEBUG - response_closed.started
+2026-03-13 23:38:04,450 - DEBUG - response_closed.complete
+2026-03-13 23:38:04,461 - DEBUG - close.started
+2026-03-13 23:38:04,484 - DEBUG - close.complete
+2026-03-13 23:38:15,908 - DEBUG - connect_tcp.started host='app.circle.so' port=443 local_address=None timeout=30.0 socket_options=None
+2026-03-13 23:38:15,920 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC1D6D590>
+2026-03-13 23:38:15,920 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000002DEC0CF8B00> server_hostname='app.circle.so' timeout=30.0
+2026-03-13 23:38:15,950 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC1D6CE60>
+2026-03-13 23:38:15,950 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2026-03-13 23:38:15,951 - DEBUG - send_request_headers.complete
+2026-03-13 23:38:15,951 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2026-03-13 23:38:15,952 - DEBUG - send_request_body.complete
+2026-03-13 23:38:15,952 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2026-03-13 23:38:16,467 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 13 Mar 2026 19:37:26 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Content-Encoding', b'gzip'), (b'etag', b'W/"6928eb475f5a3e09c47c05deaa716ce7"'), (b'Cache-Control', b'max-age=0, private, must-revalidate'), (b'content-security-policy', b''), (b'Set-Cookie', b'ahoy_visitor=8e272399-35ba-4d38-a4fd-2e05a75ed205; path=/; expires=Mon, 13 Mar 2028 19:37:25 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'ahoy_visit=dc1255d1-d675-45be-a4d0-cfc1bf382fa4; path=/; expires=Fri, 13 Mar 2026 20:07:25 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'cookies_enabled=true; path=/; SameSite=Lax; secure'), (b'Set-Cookie', b'__cf_bm=WQlwDXDgciBU3i9BgWpRQl52RXqhkJPge2Rri_Wz768-1773430646-1.0.1.1-MmITy5oDp_wwJQHjcphhmzyfQYtaP5P_83tn6lW9qFeqDwl.YufvU5e0Tkx_vq_s9EEBosyiCQv31rfYIDltmqNGWgveSIW.JqgFS5.TyJU; path=/; expires=Fri, 13-Mar-26 20:07:26 GMT; domain=.circle.so; HttpOnly; Secure; SameSite=None'), (b'x-request-id', b'adc73bac-d8b6-4b59-a860-a2ed5db119bc'), (b'x-runtime', b'0.143782'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'vary', b'Origin'), (b'x-rack-cors', b'miss; no-origin'), (b'cf-cache-status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9dbd7e3f6fdb20cb-DXB')])
+2026-03-13 23:38:16,469 - INFO - HTTP Request: GET https://app.circle.so/api/headless/v1/messages/3b7bd6eb-a1b0-4783-bdf2-e33b74c1f19a/chat_room_messages?next_per_page=20 "HTTP/1.1 200 OK"
+2026-03-13 23:38:16,469 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2026-03-13 23:38:16,508 - DEBUG - receive_response_body.complete
+2026-03-13 23:38:16,509 - DEBUG - response_closed.started
+2026-03-13 23:38:16,509 - DEBUG - response_closed.complete
+2026-03-13 23:38:16,516 - DEBUG - close.started
+2026-03-13 23:38:16,517 - DEBUG - close.complete
+2026-03-13 23:38:27,445 - DEBUG - connect_tcp.started host='app.circle.so' port=443 local_address=None timeout=30.0 socket_options=None
+2026-03-13 23:38:27,473 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0D0F5C0>
+2026-03-13 23:38:27,473 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000002DEC0CF9910> server_hostname='app.circle.so' timeout=30.0
+2026-03-13 23:38:27,504 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0D0FC00>
+2026-03-13 23:38:27,505 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2026-03-13 23:38:27,506 - DEBUG - send_request_headers.complete
+2026-03-13 23:38:27,507 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2026-03-13 23:38:27,507 - DEBUG - send_request_body.complete
+2026-03-13 23:38:27,508 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2026-03-13 23:38:27,938 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 13 Mar 2026 19:37:37 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Content-Encoding', b'gzip'), (b'etag', b'W/"6928eb475f5a3e09c47c05deaa716ce7"'), (b'Cache-Control', b'max-age=0, private, must-revalidate'), (b'content-security-policy', b''), (b'Set-Cookie', b'ahoy_visitor=aaf4dfab-93bd-44a2-bf3f-076048e85b4e; path=/; expires=Mon, 13 Mar 2028 19:37:37 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'ahoy_visit=943f19bb-9103-4e3f-84e4-913f95dbb2b0; path=/; expires=Fri, 13 Mar 2026 20:07:37 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'cookies_enabled=true; path=/; SameSite=Lax; secure'), (b'Set-Cookie', b'__cf_bm=kIDPr.bWBMD9yBi5jL_mgo_u0c1q1FQ0uBTj73tkCeY-1773430657-1.0.1.1-c_o29JicYF6s0MkPHN_nhGh.D3PIqjnFwI2qdoTl9QhNZH7VXagm3Fwgtda3CgzAMB0.tzCPps1CSJ.lr5iIAPD18sL6FVii3PwEWJ3Dym8; path=/; expires=Fri, 13-Mar-26 20:07:37 GMT; domain=.circle.so; HttpOnly; Secure; SameSite=None'), (b'x-request-id', b'3c89346d-36f5-40ec-b099-21742c9481cd'), (b'x-runtime', b'0.124607'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'vary', b'Origin'), (b'x-rack-cors', b'miss; no-origin'), (b'cf-cache-status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9dbd7e87ac00e70c-DXB')])
+2026-03-13 23:38:27,939 - INFO - HTTP Request: GET https://app.circle.so/api/headless/v1/messages/3b7bd6eb-a1b0-4783-bdf2-e33b74c1f19a/chat_room_messages?next_per_page=20 "HTTP/1.1 200 OK"
+2026-03-13 23:38:27,940 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2026-03-13 23:38:27,944 - DEBUG - receive_response_body.complete
+2026-03-13 23:38:27,944 - DEBUG - response_closed.started
+2026-03-13 23:38:27,945 - DEBUG - response_closed.complete
+2026-03-13 23:38:27,953 - DEBUG - close.started
+2026-03-13 23:38:27,954 - DEBUG - close.complete
+2026-03-13 23:38:38,918 - DEBUG - connect_tcp.started host='app.circle.so' port=443 local_address=None timeout=30.0 socket_options=None
+2026-03-13 23:38:38,931 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC1D6C960>
+2026-03-13 23:38:38,931 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000002DEC0CFAB10> server_hostname='app.circle.so' timeout=30.0
+2026-03-13 23:38:38,957 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC1D6CE10>
+2026-03-13 23:38:38,958 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2026-03-13 23:38:38,959 - DEBUG - send_request_headers.complete
+2026-03-13 23:38:38,960 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2026-03-13 23:38:38,960 - DEBUG - send_request_body.complete
+2026-03-13 23:38:38,960 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2026-03-13 23:38:39,304 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 13 Mar 2026 19:37:48 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Content-Encoding', b'gzip'), (b'etag', b'W/"6928eb475f5a3e09c47c05deaa716ce7"'), (b'Cache-Control', b'max-age=0, private, must-revalidate'), (b'content-security-policy', b''), (b'Set-Cookie', b'ahoy_visitor=514a8183-1a32-4e30-b04f-711cdf621efa; path=/; expires=Mon, 13 Mar 2028 19:37:48 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'ahoy_visit=4bf6d5cb-51e6-4c02-a84c-f96dd884434c; path=/; expires=Fri, 13 Mar 2026 20:07:48 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'cookies_enabled=true; path=/; SameSite=Lax; secure'), (b'Set-Cookie', b'__cf_bm=2BIdEiNuTT1mdDr1I.HjGSIiGlfIPT1qrx06Jf8GbYU-1773430668-1.0.1.1-RpJJmcRfS3oVR9o_zctBksfTlLEhztvAxsB..Mzkxl938F637.6nLBJydLrizxm3DlCEeiWB7jY9uFQmxQjCsFArqIGyv.5P5YktVo5YegE; path=/; expires=Fri, 13-Mar-26 20:07:48 GMT; domain=.circle.so; HttpOnly; Secure; SameSite=None'), (b'x-request-id', b'ede95c06-434e-4954-b097-3769bd0f342f'), (b'x-runtime', b'0.072931'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'vary', b'Origin'), (b'x-rack-cors', b'miss; no-origin'), (b'cf-cache-status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9dbd7ecf385a0be8-DXB')])
+2026-03-13 23:38:39,306 - INFO - HTTP Request: GET https://app.circle.so/api/headless/v1/messages/3b7bd6eb-a1b0-4783-bdf2-e33b74c1f19a/chat_room_messages?next_per_page=20 "HTTP/1.1 200 OK"
+2026-03-13 23:38:39,306 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2026-03-13 23:38:39,334 - DEBUG - receive_response_body.complete
+2026-03-13 23:38:39,335 - DEBUG - response_closed.started
+2026-03-13 23:38:39,335 - DEBUG - response_closed.complete
+2026-03-13 23:38:39,341 - DEBUG - close.started
+2026-03-13 23:38:39,342 - DEBUG - close.complete
+2026-03-13 23:38:50,674 - DEBUG - connect_tcp.started host='app.circle.so' port=443 local_address=None timeout=30.0 socket_options=None
+2026-03-13 23:38:50,685 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0D48D20>
+2026-03-13 23:38:50,685 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000002DEC0CF9AC0> server_hostname='app.circle.so' timeout=30.0
+2026-03-13 23:38:50,702 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEBC9A70C0>
+2026-03-13 23:38:50,702 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2026-03-13 23:38:50,703 - DEBUG - send_request_headers.complete
+2026-03-13 23:38:50,703 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2026-03-13 23:38:50,703 - DEBUG - send_request_body.complete
+2026-03-13 23:38:50,703 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2026-03-13 23:38:51,069 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 13 Mar 2026 19:38:00 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Content-Encoding', b'gzip'), (b'etag', b'W/"5d84eb214a0f10d306a6d0232c53e476"'), (b'Cache-Control', b'max-age=0, private, must-revalidate'), (b'content-security-policy', b''), (b'Set-Cookie', b'ahoy_visitor=54fb4776-c476-4d04-a979-7d6f43a402f7; path=/; expires=Mon, 13 Mar 2028 19:38:00 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'ahoy_visit=288503f1-3e01-49d2-9445-07b9e2fac38d; path=/; expires=Fri, 13 Mar 2026 20:08:00 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'cookies_enabled=true; path=/; SameSite=Lax; secure'), (b'Set-Cookie', b'__cf_bm=Yxdny3A8pCfJ_Br0s.03tklYiZPUmDK5Z7wOQPgm3fE-1773430680-1.0.1.1-TWJlXd.qfOdFhOqvULKdQn6eRx.LZXgBOpnazjdBrbjI6AgeKNhltsrMBeIw1k8V8dZdZN1jkfol.fetDf_eBqFY2cJLwphA2sl155GWz_0; path=/; expires=Fri, 13-Mar-26 20:08:00 GMT; domain=.circle.so; HttpOnly; Secure; SameSite=None'), (b'x-request-id', b'0a7185cf-aa9d-4d48-b5e6-19e3bc979e36'), (b'x-runtime', b'0.077570'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'vary', b'Origin'), (b'x-rack-cors', b'miss; no-origin'), (b'cf-cache-status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9dbd7f18a8ce1ddc-DXB')])
+2026-03-13 23:38:51,071 - INFO - HTTP Request: GET https://app.circle.so/api/headless/v1/messages/3b7bd6eb-a1b0-4783-bdf2-e33b74c1f19a/chat_room_messages?next_per_page=20 "HTTP/1.1 200 OK"
+2026-03-13 23:38:51,072 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2026-03-13 23:38:51,129 - DEBUG - receive_response_body.complete
+2026-03-13 23:38:51,130 - DEBUG - response_closed.started
+2026-03-13 23:38:51,130 - DEBUG - response_closed.complete
+2026-03-13 23:38:51,136 - DEBUG - close.started
+2026-03-13 23:38:51,137 - DEBUG - close.complete
+2026-03-13 23:38:52,571 - DEBUG - connect_tcp.started host='app.circle.so' port=443 local_address=None timeout=30.0 socket_options=None
+2026-03-13 23:38:52,584 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC1D6D720>
+2026-03-13 23:38:52,584 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000002DEC0CFACC0> server_hostname='app.circle.so' timeout=30.0
+2026-03-13 23:38:52,609 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC1D6CC80>
+2026-03-13 23:38:52,609 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-13 23:38:52,610 - DEBUG - send_request_headers.complete
+2026-03-13 23:38:52,610 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-13 23:38:52,611 - DEBUG - send_request_body.complete
+2026-03-13 23:38:52,611 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-13 23:38:53,027 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 202, b'Accepted', [(b'Date', b'Fri, 13 Mar 2026 19:38:02 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Content-Length', b'118'), (b'Connection', b'keep-alive'), (b'CF-RAY', b'9dbd7f248f6eb41e-DXB'), (b'Cache-Control', b'no-cache'), (b'content-security-policy', b''), (b'Set-Cookie', b'ahoy_visitor=4cb4235b-5606-4fce-8a2e-e9a2c9caa113; path=/; expires=Mon, 13 Mar 2028 19:38:02 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'ahoy_visit=f0aedaf4-2851-457d-b393-d3e7c915e3c0; path=/; expires=Fri, 13 Mar 2026 20:08:02 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'cookies_enabled=true; path=/; SameSite=Lax; secure'), (b'Set-Cookie', b'_circle_session=78UIA2L38uFLzEIvnNbMHMkwzlz53tkVvfSfCtmwWJDb1uk%2FYC5DOfqhJxRdK06RuzIftDUFctDtuWrW%2FrmRaCKm1Ccyr9abVgAnU0vZZwU6ntLeDRoKTmGLTNneb72Y5Pi5O9n7V47eb6uSM8eSi4PZiBn0bWEuNre9Gmqfxe0NAsrhTX5ZOW41Jl2FnvbTAZzw5tb4bjVPc9Ld6E8DqvIHfrqkyiCVO1ou--tqwv2etcWran1s%2FV--lFmzCieAOKZ066j10oK9eg%3D%3D; path=/; secure; HttpOnly; SameSite=None'), (b'Set-Cookie', b'__cf_bm=QJt0JILg5bRbM7awd7SabCXPfAJgaM18Qb_0.8khhrs-1773430682-1.0.1.1-QXtkqNqmQAFd7d.WB.RAM8LyjxBWbnSpOiVQLUYOeS55JTQkjAd_3ZOchS0PgzCJtrlKvPBCcUfMCS801P6b1BaGYHvX_9TURd6QtoS148Y; path=/; expires=Fri, 13-Mar-26 20:08:02 GMT; domain=.circle.so; HttpOnly; Secure; SameSite=None'), (b'x-request-id', b'f9576786-9f20-48c7-a314-fcc7a29cead9'), (b'x-runtime', b'0.099102'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'vary', b'Origin'), (b'x-rack-cors', b'miss; no-origin'), (b'cf-cache-status', b'DYNAMIC'), (b'Server', b'cloudflare')])
+2026-03-13 23:38:53,029 - INFO - HTTP Request: POST https://app.circle.so/api/headless/v1/messages/3b7bd6eb-a1b0-4783-bdf2-e33b74c1f19a/chat_room_messages "HTTP/1.1 202 Accepted"
+2026-03-13 23:38:53,029 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-13 23:38:53,030 - DEBUG - receive_response_body.complete
+2026-03-13 23:38:53,030 - DEBUG - response_closed.started
+2026-03-13 23:38:53,031 - DEBUG - response_closed.complete
+2026-03-13 23:38:53,034 - INFO - \U0001f4ac Circle Response [202]: {"creation_uuid":"764876d4-9467-492d-9730-88f81ae56b0d","parent_message_id":null,"sent_at":"2026-03-13T19:38:02.591Z"}
+2026-03-13 23:38:53,035 - INFO - \u2705 Sent message to chat room 3b7bd6eb-a1b0-4783-bdf2-e33b74c1f19a
+2026-03-13 23:38:53,036 - DEBUG - close.started
+2026-03-13 23:38:53,036 - DEBUG - close.complete
+2026-03-13 23:39:04,162 - DEBUG - connect_tcp.started host='app.circle.so' port=443 local_address=None timeout=30.0 socket_options=None
+2026-03-13 23:39:04,175 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC1D6E120>
+2026-03-13 23:39:04,175 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000002DEC0CFB140> server_hostname='app.circle.so' timeout=30.0
+2026-03-13 23:39:04,193 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0A69770>
+2026-03-13 23:39:04,194 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2026-03-13 23:39:04,194 - DEBUG - send_request_headers.complete
+2026-03-13 23:39:04,195 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2026-03-13 23:39:04,195 - DEBUG - send_request_body.complete
+2026-03-13 23:39:04,195 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2026-03-13 23:39:04,600 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 13 Mar 2026 19:38:14 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Content-Encoding', b'gzip'), (b'etag', b'W/"6ae123ff4b9a53b48373626aff0e105a"'), (b'Cache-Control', b'max-age=0, private, must-revalidate'), (b'content-security-policy', b''), (b'Set-Cookie', b'ahoy_visitor=7ccaedbc-00ac-402b-b6a5-9e1ff8a4e758; path=/; expires=Mon, 13 Mar 2028 19:38:14 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'ahoy_visit=55fff7a6-157a-4dbe-af8d-17b032ae9327; path=/; expires=Fri, 13 Mar 2026 20:08:14 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'cookies_enabled=true; path=/; SameSite=Lax; secure'), (b'Set-Cookie', b'__cf_bm=3.BEwXhcWQzoioimll0Pkr2YwYxoHMKet6_7qoxKLrk-1773430694-1.0.1.1-k9SRm4IzSRgMTQIP6s35N3DRq_pe9SwwVLyHW9GJmS21Baq31V9dkA9p_nA0GjADjxUa1hit8mNfWDXjpEzeTdtmrK_SXrClZAooBy_s4F0; path=/; expires=Fri, 13-Mar-26 20:08:14 GMT; domain=.circle.so; HttpOnly; Secure; SameSite=None'), (b'x-request-id', b'f9756c1e-fade-4d53-b914-76c847867157'), (b'x-runtime', b'0.100453'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'vary', b'Origin'), (b'x-rack-cors', b'miss; no-origin'), (b'cf-cache-status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9dbd7f6cff6f4b2d-DXB')])
+2026-03-13 23:39:04,603 - INFO - HTTP Request: GET https://app.circle.so/api/headless/v1/messages/3b7bd6eb-a1b0-4783-bdf2-e33b74c1f19a/chat_room_messages?next_per_page=20 "HTTP/1.1 200 OK"
+2026-03-13 23:39:04,604 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2026-03-13 23:39:04,611 - DEBUG - receive_response_body.complete
+2026-03-13 23:39:04,611 - DEBUG - response_closed.started
+2026-03-13 23:39:04,612 - DEBUG - response_closed.complete
+2026-03-13 23:39:04,619 - DEBUG - close.started
+2026-03-13 23:39:04,620 - DEBUG - close.complete
+2026-03-13 23:39:05,897 - DEBUG - connect_tcp.started host='app.circle.so' port=443 local_address=None timeout=30.0 socket_options=None
+2026-03-13 23:39:05,910 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0D48960>
+2026-03-13 23:39:05,910 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000002DEC0CFAF00> server_hostname='app.circle.so' timeout=30.0
+2026-03-13 23:39:05,929 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000002DEC0D4B8E0>
+2026-03-13 23:39:05,929 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-13 23:39:05,930 - DEBUG - send_request_headers.complete
+2026-03-13 23:39:05,930 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-13 23:39:05,931 - DEBUG - send_request_body.complete
+2026-03-13 23:39:05,931 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-13 23:39:06,237 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 202, b'Accepted', [(b'Date', b'Fri, 13 Mar 2026 19:38:15 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Content-Length', b'118'), (b'Connection', b'keep-alive'), (b'CF-RAY', b'9dbd7f77cc4dc71e-DXB'), (b'Cache-Control', b'no-cache'), (b'content-security-policy', b''), (b'Set-Cookie', b'ahoy_visitor=939ee68b-e7a0-4059-9906-2baae96fc63e; path=/; expires=Mon, 13 Mar 2028 19:38:15 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'ahoy_visit=f196af3a-4617-4870-8a60-6f1fa52362b2; path=/; expires=Fri, 13 Mar 2026 20:08:15 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'cookies_enabled=true; path=/; SameSite=Lax; secure'), (b'Set-Cookie', b'_circle_session=555jro3e%2Fol%2Ftr09t8e2SvfqRHi%2BFVzbrDHGGRykwJZxjnwWEcO4QacJAKn5Yn3JautWbwzdAluY8YOnZQpH1UGQbCSoKEkXir9zCQn5dYJkel1d%2F7aXtF7ArZ6BWY3dHaqFHLumLr%2BmF72uwZl8banUEyUwB1UMojZgETjsS44oIL2502c%2BOcHVQkIAFcqLxZdDnyxI0vVJHIrAOR5ceHF8dMcu4SeGmc6K--Vxid7EG2LEk7t67H--Enea594eoLvX8WJXs3LLxA%3D%3D; path=/; secure; HttpOnly; SameSite=None'), (b'Set-Cookie', b'__cf_bm=pecxE56xWfozyr2tqRcdPkc3A5MRjcwVlmJdZAmkLV8-1773430695-1.0.1.1-I2_s7eU1Z3YhNavAgR9N.ELyFGbGV1McvUl5H_mDXlS3DX8cZXh7mL33iLOKUQ1phEyFWNAT4mVc7OwiVoThT8cUKF5odMZsx4zDGnpCF1E; path=/; expires=Fri, 13-Mar-26 20:08:15 GMT; domain=.circle.so; HttpOnly; Secure; SameSite=None'), (b'x-request-id', b'f05271a9-6c74-4e29-ad50-050223862199'), (b'x-runtime', b'0.022193'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'vary', b'Origin'), (b'x-rack-cors', b'miss; no-origin'), (b'cf-cache-status', b'DYNAMIC'), (b'Server', b'cloudflare')])
+2026-03-13 23:39:06,240 - INFO - HTTP Request: POST https://app.circle.so/api/headless/v1/messages/3b7bd6eb-a1b0-4783-bdf2-e33b74c1f19a/chat_room_messages "HTTP/1.1 202 Accepted"
+2026-03-13 23:39:06,241 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-13 23:39:06,241 - DEBUG - receive_response_body.complete
+2026-03-13 23:39:06,242 - DEBUG - response_closed.started
+2026-03-13 23:39:06,243 - DEBUG - response_closed.complete
+2026-03-13 23:39:06,244 - INFO - \U0001f4ac Circle Response [202]: {"creation_uuid":"79f1e115-8a35-4331-a0f4-7947db1cc8cf","parent_message_id":null,"sent_at":"2026-03-13T19:38:15.814Z"}
+2026-03-13 23:39:06,245 - INFO - \u2705 Sent message to chat room 3b7bd6eb-a1b0-4783-bdf2-e33b74c1f19a
+2026-03-13 23:39:06,245 - DEBUG - close.started
+2026-03-13 23:39:06,246 - DEBUG - close.complete
+2026-03-13 23:45:53,202 - DEBUG - Using proactor: IocpProactor
+2026-03-13 23:45:53,979 - DEBUG - connect_tcp.started host='app.circle.so' port=443 local_address=None timeout=30.0 socket_options=None
+2026-03-13 23:45:54,007 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x0000018935138980>
+2026-03-13 23:45:54,007 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x0000018935047020> server_hostname='app.circle.so' timeout=30.0
+2026-03-13 23:45:54,024 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x00000189350CE350>
+2026-03-13 23:45:54,025 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-13 23:45:54,025 - DEBUG - send_request_headers.complete
+2026-03-13 23:45:54,025 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-13 23:45:54,026 - DEBUG - send_request_body.complete
+2026-03-13 23:45:54,026 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-13 23:45:54,348 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 13 Mar 2026 19:45:03 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Content-Encoding', b'gzip'), (b'etag', b'W/"1531338c609247a6e853fa6bdcf52bcf"'), (b'Cache-Control', b'max-age=0, private, must-revalidate'), (b'content-security-policy', b''), (b'Set-Cookie', b'ahoy_visitor=5ded7d5e-e716-45e3-8ed7-b5ad4e458e81; path=/; expires=Mon, 13 Mar 2028 19:45:03 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'ahoy_visit=106d267e-a96b-4ba3-9cb4-64718d61e05a; path=/; expires=Fri, 13 Mar 2026 20:15:03 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'cookies_enabled=true; path=/; SameSite=Lax; secure'), (b'Set-Cookie', b'_circle_session=YbBpBBGwzuXYyelrLB9OMqqjEkyDRxXE9WRRdCspTWjcsqvsME1GxvSWO2%2FlbLmoYzULCVncW2gAos9psTNJPzeD%2F4m0EfgFK51QuLgR3yXFYfmc0lpoQyipeyGhcpbjb5mjOPEA8w3Bc0ctn0teSaMi0fpDk8%2BY4Gv9GTKDOBjtUkD6fOmOGFQuyMvSzdm3HNhGoneCylW7zL8F95jWT55FwhM9DgUlJigU--9BFH9gJ1N0yyouRh--CGyXHkAGobwOTsTrj13NMg%3D%3D; path=/; secure; HttpOnly; SameSite=None'), (b'Set-Cookie', b'__cf_bm=uFaMip_sU65zBbytNv4y5DmBKma5TTdQyeOcXnIAgZY-1773431103-1.0.1.1-fOWl67wErSJrI8E6CXAiDBgAdGs7GhTeUivUrTmA4whLL1agb.uKk6Uvd8dsWtUfH1JyXG8uDmYaZR7o5KZYumqEiQ5pdVH7xb7uymjDRdE; path=/; expires=Fri, 13-Mar-26 20:15:03 GMT; domain=.circle.so; HttpOnly; Secure; SameSite=None'), (b'x-request-id', b'a6b9680b-cc7b-49ca-9eec-9a6f4025f612'), (b'x-runtime', b'0.047286'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'vary', b'Origin'), (b'x-rack-cors', b'miss; no-origin'), (b'cf-cache-status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9dbd896e191620cb-DXB')])
+2026-03-13 23:45:54,352 - INFO - HTTP Request: POST https://app.circle.so/api/v1/headless/auth_token "HTTP/1.1 200 OK"
+2026-03-13 23:45:54,353 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-13 23:45:54,354 - DEBUG - receive_response_body.complete
+2026-03-13 23:45:54,354 - DEBUG - response_closed.started
+2026-03-13 23:45:54,355 - DEBUG - response_closed.complete
+2026-03-13 23:45:54,356 - DEBUG - close.started
+2026-03-13 23:45:54,356 - DEBUG - close.complete
+2026-03-13 23:45:55,318 - DEBUG - connect_tcp.started host='app.circle.so' port=443 local_address=None timeout=30.0 socket_options=None
+2026-03-13 23:45:55,331 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x00000189350CFED0>
+2026-03-13 23:45:55,332 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x00000189350476E0> server_hostname='app.circle.so' timeout=30.0
+2026-03-13 23:45:55,356 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x0000018935114FC0>
+2026-03-13 23:45:55,356 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2026-03-13 23:45:55,357 - DEBUG - send_request_headers.complete
+2026-03-13 23:45:55,357 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2026-03-13 23:45:55,357 - DEBUG - send_request_body.complete
+2026-03-13 23:45:55,358 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2026-03-13 23:45:55,779 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 13 Mar 2026 19:45:05 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Content-Encoding', b'gzip'), (b'etag', b'W/"525b8ec3d0a3ab01110f979a603cfeeb"'), (b'Cache-Control', b'max-age=0, private, must-revalidate'), (b'content-security-policy', b''), (b'Set-Cookie', b'ahoy_visitor=7e32c8ca-c16d-425c-bcbb-f0ebe127be60; path=/; expires=Mon, 13 Mar 2028 19:45:05 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'ahoy_visit=671fb48b-e022-44b8-b6ae-eab016932080; path=/; expires=Fri, 13 Mar 2026 20:15:05 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'cookies_enabled=true; path=/; SameSite=Lax; secure'), (b'Set-Cookie', b'__cf_bm=FcslsibOAiSTaJPkY035wkij9u5TMTJtXYInStS_dPI-1773431105-1.0.1.1-AIF4mXxMt_aSjMi.P5k05pXB2R8j3XNEE69RtmNSJDx2a926RawfFe8tcCUE5Qdh.VeAvDezBlVZTCBUPmgcdPbfV8NPsURNw9fd0SEXMpA; path=/; expires=Fri, 13-Mar-26 20:15:05 GMT; domain=.circle.so; HttpOnly; Secure; SameSite=None'), (b'x-request-id', b'3618b60a-61e6-4ec3-a51e-818a763a8d50'), (b'x-runtime', b'0.096414'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'vary', b'Origin'), (b'x-rack-cors', b'miss; no-origin'), (b'cf-cache-status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9dbd89767ca02630-DXB')])
+2026-03-13 23:45:55,782 - INFO - HTTP Request: GET https://app.circle.so/api/headless/v1/messages/3b7bd6eb-a1b0-4783-bdf2-e33b74c1f19a/chat_room_messages?next_per_page=20 "HTTP/1.1 200 OK"
+2026-03-13 23:45:55,783 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2026-03-13 23:45:55,859 - DEBUG - receive_response_body.complete
+2026-03-13 23:45:55,860 - DEBUG - response_closed.started
+2026-03-13 23:45:55,861 - DEBUG - response_closed.complete
+2026-03-13 23:45:55,873 - DEBUG - close.started
+2026-03-13 23:45:55,874 - DEBUG - close.complete
+2026-03-13 23:45:57,137 - DEBUG - connect_tcp.started host='app.circle.so' port=443 local_address=None timeout=30.0 socket_options=None
+2026-03-13 23:45:57,152 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x0000018935115CD0>
+2026-03-13 23:45:57,152 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x0000018935047260> server_hostname='app.circle.so' timeout=30.0
+2026-03-13 23:45:57,173 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001893512D250>
+2026-03-13 23:45:57,174 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-13 23:45:57,175 - DEBUG - send_request_headers.complete
+2026-03-13 23:45:57,175 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-13 23:45:57,175 - DEBUG - send_request_body.complete
+2026-03-13 23:45:57,176 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-13 23:45:57,491 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 202, b'Accepted', [(b'Date', b'Fri, 13 Mar 2026 19:45:07 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Content-Length', b'118'), (b'Connection', b'keep-alive'), (b'CF-RAY', b'9dbd8981cbe44347-DXB'), (b'Cache-Control', b'no-cache'), (b'content-security-policy', b''), (b'Set-Cookie', b'ahoy_visitor=b81da02b-740c-4eb5-bfe5-7fca89bafc66; path=/; expires=Mon, 13 Mar 2028 19:45:07 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'ahoy_visit=6fa323ae-7af8-47ec-9b31-47dc934d5f3f; path=/; expires=Fri, 13 Mar 2026 20:15:07 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'cookies_enabled=true; path=/; SameSite=Lax; secure'), (b'Set-Cookie', b'_circle_session=mZtw%2BvCH0j65MGr9qw%2B%2FHp66TZ%2BnYInVgh3XEcl75E6Nhq6n8Td2MWhgrOGVlFaAD6drl9uja2juqvHC8w6hYDgei1%2FuB5ySvyQuL%2BNcXB9Zh8DkXF2EthF6FRWc3jN%2FXR7A9wHJQ%2B6eTX6pqWyaEu7bPubAB7h3wSe1OJFMeZTD10usjMauvTBYHTLre1cnH0Q1%2B5feB%2BCJeb1WWZPF6ZMtU1nhkPrN7eWd--%2F0GJJ8fSYF3jx%2Fis--AUEr68AXYd3H0FXQ1StygQ%3D%3D; path=/; secure; HttpOnly; SameSite=None'), (b'Set-Cookie', b'__cf_bm=5KwFMOcL0n2oOwqw2J10hwC2zhiH_Ar90tBo4tjWtTE-1773431107-1.0.1.1-e_FB1GC0aMphqnobG20.TLqzHnS7pcobruq1bp5LUABun9wcaRlBsSZzyIdcDrJavYFnKysLTmrYs0fWpr1YietMGp9F2FkO.MWPmalPa_E; path=/; expires=Fri, 13-Mar-26 20:15:07 GMT; domain=.circle.so; HttpOnly; Secure; SameSite=None'), (b'x-request-id', b'38a4a9f5-9a6c-429c-a3b6-b5c8df703855'), (b'x-runtime', b'0.031716'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'vary', b'Origin'), (b'x-rack-cors', b'miss; no-origin'), (b'cf-cache-status', b'DYNAMIC'), (b'Server', b'cloudflare')])
+2026-03-13 23:45:57,494 - INFO - HTTP Request: POST https://app.circle.so/api/headless/v1/messages/3b7bd6eb-a1b0-4783-bdf2-e33b74c1f19a/chat_room_messages "HTTP/1.1 202 Accepted"
+2026-03-13 23:45:57,495 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-13 23:45:57,496 - DEBUG - receive_response_body.complete
+2026-03-13 23:45:57,496 - DEBUG - response_closed.started
+2026-03-13 23:45:57,497 - DEBUG - response_closed.complete
+2026-03-13 23:45:57,498 - DEBUG - close.started
+2026-03-13 23:45:57,499 - DEBUG - close.complete
+2026-03-13 23:46:08,937 - DEBUG - connect_tcp.started host='app.circle.so' port=443 local_address=None timeout=30.0 socket_options=None
+2026-03-13 23:46:08,961 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x00000189350F2E00>
+2026-03-13 23:46:08,961 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000001893511C3B0> server_hostname='app.circle.so' timeout=30.0
+2026-03-13 23:46:08,985 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x00000189350F2F10>
+2026-03-13 23:46:08,985 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2026-03-13 23:46:08,986 - DEBUG - send_request_headers.complete
+2026-03-13 23:46:08,987 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2026-03-13 23:46:08,987 - DEBUG - send_request_body.complete
+2026-03-13 23:46:08,987 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2026-03-13 23:46:09,358 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 13 Mar 2026 19:45:19 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Content-Encoding', b'gzip'), (b'etag', b'W/"fb3f2be6393ec6082de2c611d9fc6304"'), (b'Cache-Control', b'max-age=0, private, must-revalidate'), (b'content-security-policy', b''), (b'Set-Cookie', b'ahoy_visitor=7981943a-a3b0-46a5-bc83-928599e591b0; path=/; expires=Mon, 13 Mar 2028 19:45:18 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'ahoy_visit=35432f1d-6598-42c3-83d9-f27dea93f782; path=/; expires=Fri, 13 Mar 2026 20:15:18 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'cookies_enabled=true; path=/; SameSite=Lax; secure'), (b'Set-Cookie', b'__cf_bm=g8saB.6dFfJvL_G5enxmsn_DsWAUjLwIq09qnXMIfIo-1773431119-1.0.1.1-OsRfyB1WyiGjOC8FQ5eR66V955RJkSeTN0GPfJ6elv6aYiaDblxgJbZf1zLpKKRLvq.F0ctrT814lS9QY5cx53Xdj0.68xiA9QWzEWGbyv8; path=/; expires=Fri, 13-Mar-26 20:15:19 GMT; domain=.circle.so; HttpOnly; Secure; SameSite=None'), (b'x-request-id', b'853a4f71-f739-4192-b9a0-840e46641f01'), (b'x-runtime', b'0.071212'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'vary', b'Origin'), (b'x-rack-cors', b'miss; no-origin'), (b'cf-cache-status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9dbd89cb9ef8a0ec-DXB')])
+2026-03-13 23:46:09,361 - INFO - HTTP Request: GET https://app.circle.so/api/headless/v1/messages/3b7bd6eb-a1b0-4783-bdf2-e33b74c1f19a/chat_room_messages?next_per_page=20 "HTTP/1.1 200 OK"
+2026-03-13 23:46:09,362 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2026-03-13 23:46:09,444 - DEBUG - receive_response_body.complete
+2026-03-13 23:46:09,446 - DEBUG - response_closed.started
+2026-03-13 23:46:09,447 - DEBUG - response_closed.complete
+2026-03-13 23:46:09,480 - DEBUG - close.started
+2026-03-13 23:46:09,481 - DEBUG - close.complete
+2026-03-13 23:46:20,869 - DEBUG - connect_tcp.started host='app.circle.so' port=443 local_address=None timeout=30.0 socket_options=None
+2026-03-13 23:46:20,884 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001893510C350>
+2026-03-13 23:46:20,884 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x0000018935047260> server_hostname='app.circle.so' timeout=30.0
+2026-03-13 23:46:20,907 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001893510C750>
+2026-03-13 23:46:20,909 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2026-03-13 23:46:20,910 - DEBUG - send_request_headers.complete
+2026-03-13 23:46:20,910 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2026-03-13 23:46:20,911 - DEBUG - send_request_body.complete
+2026-03-13 23:46:20,911 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2026-03-13 23:46:21,338 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 13 Mar 2026 19:45:30 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Content-Encoding', b'gzip'), (b'etag', b'W/"d7d35a09ea13b8b6d95906c50e96043d"'), (b'Cache-Control', b'max-age=0, private, must-revalidate'), (b'content-security-policy', b''), (b'Set-Cookie', b'ahoy_visitor=15b10dc9-fd37-4393-923e-a9d98b7c6fb2; path=/; expires=Mon, 13 Mar 2028 19:45:30 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'ahoy_visit=fcf0203f-fcae-474b-9359-0dbd227b83f3; path=/; expires=Fri, 13 Mar 2026 20:15:30 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'cookies_enabled=true; path=/; SameSite=Lax; secure'), (b'Set-Cookie', b'__cf_bm=vLbC7ULJRfuY9ir6.TZG9B1_rtXpO0mblRNV6K9jxao-1773431130-1.0.1.1-ez9o5o5ooR5x82K50nRyMCinxFY41YPagnmW1GmMYZnT9JMPsbx.fIPtOvAav3d4UisrbO4Ov0oAdyu9KbyK8gFG1RN08xKFFV5SWXfgKds; path=/; expires=Fri, 13-Mar-26 20:15:30 GMT; domain=.circle.so; HttpOnly; Secure; SameSite=None'), (b'x-request-id', b'c8d0df6f-a3cf-4585-8d8c-e801234e1bdf'), (b'x-runtime', b'0.145566'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'vary', b'Origin'), (b'x-rack-cors', b'miss; no-origin'), (b'cf-cache-status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9dbd8a162e05b555-DXB')])
+2026-03-13 23:46:21,340 - INFO - HTTP Request: GET https://app.circle.so/api/headless/v1/messages/3b7bd6eb-a1b0-4783-bdf2-e33b74c1f19a/chat_room_messages?next_per_page=20 "HTTP/1.1 200 OK"
+2026-03-13 23:46:21,340 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2026-03-13 23:46:21,453 - DEBUG - receive_response_body.complete
+2026-03-13 23:46:21,454 - DEBUG - response_closed.started
+2026-03-13 23:46:21,454 - DEBUG - response_closed.complete
+2026-03-13 23:46:21,460 - DEBUG - close.started
+2026-03-13 23:46:21,461 - DEBUG - close.complete
+2026-03-13 23:46:22,573 - DEBUG - connect_tcp.started host='app.circle.so' port=443 local_address=None timeout=30.0 socket_options=None
+2026-03-13 23:46:22,610 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x0000018935159C70>
+2026-03-13 23:46:22,610 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x0000018935047410> server_hostname='app.circle.so' timeout=30.0
+2026-03-13 23:46:22,645 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001893515A8A0>
+2026-03-13 23:46:22,646 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-13 23:46:22,647 - DEBUG - send_request_headers.complete
+2026-03-13 23:46:22,648 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-13 23:46:22,649 - DEBUG - send_request_body.complete
+2026-03-13 23:46:22,649 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-13 23:46:22,957 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 202, b'Accepted', [(b'Date', b'Fri, 13 Mar 2026 19:45:32 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Content-Length', b'118'), (b'Connection', b'keep-alive'), (b'CF-RAY', b'9dbd8a20fe593415-DXB'), (b'Cache-Control', b'no-cache'), (b'content-security-policy', b''), (b'Set-Cookie', b'ahoy_visitor=7816b812-4969-4ca7-889d-6aa2ce0b6bf6; path=/; expires=Mon, 13 Mar 2028 19:45:32 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'ahoy_visit=a57b625b-ac73-4aab-a909-328a1c1a9dbc; path=/; expires=Fri, 13 Mar 2026 20:15:32 GMT; SameSite=Lax; secure'), (b'Set-Cookie', b'cookies_enabled=true; path=/; SameSite=Lax; secure'), (b'Set-Cookie', b'_circle_session=SEVV2jMGU6vJX40VNN87mcpdJpMi1lY1BK3YRZWwECUhzOqKOHHBp8AHw8oWu1gvs2kfrP%2B4iIYxLBRw%2B6B24ZtfEPwQU%2BmjSIJ9s%2BpWXWQF%2F7ollKmU6U8b1dyIK4qfeYdZYqAD7B%2FKB0wQHeO43QnlG6dEqrNt4kxTDdAPzyT6FgfkXjqFipH3cOXUZt%2BW0dnRztxLSE2MMkhYym73HnurDD8Xt7aUv5%2Fj--kdP2hlTZV2EEQvd6--jvIhHWYYVvSvJWDwl2i0Zg%3D%3D; path=/; secure; HttpOnly; SameSite=None'), (b'Set-Cookie', b'__cf_bm=3YWII5VPhWyyQH1wTmOZidY06HU6gBxL6R32eDKO1O8-1773431132-1.0.1.1-OKS0cIUJQtzdEfTEhCIFT5IjHHJMvHTrFY2At_njskBK0.Qiq6a93tvUWipCiaM6ueUTzz_qGZ2vwKGF7GbzHI5sgg0A6lc5Lqx_eXX912c; path=/; expires=Fri, 13-Mar-26 20:15:32 GMT; domain=.circle.so; HttpOnly; Secure; SameSite=None'), (b'x-request-id', b'112eb10d-7cde-4828-9381-50540222fc72'), (b'x-runtime', b'0.045039'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'vary', b'Origin'), (b'x-rack-cors', b'miss; no-origin'), (b'cf-cache-status', b'DYNAMIC'), (b'Server', b'cloudflare')])
+2026-03-13 23:46:22,976 - INFO - HTTP Request: POST https://app.circle.so/api/headless/v1/messages/3b7bd6eb-a1b0-4783-bdf2-e33b74c1f19a/chat_room_messages "HTTP/1.1 202 Accepted"
+2026-03-13 23:46:22,976 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-13 23:46:22,977 - DEBUG - receive_response_body.complete
+2026-03-13 23:46:22,977 - DEBUG - response_closed.started
+2026-03-13 23:46:22,977 - DEBUG - response_closed.complete
+2026-03-13 23:46:22,980 - DEBUG - close.started
+2026-03-13 23:46:22,983 - DEBUG - close.complete
+2026-03-13 23:47:22,923 - DEBUG - connect_tcp.started host='app.circle.so' port=443 local_address=None timeout=30.0 socket_options=None
+2026-03-13 23:47:22,950 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x00000189351AD0F0>
+2026-03-13 23:47:22,950 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000001893511CF80> server_hostname='app.circle.so' timeout=30.0
+2026-03-13 23:47:22,989 - DEBUG - start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x00000189351075B0>
+2026-03-13 23:47:22,989 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2026-03-13 23:47:22,990 - DEBUG - send_request_headers.complete
+2026-03-13 23:47:22,990 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2026-03-13 23:47:22,990 - DEBUG - send_request_body.complete
+2026-03-13 23:47:22,990 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2026-03-13 23:47:23,371 - DEBUG - receive_response_headers.failed exception=CancelledError()
+2026-03-13 23:47:23,371 - DEBUG - response_closed.started
+2026-03-13 23:47:23,371 - DEBUG - response_closed.complete

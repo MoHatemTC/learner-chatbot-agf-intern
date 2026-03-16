@@ -1,0 +1,62 @@
+& C:\Users\Administrator\AppData\Local\Programs\Python\Python313\python.exe c:/Users/Administrator/Desktop/Sprints_Internship/learner-chatbot-agf-intern/Ragas.py
+c:\Users\Administrator\Desktop\Sprints_Internship\learner-chatbot-agf-intern\Ragas.py:8: DeprecationWarning: Importing faithfulness from 'ragas.metrics' is deprecated and will be removed in v1.0. Please use 'ragas.metrics.collections' instead. Example: from ragas.metrics.collections import faithfulness
+  from ragas.metrics import faithfulness, answer_relevancy, context_precision, context_recall
+c:\Users\Administrator\Desktop\Sprints_Internship\learner-chatbot-agf-intern\Ragas.py:8: DeprecationWarning: Importing answer_relevancy from 'ragas.metrics' is deprecated and will be removed in v1.0. Please use 'ragas.metrics.collections' instead. Example: from ragas.metrics.collections import answer_relevancy    
+  from ragas.metrics import faithfulness, answer_relevancy, context_precision, context_recall
+c:\Users\Administrator\Desktop\Sprints_Internship\learner-chatbot-agf-intern\Ragas.py:8: DeprecationWarning: Importing context_precision from 'ragas.metrics' is deprecated and will be removed in v1.0. Please use 'ragas.metrics.collections' instead. Example: from ragas.metrics.collections import context_precision  
+  from ragas.metrics import faithfulness, answer_relevancy, context_precision, context_recall
+c:\Users\Administrator\Desktop\Sprints_Internship\learner-chatbot-agf-intern\Ragas.py:8: DeprecationWarning: Importing context_recall from 'ragas.metrics' is deprecated and will be removed in v1.0. Please use 'ragas.metrics.collections' instead. Example: from ragas.metrics.collections import context_recall        
+  from ragas.metrics import faithfulness, answer_relevancy, context_precision, context_recall
+📝 Running Agent on 50 cases...
+Done 10/50...
+Done 20/50...
+Done 30/50...
+Done 40/50...
+Done 50/50...
+
+🔍 Scoring with Ragas (LLM-as-a-Judge)...
+Evaluating:   0%|                                                               | 0/200 [00:00<?, ?it/s]WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+Evaluating:   0%|▎                                                      | 1/200 [00:06<20:52,  6.30s/it]WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+Evaluating:   1%|▌                                                    | 2/200 [00:38<1:10:30, 21.37s/it]WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+Evaluating:   6%|███▏                                                  | 12/200 [00:42<08:16,  2.64s/it]WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+Evaluating:   6%|███▌                                                  | 13/200 [00:49<09:44,  3.13s/it]WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+Evaluating:  14%|███████▌                                              | 28/200 [01:29<07:13,  2.52s/it]WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+Evaluating:  20%|██████████▊                                           | 40/200 [02:05<06:05,  2.28s/it]WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+Evaluating:  28%|███████████████▍                                      | 57/200 [02:51<05:36,  2.35s/it]WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+Evaluating:  41%|██████████████████████▏                               | 82/200 [04:10<04:21,  2.21s/it]WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+Evaluating:  42%|██████████████████████▉                               | 85/200 [04:14<03:46,  1.97s/it]WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+Evaluating:  47%|█████████████████████████▍                            | 94/200 [04:44<04:01,  2.28s/it]WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+Evaluating:  55%|████████████████████████████▉                        | 109/200 [05:32<04:25,  2.92s/it]WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+Evaluating:  57%|██████████████████████████████▍                      | 115/200 [05:42<03:15,  2.30s/it]WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+Evaluating:  58%|██████████████████████████████▋                      | 116/200 [05:57<06:08,  4.38s/it]WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+Evaluating:  61%|████████████████████████████████▎                    | 122/200 [06:14<04:34,  3.52s/it]WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+Evaluating:  65%|██████████████████████████████████▍                  | 130/200 [06:26<02:57,  2.54s/it]WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+Evaluating:  66%|██████████████████████████████████▋                  | 131/200 [06:39<04:44,  4.12s/it]WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+Evaluating:  68%|████████████████████████████████████                 | 136/200 [06:57<04:02,  3.79s/it]WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+Evaluating:  72%|██████████████████████████████████████▏              | 144/200 [07:12<02:42,  2.89s/it]WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+Evaluating:  73%|██████████████████████████████████████▋              | 146/200 [07:22<03:04,  3.41s/it]WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+Evaluating:  80%|██████████████████████████████████████████▍          | 160/200 [07:52<01:27,  2.18s/it]WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+Evaluating:  82%|███████████████████████████████████████████▍         | 164/200 [08:08<01:37,  2.70s/it]WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+Evaluating:  88%|██████████████████████████████████████████████▋      | 176/200 [08:41<01:01,  2.58s/it]WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+Evaluating:  91%|████████████████████████████████████████████████▏    | 182/200 [08:59<00:50,  2.78s/it]WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+Evaluating:  96%|██████████████████████████████████████████████████▌  | 191/200 [09:26<00:22,  2.49s/it]WARNING:ragas.prompt.pydantic_prompt:LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+Evaluating: 100%|█████████████████████████████████████████████████████| 200/200 [09:49<00:00,  2.95s/it]
+
+==============================
+📊 FINAL SCORES
+{'faithfulness': 0.9400, 'answer_relevancy': 0.9546, 'context_precision': 0.9600, 'context_recall': 0.9800}
+==============================
+✅ Successfully exported 50-response report to 'Final_Internship_RAG_Report.csv'

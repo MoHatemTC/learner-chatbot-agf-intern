@@ -1,51 +1,34 @@
-## 🤖 Academic Coordinator Agent
+## 🤖 Sprints Academic Coordinator Bot (Circle.so Integrated)
 
-This repository automates the extraction and summarization of student curricula using an AI-driven pipeline. It transforms raw, unstructured PDF data into structured database entries and professional student announcements.
-
----
-
-### 📋 Agent Task Overview
-
-The system performs a two-stage operation to bridge the gap between static documents and student engagement:
-
-1. **Data Extraction & Sync:** The script parses a 30-page academic PDF, identifying rows for programs, modules, topics, and tasks. It then synchronizes this data (approx. 177 rows) into a **Supabase** database.
-2. **Intelligent Summarization:** A **Senior Academic Coordinator Agent** (built with CrewAI) queries the database for a specific week. It is tasked with:
-* Extracting hidden topics from merged text fields.
-* Identifying specific Live Session requirements.
-* Formatting a friendly, actionable "Next Steps" announcement for Slack or Discord.
-
-
+This repository hosts an automated AI-driven pipeline that bridges the gap between structured academic curricula and student engagement. It features an intelligent **CrewAI** agent that monitors a **Circle.so** chat room, identifies student queries, and provides real-time schedule updates.
 
 ---
 
-### 🚀 How to Run the Agent
+### 📋 System Architecture
 
-Follow these steps to execute the pipeline:
+The system operates in a real-time loop to serve students directly where they communicate:
 
-1. **Install Dependencies:**
-```bash
-pip install crewai supabase pymupdf python-dotenv
-
-```
-
-
-2. **Execute the Agent:**
-```bash
-python agent.py
-
-```
-
-
-3. **Provide Input:**
-When the terminal prompts `Enter the week to summarize`, type the week number (e.g., `4`) and press Enter.
+1. **Circle Integration:** The bot polls the Circle Headless API to monitor specific chat rooms for student mentions of program weeks (e.g., "AI Week 3").
+2. **Contextual Processing:** The system identifies the student, extracts the relevant program (AI/ML or Mobile), and detects the specific week requested.
+3. **CrewAI Intelligence:** A **Senior Academic Coordinator Agent** is triggered to:
+    * Research session details, topics, and GMT+2 timings.
+    * Format a professional, friendly response including Zoom links.
+4. **Automated Response:** The bot replies directly to the student's message in Circle, using **TipTap JSON** formatting for @mentions and rich text.
 
 ---
 
-### ✨ Importance of the Agent
+### 🚀 Deployment & Usage
 
-* **Data Accuracy:** Automatically handles noisy PDF data and font errors that usually break standard parsers.
-* **Time Efficiency:** Replaces the manual work of searching through large PDFs to create weekly updates for multiple programs.
-* **Clarity:** It acts as a "logic filter," ensuring that even if the database contains "N/A" or messy strings, the final output to students is clean, professional, and encouraging.
-* **Scalability:** Allows a single coordinator to manage dozens of different programs by simply changing the query parameters.
+#### 1. Environment Configuration
+Create a `.env` file in the root directory with the keys
 
----
+for running the code type this in your terminal after running Docker Desktop:
+# Build the image
+docker build -t circle-bot .
+
+# Run the container with persistent memory
+docker run -d \
+  --name sprints-bot \
+  --env-file .env \
+  -v ${PWD}/data:/app/data \
+  circle-bot
